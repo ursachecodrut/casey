@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.codrutursache.casey.R
 import com.codrutursache.casey.navigation.Route
+import com.codrutursache.casey.presentation.ui.Typography
 
 @Composable
 fun TopBar(
@@ -32,7 +33,13 @@ fun ProfileTopBar(
 ) {
 
     TopAppBar(
-        title = { Text(text = stringResource(R.string.my_profile_title)) },
+        title = {
+            Text(
+                text = stringResource(R.string.my_profile_title),
+                fontSize = Typography.titleLarge.fontSize,
+                fontWeight = Typography.titleLarge.fontWeight
+            )
+        },
         actions = {
             IconButton(onClick = openProfileBottomSheet) {
                 Icon(

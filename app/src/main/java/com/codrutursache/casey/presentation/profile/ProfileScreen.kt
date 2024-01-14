@@ -59,10 +59,10 @@ fun ProfileScreen(
             Text(
                 text = displayName ?: "No name",
                 fontWeight = FontWeight.Bold,
-                fontSize = Typography.bodyLarge.fontSize,
+                fontSize = Typography.bodyMedium.fontSize,
+                letterSpacing = Typography.bodyMedium.letterSpacing,
+                lineHeight = Typography.bodyMedium.lineHeight
             )
         }
     }
-
-
 }
