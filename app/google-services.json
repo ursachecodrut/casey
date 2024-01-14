@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "984299635980",
+    "firebase_url": "https://casey-9101c-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "casey-9101c",
+    "storage_bucket": "casey-9101c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984299635980:android:0e9e6e4f434c4d6ea83529",
+        "android_client_info": {
+          "package_name": "com.codrutursache.casey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984299635980-shu5d5u038fjs0mm1mmg3vps42vs3m85.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codrutursache.casey",
+            "certificate_hash": "0e9136c5dfa2627c7ea4c03447041bb39cac4608"
+          }
+        },
+        {
+          "client_id": "984299635980-lbibunbb0j8usto102kt25o7b6uvvrvd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWgOxq2sLheU7RN0v_4MBNwAj4J0qgJd0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984299635980-lbibunbb0j8usto102kt25o7b6uvvrvd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
