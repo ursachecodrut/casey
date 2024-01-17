@@ -8,4 +8,7 @@
     <string name="profile_picture">Profile picture</string>
     <string name="sign_out">Sign out</string>
     <string name="menu">Menu</string>
+
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
 </resources>

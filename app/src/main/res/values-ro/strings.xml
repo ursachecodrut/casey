@@ -6,4 +6,7 @@
     <string name="profile_picture">Imaginea de profil</string>
     <string name="sign_out">Sign out</string>
     <string name="menu">Meniu</string>
+
+    <string name="home">Acasă</string>
+    <string name="profile">Profil</string>
 </resources>

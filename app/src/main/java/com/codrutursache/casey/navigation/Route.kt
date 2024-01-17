@@ -1,18 +1,36 @@
 package com.codrutursache.casey.navigation
 
-import com.codrutursache.casey.core.Constants.Routes.AUTH_SCREEN_ROUTE
-import com.codrutursache.casey.core.Constants.Routes.PROFILE_SCREEN_ROUTE
-import com.codrutursache.casey.core.Constants.Routes.SETTINGS_SCREEN_ROUTE
+import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.ui.graphics.vector.ImageVector
+import com.codrutursache.casey.R
 
-interface BottomNavRoute {
-    val icon: String
+interface NavBarRoute {
+    val route: String
+    val icon: ImageVector
+
+    @get:StringRes
+    val labelResourceId: Int
 }
 
 sealed class Route(val route: String) {
-    data object AuthRoute : Route(AUTH_SCREEN_ROUTE)
-    data object ProfileRoute : Route(PROFILE_SCREEN_ROUTE), BottomNavRoute {
-        override val icon: String = "profile"
+    data object AuthRoute : Route("auth_screen")
+
+    data object ProfileRoute : Route("profile_screen"), NavBarRoute {
+        override val icon: ImageVector = Icons.Filled.AccountCircle
+        override val labelResourceId: Int = R.string.profile
     }
 
-    data object SettingsRoute : Route(SETTINGS_SCREEN_ROUTE)
+    data object HomeRoute : Route("home_screen"), NavBarRoute {
+        override val icon: ImageVector = Icons.Filled.Home
+        override val labelResourceId: Int = R.string.home
+    }
+
+    data object SettingsRoute : Route("settings_screen")
 }
+
+
+val bottomNavItems = listOf<NavBarRoute>(Route.HomeRoute, Route.ProfileRoute)
+

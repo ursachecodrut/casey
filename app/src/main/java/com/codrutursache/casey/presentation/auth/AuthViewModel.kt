@@ -39,8 +39,8 @@ class AuthViewModel @Inject constructor(
 
     fun checkAuth(navController: NavHostController) {
         viewModelScope.launch {
-            if (isUserAuthenticated) {
-                navController.navigate(Route.ProfileRoute.route)
+            if (!isUserAuthenticated) {
+                navController.navigate(Route.AuthRoute.route)
             }
         }
     }
