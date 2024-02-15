@@ -10,19 +10,18 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.compose.ui.tooling.preview.Preview
+import com.codrutursache.casey.navigation.Route
 import com.codrutursache.casey.navigation.bottomNavItems
+import com.codrutursache.casey.presentation.ui.CaseyTheme
 
 
 @Composable
 fun BottomBar(
-    navController: NavController,
+    navigateTo: (String) -> Unit,
+    currentRoute: String?,
 ) {
     var selectedItem by remember { mutableIntStateOf(0) }
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
 
     val currentRouteIndex = bottomNavItems.indexOfFirst { it.route == currentRoute }
 
@@ -45,10 +44,32 @@ fun BottomBar(
                 selected = isSelected,
                 onClick = {
                     selectedItem = index
-                    navController.navigate(item.route)
+                    navigateTo(item.route)
                 }
             )
 
         }
+    }
+}
+
+@Preview("[EN] Bottom Bar Preview")
+@Composable
+private fun BottomBarPreview() {
+    CaseyTheme {
+        BottomBar(
+            navigateTo = {},
+            currentRoute = Route.HomeRoute.route
+        )
+    }
+}
+
+@Preview("[RO] Bottom Bar Preview", locale = "ro")
+@Composable
+private fun BottomBarPreviewRo() {
+    CaseyTheme {
+        BottomBar(
+            navigateTo = {},
+            currentRoute = Route.HomeRoute.route
+        )
     }
 }

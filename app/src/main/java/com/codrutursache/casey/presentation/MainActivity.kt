@@ -66,7 +66,12 @@ class MainActivity : ComponentActivity() {
                     },
                     bottomBar = {
                         if (isBottomBarVisible.value)
-                            BottomBar(navController = navController)
+                            BottomBar(
+                                navigateTo = { route ->
+                                    navController.navigate(route)
+                                },
+                                currentRoute = navBackStackEntry?.destination?.route,
+                            )
                     }
                 ) { innerPadding ->
                     NavGraph(
