@@ -13,6 +13,8 @@ import androidx.navigation.compose.composable
 import com.codrutursache.casey.presentation.auth.AuthScreen
 import com.codrutursache.casey.presentation.profile.ProfileScreen
 import com.codrutursache.casey.presentation.profile.ProfileViewModel
+import com.codrutursache.casey.presentation.recipes.RecipesListScreen
+import com.codrutursache.casey.presentation.recipes.RecipesListViewModel
 import com.codrutursache.casey.presentation.settings.SettingsScreen
 import com.codrutursache.casey.presentation.settings.SettingsViewModel
 
@@ -45,7 +47,11 @@ fun NavGraph(
         composable(
             route = Route.HomeRoute.route
         ) {
-            Text(text = "Home")
+
+            val recipesListViewModel = hiltViewModel<RecipesListViewModel>()
+            val recipes = recipesListViewModel.recipes
+
+            RecipesListScreen(response = recipes)
         }
 
         composable(
@@ -60,8 +66,6 @@ fun NavGraph(
                 photoUrl = photoUrl,
             )
         }
-
-
 
 
         composable(
@@ -80,6 +84,5 @@ fun NavGraph(
                 signOut = signOut,
             )
         }
-
     }
 }
