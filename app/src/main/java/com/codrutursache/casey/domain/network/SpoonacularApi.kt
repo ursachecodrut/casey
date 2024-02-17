@@ -9,10 +9,9 @@ interface SpoonacularApi {
 
     companion object {
         const val BASE_URL = "https://api.spoonacular.com"
-        private const val API_KEY = BuildConfig.SPOONACULAR_API_KEY
     }
 
-    @GET("/recipes/complexSearch?apiKey=$API_KEY")
+    @GET("/recipes/complexSearch")
     suspend fun complexSearch(
         @Query("number") number: Int = 10,
         @Query("offset") offset: Int = 0,

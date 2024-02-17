@@ -1,21 +1,15 @@
 package com.codrutursache.casey.di
 
-import com.codrutursache.casey.domain.repository.AuthRepository
-import com.codrutursache.casey.data.repository.AuthRepositoryImpl
-import com.codrutursache.casey.domain.repository.ProfileRepository
 import android.app.Application
 import android.content.Context
 import com.codrutursache.casey.R
-import com.codrutursache.casey.data.repository.ProfileRepositoryImpl
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.Module
