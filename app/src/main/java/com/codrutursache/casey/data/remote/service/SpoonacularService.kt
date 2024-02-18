@@ -1,6 +1,6 @@
 package com.codrutursache.casey.data.remote.service
 
-import com.codrutursache.casey.data.remote.model.RecipeListResponse
+import com.codrutursache.casey.data.remote.dto.RecipeListDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,5 +14,5 @@ interface SpoonacularService {
     suspend fun complexSearch(
         @Query("number") number: Int = 10,
         @Query("offset") offset: Int = 0,
-    ): RecipeListResponse
+    ): RecipeListDto
 }

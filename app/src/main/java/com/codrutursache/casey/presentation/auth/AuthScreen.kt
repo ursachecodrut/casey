@@ -1,6 +1,7 @@
 package com.codrutursache.casey.presentation.auth
 
 import android.app.Activity.RESULT_OK
+import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts.StartIntentSenderForResult
@@ -23,15 +24,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.codrutursache.casey.R
+import com.codrutursache.casey.domain.repository.OneTapSignInResponse
+import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
 import com.codrutursache.casey.presentation.base.ProgressBar
-import com.codrutursache.casey.data.remote.model.Response
-import java.lang.Exception
+import com.codrutursache.casey.util.Response
+import kotlinx.coroutines.Job
 
 @Composable
 fun AuthScreen(
-    viewModel: AuthViewModel = hiltViewModel(),
+    signInWithIntentResponse: SignInWithIntentResponse,
+    oneTapSignInResponse: OneTapSignInResponse,
+    oneTapSignIn: () -> Job,
+    signInWithIntent: (Intent?) -> Job,
     navigateToProfileScreen: () -> Unit
 ) {
     Surface(
@@ -45,7 +50,7 @@ fun AuthScreen(
             Button(
                 modifier = Modifier.padding(bottom = 48.dp),
                 shape = RoundedCornerShape(6.dp),
-                onClick = { viewModel.oneTapSignIn() }
+                onClick = { oneTapSignIn() }
             ) {
                 Icon(imageVector = Icons.Filled.Add, contentDescription = null)
                 Text(
@@ -60,14 +65,14 @@ fun AuthScreen(
     val launcher = rememberLauncherForActivityResult(StartIntentSenderForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             try {
-                viewModel.signInWithIntent(result.data)
+                signInWithIntent(result.data)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
 
-    when (val oneTapSignInResponse = viewModel.oneTapSignInResponse) {
+    when (oneTapSignInResponse) {
         is Response.Loading -> ProgressBar()
         is Response.Success -> oneTapSignInResponse.data?.let { signInResult ->
             LaunchedEffect(signInResult) {
@@ -82,9 +87,9 @@ fun AuthScreen(
         }
     }
 
-    when (val signInWithGoogleResponse = viewModel.signInWithIntentResponse) {
+    when (signInWithIntentResponse) {
         is Response.Loading -> ProgressBar()
-        is Response.Success -> signInWithGoogleResponse.data?.let { signedIn ->
+        is Response.Success -> signInWithIntentResponse.data?.let { signedIn ->
             LaunchedEffect(signedIn) {
                 if (signedIn) {
                     navigateToProfileScreen()
@@ -93,7 +98,7 @@ fun AuthScreen(
         }
 
         is Response.Failure -> LaunchedEffect(Unit) {
-            signInWithGoogleResponse.e.printStackTrace()
+            signInWithIntentResponse.e.printStackTrace()
         }
     }
 }

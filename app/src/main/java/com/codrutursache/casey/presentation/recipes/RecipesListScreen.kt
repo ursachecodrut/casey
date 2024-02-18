@@ -2,15 +2,14 @@ package com.codrutursache.casey.presentation.recipes
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.codrutursache.casey.data.remote.model.RecipeListResponse
-import com.codrutursache.casey.data.remote.model.Response
+import com.codrutursache.casey.data.remote.dto.RecipeListDto
+import com.codrutursache.casey.util.Response
 
 
 @Composable
 fun RecipesListScreen(
-    response: Response<RecipeListResponse>
+    response: Response<RecipeListDto>
 ) {
-
 
     when (response) {
         is Response.Loading -> {

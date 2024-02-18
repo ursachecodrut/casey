@@ -10,9 +10,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.codrutursache.casey.R
-import com.codrutursache.casey.presentation.base.ProgressBar
-import com.codrutursache.casey.data.remote.model.Response
 import com.codrutursache.casey.domain.repository.SignOutResponse
+import com.codrutursache.casey.presentation.base.ProgressBar
+import com.codrutursache.casey.util.Response
 import kotlinx.coroutines.Job
 
 @Composable
@@ -46,6 +46,7 @@ fun SettingsScreen(
         is Response.Failure -> LaunchedEffect(Unit) {
             signOutResponse.e.printStackTrace()
         }
+
     }
 
 

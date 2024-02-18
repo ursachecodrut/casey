@@ -1,11 +1,8 @@
 package com.codrutursache.casey.domain.repository
 
 import android.content.Intent
-import android.content.IntentSender
-import com.codrutursache.casey.data.remote.model.Response
+import com.codrutursache.casey.util.Response
 import com.google.android.gms.auth.api.identity.BeginSignInResult
-import com.google.firebase.auth.AuthCredential
-import kotlinx.coroutines.flow.Flow
 
 typealias OneTapSignInResponse = Response<BeginSignInResult>
 typealias SignInWithIntentResponse = Response<Boolean>

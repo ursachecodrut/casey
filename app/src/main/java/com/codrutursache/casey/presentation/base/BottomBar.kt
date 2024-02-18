@@ -11,8 +11,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.codrutursache.casey.util.Route
-import com.codrutursache.casey.util.bottomNavItems
+import com.codrutursache.casey.presentation.navigation.Route
+import com.codrutursache.casey.presentation.navigation.bottomNavItems
 import com.codrutursache.casey.presentation.theme.CaseyTheme
 
 

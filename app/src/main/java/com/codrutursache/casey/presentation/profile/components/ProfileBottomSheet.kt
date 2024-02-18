@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.codrutursache.casey.R
-import com.codrutursache.casey.util.Route
+import com.codrutursache.casey.presentation.navigation.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

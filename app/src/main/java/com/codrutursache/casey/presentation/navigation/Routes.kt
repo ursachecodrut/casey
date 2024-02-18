@@ -1,4 +1,4 @@
-package com.codrutursache.casey.util
+package com.codrutursache.casey.presentation.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons

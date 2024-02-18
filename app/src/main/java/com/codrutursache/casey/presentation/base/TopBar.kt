@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.codrutursache.casey.R
-import com.codrutursache.casey.util.Route
+import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.theme.Typography
 
 @Composable

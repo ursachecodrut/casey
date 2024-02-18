@@ -1,4 +1,4 @@
-package com.codrutursache.casey.presentation
+package com.codrutursache.casey.presentation.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -10,13 +10,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.codrutursache.casey.presentation.auth.AuthScreen
+import com.codrutursache.casey.presentation.auth.AuthViewModel
 import com.codrutursache.casey.presentation.profile.ProfileScreen
 import com.codrutursache.casey.presentation.profile.ProfileViewModel
 import com.codrutursache.casey.presentation.recipes.RecipesListScreen
 import com.codrutursache.casey.presentation.recipes.RecipesListViewModel
 import com.codrutursache.casey.presentation.settings.SettingsScreen
 import com.codrutursache.casey.presentation.settings.SettingsViewModel
-import com.codrutursache.casey.util.Route
 
 @Composable
 fun NavGraph(
@@ -36,8 +36,13 @@ fun NavGraph(
         composable(
             route = Route.AuthRoute.route
         ) {
+            val authViewModel = hiltViewModel<AuthViewModel>()
 
             AuthScreen(
+                signInWithIntentResponse = authViewModel.signInWithIntentResponse,
+                oneTapSignInResponse = authViewModel.oneTapSignInResponse,
+                oneTapSignIn = authViewModel::oneTapSignIn,
+                signInWithIntent = authViewModel::signInWithIntent,
                 navigateToProfileScreen = {
                     navController.navigate(Route.ProfileRoute.route)
                 }
@@ -47,23 +52,19 @@ fun NavGraph(
         composable(
             route = Route.HomeRoute.route
         ) {
-
             val recipesListViewModel = hiltViewModel<RecipesListViewModel>()
-            val recipes = recipesListViewModel.recipes
 
-            RecipesListScreen(response = recipes)
+            RecipesListScreen(response = recipesListViewModel.recipes)
         }
 
         composable(
             route = Route.ProfileRoute.route
         ) {
             val profileViewModel = hiltViewModel<ProfileViewModel>()
-            val displayName = profileViewModel.displayName
-            val photoUrl = profileViewModel.photoUrl
 
             ProfileScreen(
-                displayName = displayName,
-                photoUrl = photoUrl,
+                displayName = profileViewModel.displayName,
+                photoUrl = profileViewModel.photoUrl,
             )
         }
 
@@ -72,16 +73,14 @@ fun NavGraph(
             route = Route.SettingsRoute.route
         ) {
             val settingsViewModel = hiltViewModel<SettingsViewModel>()
-            val signOutResponse = settingsViewModel.signOutResponse
-            val signOut = settingsViewModel::signOut
 
             SettingsScreen(
-                signOutResponse = signOutResponse,
+                signOutResponse = settingsViewModel.signOutResponse,
                 navigateToAuthScreen = {
                     navController.popBackStack()
                     navController.navigate(Route.AuthRoute.route)
                 },
-                signOut = signOut,
+                signOut = settingsViewModel::signOut,
             )
         }
     }
