@@ -16,13 +16,12 @@ import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.codrutursache.casey.navigation.NavGraph
-import com.codrutursache.casey.navigation.Route
+import com.codrutursache.casey.util.Route
 import com.codrutursache.casey.presentation.auth.AuthViewModel
-import com.codrutursache.casey.presentation.core.appbars.BottomBar
-import com.codrutursache.casey.presentation.core.appbars.TopBar
+import com.codrutursache.casey.presentation.base.BottomBar
+import com.codrutursache.casey.presentation.base.TopBar
 import com.codrutursache.casey.presentation.profile.components.ProfileBottomSheet
-import com.codrutursache.casey.presentation.ui.CaseyTheme
+import com.codrutursache.casey.presentation.theme.CaseyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.codrutursache.casey.data.repository
+package com.codrutursache.casey.data.remote.repository
 
 import com.codrutursache.casey.domain.repository.ProfileRepository
 import com.google.firebase.auth.FirebaseAuth

@@ -1,9 +1,9 @@
 package com.codrutursache.casey.di
 
 import com.codrutursache.casey.BuildConfig
-import com.codrutursache.casey.core.Constants.SPOONACULAR_API_KEY_INTERCEPTOR_TAG
-import com.codrutursache.casey.core.Constants.LOGGING_INTERCEPTOR_TAG
-import com.codrutursache.casey.domain.network.SpoonacularApi
+import com.codrutursache.casey.util.Constants.SPOONACULAR_API_KEY_INTERCEPTOR_TAG
+import com.codrutursache.casey.util.Constants.LOGGING_INTERCEPTOR_TAG
+import com.codrutursache.casey.data.remote.service.SpoonacularService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -72,7 +72,7 @@ object NetworkModule {
     @Singleton
     fun provideSpoonacularRetrovitInstance(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl(SpoonacularApi.BASE_URL)
+            .baseUrl(SpoonacularService.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
@@ -80,6 +80,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideSpoonacularApi(retrofit: Retrofit): SpoonacularApi =
-        retrofit.create(SpoonacularApi::class.java)
+    fun provideSpoonacularApi(retrofit: Retrofit): SpoonacularService =
+        retrofit.create(SpoonacularService::class.java)
 }

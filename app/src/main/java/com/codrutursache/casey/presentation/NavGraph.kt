@@ -1,8 +1,7 @@
-package com.codrutursache.casey.navigation
+package com.codrutursache.casey.presentation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,6 +16,7 @@ import com.codrutursache.casey.presentation.recipes.RecipesListScreen
 import com.codrutursache.casey.presentation.recipes.RecipesListViewModel
 import com.codrutursache.casey.presentation.settings.SettingsScreen
 import com.codrutursache.casey.presentation.settings.SettingsViewModel
+import com.codrutursache.casey.util.Route
 
 @Composable
 fun NavGraph(

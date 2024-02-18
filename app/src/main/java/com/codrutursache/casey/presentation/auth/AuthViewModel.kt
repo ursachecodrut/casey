@@ -7,11 +7,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.codrutursache.casey.domain.model.Response
+import com.codrutursache.casey.data.remote.model.Response
 import com.codrutursache.casey.domain.repository.AuthRepository
 import com.codrutursache.casey.domain.repository.OneTapSignInResponse
 import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
-import com.codrutursache.casey.navigation.Route
+import com.codrutursache.casey.util.Route
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

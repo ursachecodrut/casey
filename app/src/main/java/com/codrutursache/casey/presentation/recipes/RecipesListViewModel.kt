@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codrutursache.casey.domain.model.RecipeListResponse
-import com.codrutursache.casey.domain.model.Response
+import com.codrutursache.casey.data.remote.model.RecipeListResponse
+import com.codrutursache.casey.data.remote.model.Response
 import com.codrutursache.casey.domain.repository.RecipesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

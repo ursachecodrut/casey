@@ -2,8 +2,8 @@ package com.codrutursache.casey.presentation.recipes
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.codrutursache.casey.domain.model.RecipeListResponse
-import com.codrutursache.casey.domain.model.Response
+import com.codrutursache.casey.data.remote.model.RecipeListResponse
+import com.codrutursache.casey.data.remote.model.Response
 
 
 @Composable

@@ -1,4 +1,4 @@
-package com.codrutursache.casey.domain.model
+package com.codrutursache.casey.data.remote.model
 
 sealed class Response<out T> {
     data object Loading : Response<Nothing>()

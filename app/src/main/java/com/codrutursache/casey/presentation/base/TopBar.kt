@@ -1,4 +1,4 @@
-package com.codrutursache.casey.presentation.core.appbars
+package com.codrutursache.casey.presentation.base
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.codrutursache.casey.R
-import com.codrutursache.casey.navigation.Route
-import com.codrutursache.casey.presentation.ui.Typography
+import com.codrutursache.casey.util.Route
+import com.codrutursache.casey.presentation.theme.Typography
 
 @Composable
 fun TopBar(

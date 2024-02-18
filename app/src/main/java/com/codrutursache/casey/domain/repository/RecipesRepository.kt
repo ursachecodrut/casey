@@ -1,7 +1,7 @@
 package com.codrutursache.casey.domain.repository
 
-import com.codrutursache.casey.domain.model.RecipeListResponse
-import com.codrutursache.casey.domain.model.Response
+import com.codrutursache.casey.data.remote.model.RecipeListResponse
+import com.codrutursache.casey.data.remote.model.Response
 
 interface RecipesRepository {
 

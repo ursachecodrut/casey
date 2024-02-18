@@ -1,4 +1,4 @@
-package com.codrutursache.casey.domain.model
+package com.codrutursache.casey.data.remote.model
 
 import com.google.firebase.firestore.FieldValue
 

@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.codrutursache.casey.R
-import com.codrutursache.casey.components.ProgressBar
-import com.codrutursache.casey.domain.model.Response
+import com.codrutursache.casey.presentation.base.ProgressBar
+import com.codrutursache.casey.data.remote.model.Response
 import java.lang.Exception
 
 @Composable
