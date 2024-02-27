@@ -1,14 +1,14 @@
-package com.codrutursache.casey.data.repository
+package com.codrutursache.casey.data.remote.repository
 
 import android.content.Intent
+import com.codrutursache.casey.data.remote.model.User
 import com.codrutursache.casey.domain.repository.AuthRepository
 import com.codrutursache.casey.domain.repository.OneTapSignInResponse
-import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
-import com.codrutursache.casey.core.Constants.USERS_COLLECTION
-import com.codrutursache.casey.domain.model.Response
-import com.codrutursache.casey.domain.model.User
 import com.codrutursache.casey.domain.repository.RevokeAccessResponse
+import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
 import com.codrutursache.casey.domain.repository.SignOutResponse
+import com.codrutursache.casey.util.Constants.USERS_COLLECTION
+import com.codrutursache.casey.util.Response
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

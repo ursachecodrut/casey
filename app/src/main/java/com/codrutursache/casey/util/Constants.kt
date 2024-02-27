@@ -1,4 +1,4 @@
-package com.codrutursache.casey.core
+package com.codrutursache.casey.util
 
 object Constants {
     const val USERS_COLLECTION = "users"

@@ -1,4 +1,4 @@
-package com.codrutursache.casey.presentation.core.appbars
+package com.codrutursache.casey.presentation.base
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -11,9 +11,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.codrutursache.casey.navigation.Route
-import com.codrutursache.casey.navigation.bottomNavItems
-import com.codrutursache.casey.presentation.ui.CaseyTheme
+import com.codrutursache.casey.presentation.navigation.Route
+import com.codrutursache.casey.presentation.navigation.bottomNavItems
+import com.codrutursache.casey.presentation.theme.CaseyTheme
 
 
 @Composable

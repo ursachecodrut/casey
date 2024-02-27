@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.codrutursache.casey.R
-import com.codrutursache.casey.core.Constants.MEDIUM_FIREBASE_IMAGE_TAG
-import com.codrutursache.casey.core.Constants.SMALL_FIREBASE_IMAGE_TAG
-import com.codrutursache.casey.presentation.ui.Typography
+import com.codrutursache.casey.util.Constants.MEDIUM_FIREBASE_IMAGE_TAG
+import com.codrutursache.casey.util.Constants.SMALL_FIREBASE_IMAGE_TAG
+import com.codrutursache.casey.presentation.theme.Typography
 
 @Composable
 fun ProfileScreen(

@@ -1,4 +1,4 @@
-package com.codrutursache.casey.presentation.ui
+package com.codrutursache.casey.presentation.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

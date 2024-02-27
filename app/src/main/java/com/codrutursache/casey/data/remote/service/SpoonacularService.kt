@@ -1,11 +1,10 @@
-package com.codrutursache.casey.domain.network
+package com.codrutursache.casey.data.remote.service
 
-import com.codrutursache.casey.BuildConfig
-import com.codrutursache.casey.domain.model.RecipeListResponse
+import com.codrutursache.casey.data.remote.dto.RecipeListDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface SpoonacularApi {
+interface SpoonacularService {
 
     companion object {
         const val BASE_URL = "https://api.spoonacular.com"
@@ -15,5 +14,5 @@ interface SpoonacularApi {
     suspend fun complexSearch(
         @Query("number") number: Int = 10,
         @Query("offset") offset: Int = 0,
-    ): RecipeListResponse
+    ): RecipeListDto
 }
