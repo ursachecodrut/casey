@@ -6,6 +6,5 @@ import javax.inject.Inject
 class GetProfileDetailsUseCase @Inject constructor(
     private val profileRepository: ProfileRepository
 ) {
-
     operator fun invoke() = profileRepository.userDetails
 }

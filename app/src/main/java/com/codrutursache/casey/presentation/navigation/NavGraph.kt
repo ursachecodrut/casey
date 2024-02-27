@@ -1,8 +1,11 @@
 package com.codrutursache.casey.presentation.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -15,6 +18,8 @@ import com.codrutursache.casey.presentation.auth.AuthScreen
 import com.codrutursache.casey.presentation.auth.AuthViewModel
 import com.codrutursache.casey.presentation.profile.ProfileScreen
 import com.codrutursache.casey.presentation.profile.ProfileViewModel
+import com.codrutursache.casey.presentation.recipe_information.RecipeInformationScreen
+import com.codrutursache.casey.presentation.recipe_information.RecipeInformationViewModel
 import com.codrutursache.casey.presentation.recipes.RecipesListScreen
 import com.codrutursache.casey.presentation.recipes.RecipesListViewModel
 import com.codrutursache.casey.presentation.settings.SettingsScreen
@@ -27,7 +32,7 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Route.HomeRoute.route,
+        startDestination = Route.RecipesRoute.route,
         modifier = Modifier
             .padding(innerPadding)
             .padding(
@@ -52,7 +57,7 @@ fun NavGraph(
         }
 
         composable(
-            route = Route.HomeRoute.route
+            route = Route.RecipesRoute.route
         ) {
             val recipesListViewModel = hiltViewModel<RecipesListViewModel>()
 
@@ -61,7 +66,36 @@ fun NavGraph(
             RecipesListScreen(
                 recipes = recipes,
                 fetchMoreRecipes = recipesListViewModel::getRecipes,
+                navigateToRecipeInformation = { recipeId ->
+                    navController.navigateToRecipeDetails(recipeId)
+                }
             )
+        }
+
+        composable(
+            route = Route.RecipeInformationRoute.routeWithArgs,
+            arguments = Route.RecipeInformationRoute.arguments
+        ) {
+            Log.d("NavGraph", "RecipeInformationRoute")
+            val recipeId = it.arguments?.getInt("recipeId") ?: return@composable
+            Log.d(
+                "NavGraph",
+                "RecipeInformationRoute routeWithArgs: ${Route.RecipeInformationRoute.routeWithArgs}"
+            )
+            Log.d("NavGraph", "RecipeInformationRoute recipeId: $recipeId")
+            val recipeInformationViewModel = hiltViewModel<RecipeInformationViewModel>()
+
+
+            LaunchedEffect(recipeId) {
+                recipeInformationViewModel.getRecipeInformation(recipeId)
+            }
+
+            val recipeInfo by remember { recipeInformationViewModel.recipeInformation }
+
+            RecipeInformationScreen(
+                recipeResponse = recipeInfo,
+            )
+
         }
 
         composable(
@@ -91,4 +125,12 @@ fun NavGraph(
             )
         }
     }
+}
+
+fun NavHostController.navigateToRecipeDetails(recipeId: Int) {
+    navigate("${Route.RecipeInformationRoute.route}/$recipeId")
+}
+
+fun NavHostController.navigateToAuth() {
+    navigate(Route.AuthRoute.route)
 }

@@ -11,8 +11,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,45 +31,39 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.codrutursache.casey.R
-import com.codrutursache.casey.data.remote.dto.RecipeDto
+import com.codrutursache.casey.data.remote.response.RecipeResponse
 import com.codrutursache.casey.presentation.base.InfiniteGridScroll
 import com.codrutursache.casey.util.mock.Mocks
 
 
 @Composable
 fun RecipesListScreen(
-    recipes: List<RecipeDto>,
-    fetchMoreRecipes: () -> Unit
-) {
-    Surface(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        RecipesListSuccess(recipes = recipes, fetchMoreRecipes = fetchMoreRecipes)
-    }
-}
-
-@Composable
-fun RecipesListSuccess(
-    recipes: List<RecipeDto>,
+    recipes: List<RecipeResponse>,
     fetchMoreRecipes: () -> Unit,
+    navigateToRecipeInformation: (Int) -> Unit,
 ) {
-
     InfiniteGridScroll(
         itemsCount = recipes.size, loadMoreItems = fetchMoreRecipes,
     ) {
-        RecipeCard(recipe = recipes[it])
+        RecipeCard(
+            recipe = recipes[it],
+            navigateToRecipeInformation = navigateToRecipeInformation
+        )
     }
-
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeCard(
-    recipe: RecipeDto,
+    recipe: RecipeResponse,
+    navigateToRecipeInformation: (Int) -> Unit
 ) {
     ElevatedCard(
+        onClick = { navigateToRecipeInformation(recipe.id) },
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
+
     ) {
         Box(
             modifier = Modifier
@@ -106,7 +101,7 @@ fun RecipeCard(
                     .fillMaxSize()
                     .padding(8.dp)
             ) {
-                IconButton(
+                FilledIconButton(
                     onClick = { /*TODO*/ },
                     modifier = Modifier.align(Alignment.TopEnd)
                 ) {
@@ -136,5 +131,7 @@ fun RecipeCard(
 fun RecipesListScreenPreview() {
     RecipesListScreen(
         recipes = Mocks.recipeListDto.results,
-        fetchMoreRecipes = { /*TODO*/ })
+        fetchMoreRecipes = { /*TODO*/ },
+        navigateToRecipeInformation = { /*TODO*/ }
+    )
 }

@@ -1,9 +1,11 @@
-package com.codrutursache.casey.data.remote.dto
+package com.codrutursache.casey.data.remote.response
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 
-data class RecipeListDto(
+@JsonClass(generateAdapter = true)
+data class RecipeListResponse(
     @Json(name = "offset")
     val offset: Int,
 
@@ -14,5 +16,5 @@ data class RecipeListDto(
     val totalResults: Int,
 
     @Json(name = "results")
-    val results: List<RecipeDto>
+    val results: List<RecipeResponse>
 )

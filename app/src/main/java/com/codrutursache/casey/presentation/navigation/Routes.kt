@@ -5,6 +5,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.codrutursache.casey.R
 
 interface NavBarRoute {
@@ -15,6 +18,11 @@ interface NavBarRoute {
     val labelResourceId: Int
 }
 
+interface RouteWithArgs {
+    val routeWithArgs: String
+    val arguments: List<NamedNavArgument>
+}
+
 sealed class Route(val route: String) {
     data object AuthRoute : Route("auth_screen")
 
@@ -23,14 +31,25 @@ sealed class Route(val route: String) {
         override val labelResourceId: Int = R.string.profile
     }
 
-    data object HomeRoute : Route("home_screen"), NavBarRoute {
+    data object RecipesRoute : Route("recipes_screen"), NavBarRoute {
         override val icon: ImageVector = Icons.Filled.Home
         override val labelResourceId: Int = R.string.home
+    }
+
+    data object RecipeInformationRoute : Route("recipe_information_screen"), RouteWithArgs {
+        private const val recipeIdArg = "recipeId"
+        override val routeWithArgs = "$route/{$recipeIdArg}"
+        override val arguments: List<NamedNavArgument> = listOf(
+            navArgument(recipeIdArg) {
+                type = NavType.IntType
+                nullable = false
+            }
+        )
     }
 
     data object SettingsRoute : Route("settings_screen")
 }
 
 
-val bottomNavItems = listOf<NavBarRoute>(Route.HomeRoute, Route.ProfileRoute)
+val bottomNavItems = listOf<NavBarRoute>(Route.RecipesRoute, Route.ProfileRoute)
 

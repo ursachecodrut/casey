@@ -58,7 +58,7 @@ private fun BottomBarPreview() {
     CaseyTheme {
         BottomBar(
             navigateTo = {},
-            currentRoute = Route.HomeRoute.route
+            currentRoute = Route.RecipesRoute.route
         )
     }
 }
@@ -69,7 +69,7 @@ private fun BottomBarPreviewRo() {
     CaseyTheme {
         BottomBar(
             navigateTo = {},
-            currentRoute = Route.HomeRoute.route
+            currentRoute = Route.RecipesRoute.route
         )
     }
 }

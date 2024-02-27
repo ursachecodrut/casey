@@ -1,9 +1,11 @@
-package com.codrutursache.casey.data.remote.dto
+package com.codrutursache.casey.data.remote.response
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 
-data class RecipeDto(
+@JsonClass(generateAdapter = true)
+data class RecipeResponse(
     @Json(name = "id")
     val id: Int,
 

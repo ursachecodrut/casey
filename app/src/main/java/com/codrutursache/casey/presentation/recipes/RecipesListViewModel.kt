@@ -1,10 +1,9 @@
 package com.codrutursache.casey.presentation.recipes
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codrutursache.casey.data.remote.dto.RecipeDto
+import com.codrutursache.casey.data.remote.response.RecipeResponse
 import com.codrutursache.casey.domain.usecases.GetRecipesUseCase
 import com.codrutursache.casey.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,7 @@ class RecipesListViewModel @Inject constructor(
     private var offset = 0
     private val pageSize = 10
 
-    var recipeListDto = mutableStateOf<List<RecipeDto>>(emptyList())
+    var recipeListDto = mutableStateOf<List<RecipeResponse>>(emptyList())
         private set
 
     var isLoading = mutableStateOf(false)

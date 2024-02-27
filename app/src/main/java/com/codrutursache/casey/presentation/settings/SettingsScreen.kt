@@ -48,6 +48,4 @@ fun SettingsScreen(
         }
 
     }
-
-
 }
