@@ -3,6 +3,8 @@ package com.codrutursache.casey.presentation.navigation
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -54,7 +56,12 @@ fun NavGraph(
         ) {
             val recipesListViewModel = hiltViewModel<RecipesListViewModel>()
 
-            RecipesListScreen(response = recipesListViewModel.recipes)
+            val recipes by remember { recipesListViewModel.recipeListDto }
+
+            RecipesListScreen(
+                recipes = recipes,
+                fetchMoreRecipes = recipesListViewModel::getRecipes,
+            )
         }
 
         composable(

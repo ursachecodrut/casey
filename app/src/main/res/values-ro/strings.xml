@@ -9,4 +9,5 @@
 
     <string name="home">Acasă</string>
     <string name="profile">Profil</string>
+    <string name="favorite">Favorit</string>
 </resources>

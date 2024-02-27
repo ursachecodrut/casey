@@ -5,5 +5,5 @@ import com.codrutursache.casey.util.Response
 
 interface RecipesRepository {
 
-    suspend fun getRecipes(): Response<RecipeListDto>
+    suspend fun getRecipes(number: Int, offset: Int): Response<RecipeListDto>
 }
