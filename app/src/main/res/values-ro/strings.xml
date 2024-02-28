@@ -10,4 +10,7 @@
     <string name="home">Acasă</string>
     <string name="profile">Profil</string>
     <string name="favorite">Favorit</string>
+    <string name="back">Înapoi</string>
+    <string name="ingredients">Ingrediente</string>
+    <string name="items">%1$s articole</string>
 </resources>

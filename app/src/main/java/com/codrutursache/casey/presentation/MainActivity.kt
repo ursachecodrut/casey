@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -13,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -74,10 +77,14 @@ class MainActivity : ComponentActivity() {
                             )
                     }
                 ) { innerPadding ->
-                    NavGraph(
-                        navController = navController,
-                        innerPadding = innerPadding,
-                    )
+                    Surface(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        NavGraph(
+                            navController = navController,
+                            innerPadding = innerPadding,
+                        )
+                    }
 
                     if (isSheetOpen) {
                         ProfileBottomSheet(

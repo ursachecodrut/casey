@@ -8,9 +8,6 @@ import retrofit2.http.Query
 
 interface SpoonacularService {
 
-    companion object {
-        const val BASE_URL = "https://api.spoonacular.com"
-    }
 
     @GET("/recipes/complexSearch")
     suspend fun complexSearch(
@@ -23,4 +20,25 @@ interface SpoonacularService {
         @Path("id") id: Int,
         @Query("includeNutrition") includeNutrition: Boolean = false,
     ): RecipeInformationResponse
+
+
+    companion object {
+        enum class ImageSize(val size: String) {
+            SMALL("100x100"),
+            MEDIUM("250x250"),
+            LARGE("500x500"),
+        }
+
+        enum class CdnItem(val item: String) {
+            INGREDIENTS("ingredients"),
+            EQUIPMENT("equipment"),
+        }
+
+        const val BASE_URL = "https://api.spoonacular.com"
+        const val CDN_URL = "https://spoonacular.com/cdn"
+
+        inline fun getFromCdn(item: CdnItem, size: ImageSize, name: String) =
+            "$CDN_URL/${item.item}_${size.size}/$name"
+    }
+
 }

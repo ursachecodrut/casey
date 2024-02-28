@@ -1,11 +1,9 @@
 package com.codrutursache.casey.presentation.navigation
 
-import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -76,24 +74,18 @@ fun NavGraph(
             route = Route.RecipeInformationRoute.routeWithArgs,
             arguments = Route.RecipeInformationRoute.arguments
         ) {
-            Log.d("NavGraph", "RecipeInformationRoute")
             val recipeId = it.arguments?.getInt("recipeId") ?: return@composable
-            Log.d(
-                "NavGraph",
-                "RecipeInformationRoute routeWithArgs: ${Route.RecipeInformationRoute.routeWithArgs}"
-            )
-            Log.d("NavGraph", "RecipeInformationRoute recipeId: $recipeId")
             val recipeInformationViewModel = hiltViewModel<RecipeInformationViewModel>()
-
 
             LaunchedEffect(recipeId) {
                 recipeInformationViewModel.getRecipeInformation(recipeId)
             }
 
-            val recipeInfo by remember { recipeInformationViewModel.recipeInformation }
+            val response by remember { recipeInformationViewModel.recipeInformation }
 
             RecipeInformationScreen(
-                recipeResponse = recipeInfo,
+                response = response,
+                popBackStack = navController::popBackStack
             )
 
         }
