@@ -13,4 +13,5 @@
     <string name="back">Înapoi</string>
     <string name="ingredients">Ingrediente</string>
     <string name="items">%1$s articole</string>
+    <string name="steps">Pași</string>
 </resources>

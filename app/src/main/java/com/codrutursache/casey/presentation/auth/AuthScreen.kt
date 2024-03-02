@@ -52,7 +52,6 @@ fun AuthScreen(
                 shape = RoundedCornerShape(6.dp),
                 onClick = { oneTapSignIn() }
             ) {
-                Icon(imageVector = Icons.Filled.Add, contentDescription = null)
                 Text(
                     text = stringResource(R.string.sign_in_with_google),
                     modifier = Modifier.padding(6.dp),

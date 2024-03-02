@@ -15,4 +15,5 @@
     <string name="back">Back</string>
     <string name="ingredients">Ingredients</string>
     <string name="items">%1$s items</string>
+    <string name="steps">Steps</string>
 </resources>

@@ -85,7 +85,6 @@ fun NavGraph(
 
             RecipeInformationScreen(
                 response = response,
-                popBackStack = navController::popBackStack
             )
 
         }
