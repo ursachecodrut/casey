@@ -36,10 +36,17 @@ import com.codrutursache.casey.data.remote.response.RecipeResponse
 @Composable
 fun RecipeCard(
     recipe: RecipeResponse,
-    navigateToRecipeInformation: (Int) -> Unit
+    navigateToRecipeInformation: (Int, String?, String?, String?) -> Unit
 ) {
     ElevatedCard(
-        onClick = { navigateToRecipeInformation(recipe.id) },
+        onClick = {
+            navigateToRecipeInformation(
+                recipe.id,
+                recipe.title,
+                recipe.image,
+                recipe.imageType
+            )
+        },
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))

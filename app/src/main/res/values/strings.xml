@@ -16,4 +16,6 @@
     <string name="ingredients">Ingredients</string>
     <string name="items">%1$s items</string>
     <string name="steps">Steps</string>
+    <string name="general">General</string>
+    <string name="recipes">Recipes</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.codrutursache.casey.presentation.recipe_information
 
-import android.text.Html
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,12 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -63,12 +61,6 @@ fun RecipeInformationScreen(
             Text(text = response.e.toString())
         }
     }
-}
-
-enum class Tab(val title: String) {
-    GENERAL("General"),
-    INGREDIENTS("Ingredients"),
-    STEPS("Steps")
 }
 
 @Composable
@@ -129,7 +121,7 @@ fun RecipeInformationSuccessScreen(
                             .height(48.dp)
                     ) {
                         Text(
-                            text = "${tab.title}${possibleCount?.let { " ($it)" } ?: ""}",
+                            text = "${stringResource(tab.title)}${possibleCount?.let { " ($it)" } ?: ""}",
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
                             style = Typography.bodyLarge,
@@ -170,4 +162,10 @@ fun RecipeInformationSuccessScreenPreview() {
 @Composable
 fun RecipeInformationSuccessScreenPreview_RO() {
     RecipeInformationSuccessScreen(recipeInfo = Mocks.recipeInfoMock)
+}
+
+enum class Tab(@StringRes val title: Int) {
+    GENERAL(R.string.general),
+    INGREDIENTS(R.string.ingredients),
+    STEPS(R.string.steps)
 }

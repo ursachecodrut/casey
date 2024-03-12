@@ -14,4 +14,6 @@
     <string name="ingredients">Ingrediente</string>
     <string name="items">%1$s articole</string>
     <string name="steps">Pași</string>
+    <string name="general">General</string>
+    <string name="recipes">Rețete</string>
 </resources>

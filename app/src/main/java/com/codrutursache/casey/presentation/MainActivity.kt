@@ -13,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,9 +20,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.codrutursache.casey.presentation.auth.AuthViewModel
 import com.codrutursache.casey.presentation.base.BottomBar
-import com.codrutursache.casey.presentation.base.TopBar
+import com.codrutursache.casey.presentation.base.topbar.TopBar
+import com.codrutursache.casey.presentation.base.topbar.TopBarViewModel
 import com.codrutursache.casey.presentation.navigation.NavGraph
-import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.profile.components.ProfileBottomSheet
 import com.codrutursache.casey.presentation.theme.CaseyTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,42 +38,39 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             val authViewModel = hiltViewModel<AuthViewModel>()
+            val topBarViewModel = hiltViewModel<TopBarViewModel>()
 
             LaunchedEffect(Unit) {
                 authViewModel.checkAuth(navController)
             }
 
             val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val isBottomBarVisible =
-                rememberSaveable { mutableStateOf(false) }
 
             val sheetState = rememberModalBottomSheetState()
             var isSheetOpen by remember { mutableStateOf(false) }
             val openProfileBottomSheet = { isSheetOpen = true }
             val closeProfileBottomSheet = { isSheetOpen = false }
 
-            isBottomBarVisible.value = when (navBackStackEntry?.destination?.route) {
-                Route.AuthRoute.route -> false
-                Route.ProfileRoute.route -> true
-                else -> true
-            }
+
 
             CaseyTheme {
                 Scaffold(
                     topBar = {
                         TopBar(
-                            navController = navController,
+                            currentRoute = navBackStackEntry?.destination?.route,
+                            arguments = navBackStackEntry?.arguments,
+                            goBack = { navController.popBackStack() },
                             openProfileBottomSheet = openProfileBottomSheet,
+                            saveRecipe = topBarViewModel::saveRecipe,
                         )
                     },
                     bottomBar = {
-                        if (isBottomBarVisible.value)
-                            BottomBar(
-                                navigateTo = { route ->
-                                    navController.navigate(route)
-                                },
-                                currentRoute = navBackStackEntry?.destination?.route,
-                            )
+                        BottomBar(
+                            navigateTo = { route ->
+                                navController.navigate(route)
+                            },
+                            currentRoute = navBackStackEntry?.destination?.route,
+                        )
                     }
                 ) { innerPadding ->
                     Surface(
@@ -99,3 +95,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

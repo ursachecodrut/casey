@@ -22,6 +22,13 @@ interface SpoonacularService {
     ): RecipeInformationResponse
 
 
+    @GET("/recipes/informationBulk")
+    suspend fun getRecipeInformationBulk(
+        @Path("ids") ids: List<Int>,
+        @Query("includeNutrition") includeNutrition: Boolean = false,
+    ): List<RecipeInformationResponse>
+
+
     companion object {
         enum class ImageSize(val size: String) {
             SMALL("100x100"),

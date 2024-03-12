@@ -1,11 +1,14 @@
 package com.codrutursache.casey.presentation.profile
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,14 +24,21 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.codrutursache.casey.R
+import com.codrutursache.casey.data.remote.response.RecipeResponse
+import com.codrutursache.casey.presentation.base.InfiniteGridScroll
+import com.codrutursache.casey.presentation.recipes.components.RecipeCard
 import com.codrutursache.casey.util.Constants.MEDIUM_FIREBASE_IMAGE_TAG
 import com.codrutursache.casey.util.Constants.SMALL_FIREBASE_IMAGE_TAG
 import com.codrutursache.casey.presentation.theme.Typography
+import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.util.mock.Mocks
 
 @Composable
 fun ProfileScreen(
     displayName: String?,
     photoUrl: String?,
+    recipes: Response<List<RecipeResponse>>,
+    navigateToRecipeInformation: (Int, String?, String?, String?) -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize()
@@ -64,15 +74,64 @@ fun ProfileScreen(
                 letterSpacing = Typography.bodyMedium.letterSpacing,
                 lineHeight = Typography.bodyMedium.lineHeight
             )
+
+            when (recipes) {
+                is Response.Loading -> {
+                    Text(text = "Loading...")
+                }
+
+                is Response.Success -> {
+                    recipes.data?.let { recipes ->
+                        InfiniteGridScroll(
+                            itemsCount = recipes.size,
+                            columns = 2,
+                            isLazy = false,
+                        ) {
+                            RecipeCard(
+                                recipe = recipes[it],
+                                navigateToRecipeInformation = navigateToRecipeInformation
+                            )
+                        }
+
+                    }
+
+                }
+
+                is Response.Failure -> {
+                    Text(text = "Error: ${recipes.e}")
+                }
+            }
+
         }
     }
 }
 
-@Preview
 @Composable
-fun ProfileScreenPreview() {
-    ProfileScreen(
-        displayName = "John Doe",
-        photoUrl = null,
-    )
+fun SavedRecipeList(
+    recipes: List<RecipeResponse>,
+    navigateToRecipeInformation: (Int, String?, String?, String?) -> Unit
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        items(recipes.size) { index ->
+            Log.d("SavedRecipeList", "SavedRecipeList: ${recipes[index]}")
+            RecipeCard(
+                recipe = recipes[index],
+                navigateToRecipeInformation = navigateToRecipeInformation
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SavedRecipesListPreview() {
+    SavedRecipeList(
+        recipes = listOf(
+            Mocks.recipeResponse,
+            Mocks.recipeResponse,
+        ),
+    ) { _, _, _, _ -> }
 }

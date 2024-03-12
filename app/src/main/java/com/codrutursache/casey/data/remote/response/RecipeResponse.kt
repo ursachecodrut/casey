@@ -17,4 +17,6 @@ data class RecipeResponse(
 
     @Json(name = "imageType")
     val imageType: String
-)
+) {
+    constructor() : this(0, "", "", "")
+}
