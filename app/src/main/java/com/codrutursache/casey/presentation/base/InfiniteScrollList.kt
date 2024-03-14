@@ -13,7 +13,8 @@ fun InfiniteGridScroll(
     modifier: Modifier = Modifier,
     columns: Int = 2,
     itemsCount: Int,
-    loadMoreItems: () -> Unit,
+    isLazy: Boolean = true,
+    loadMoreItems: () -> Unit = {},
     verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(8.dp),
     horizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(8.dp),
     content: @Composable (index: Int) -> Unit,
@@ -29,7 +30,8 @@ fun InfiniteGridScroll(
     ) {
         items(itemsCount) { index ->
             content(index)
-            if (index == itemsCount - 1) {
+
+            if (isLazy && index == itemsCount - 1) {
                 loadMoreItems()
             }
         }

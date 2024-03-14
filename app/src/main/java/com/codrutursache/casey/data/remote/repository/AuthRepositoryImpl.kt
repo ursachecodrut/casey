@@ -12,6 +12,7 @@ import com.codrutursache.casey.util.Response
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FieldValue.serverTimestamp
@@ -24,7 +25,7 @@ class AuthRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val oneTapClient: SignInClient,
     private val signInRequest: BeginSignInRequest,
-    private val db: FirebaseFirestore,
+    private val firestore: FirebaseFirestore,
     private val googleSignInClient: GoogleSignInClient,
 ) : AuthRepository {
 
@@ -70,7 +71,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun deleteAccount(): RevokeAccessResponse {
         return try {
             auth.currentUser?.apply {
-                db.collection(USERS_COLLECTION).document(uid).delete().await()
+                firestore.collection(USERS_COLLECTION).document(uid).delete().await()
                 googleSignInClient.revokeAccess().await()
                 oneTapClient.signOut().await()
                 delete().await()
@@ -87,9 +88,9 @@ class AuthRepositoryImpl @Inject constructor(
                 email = email,
                 displayName = displayName,
                 photoUrl = photoUrl.toString(),
-                createdAt = serverTimestamp()
+                createdAt = Timestamp.now()
             )
-            db.collection(USERS_COLLECTION).document(uid).set(user).await()
+            firestore.collection(USERS_COLLECTION).document(uid).set(user).await()
         }
     }
 }

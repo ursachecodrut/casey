@@ -38,11 +38,27 @@ sealed class Route(val route: String) {
 
     data object RecipeInformationRoute : Route("recipe_information_screen"), RouteWithArgs {
         private const val recipeIdArg = "recipeId"
-        override val routeWithArgs = "$route/{$recipeIdArg}"
+        private const val recipeTitle = "title"
+        private const val recipeImage = "image"
+        private const val recipeImageType = "imageType"
+        override val routeWithArgs =
+            "$route/{$recipeIdArg}?title={$recipeTitle}&image={$recipeImage}&imageType={$recipeImageType}"
         override val arguments: List<NamedNavArgument> = listOf(
             navArgument(recipeIdArg) {
                 type = NavType.IntType
                 nullable = false
+            },
+            navArgument(recipeTitle) {
+                type = NavType.StringType
+                nullable = true
+            },
+            navArgument(recipeImage) {
+                type = NavType.StringType
+                nullable = true
+            },
+            navArgument(recipeImageType) {
+                type = NavType.StringType
+                nullable = true
             }
         )
     }

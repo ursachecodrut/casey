@@ -21,8 +21,7 @@ class RecipesListViewModel @Inject constructor(
     var recipeListDto = mutableStateOf<List<RecipeResponse>>(emptyList())
         private set
 
-    var isLoading = mutableStateOf(false)
-        private set
+    private var isLoading = mutableStateOf(false)
 
     init {
         getRecipes()

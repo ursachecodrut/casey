@@ -64,9 +64,7 @@ fun NavGraph(
             RecipesListScreen(
                 recipes = recipes,
                 fetchMoreRecipes = recipesListViewModel::getRecipes,
-                navigateToRecipeInformation = { recipeId ->
-                    navController.navigateToRecipeDetails(recipeId)
-                }
+                navigateToRecipeInformation = navController::navigateToRecipeDetails
             )
         }
 
@@ -94,9 +92,13 @@ fun NavGraph(
         ) {
             val profileViewModel = hiltViewModel<ProfileViewModel>()
 
+            val recipes by remember { profileViewModel.savedRecipesIds }
+
             ProfileScreen(
                 displayName = profileViewModel.displayName,
                 photoUrl = profileViewModel.photoUrl,
+                recipes = recipes,
+                navigateToRecipeInformation = navController::navigateToRecipeDetails
             )
         }
 
@@ -118,8 +120,27 @@ fun NavGraph(
     }
 }
 
-fun NavHostController.navigateToRecipeDetails(recipeId: Int) {
-    navigate("${Route.RecipeInformationRoute.route}/$recipeId")
+fun NavHostController.navigateToRecipeDetails(
+    recipeId: Int,
+    recipeTitle: String? = null,
+    recipeImage: String? = null,
+    recipeImageType: String? = null
+) {
+    val titleArg = recipeTitle?.let { "title=$it" } ?: ""
+    val imageArg = recipeImage?.let { "image=$it" } ?: ""
+    val imageTypeArg = recipeImageType?.let { "imageType=$it" } ?: ""
+    val optionalArgs =
+        listOf(titleArg, imageArg, imageTypeArg)
+            .filter { it.isNotEmpty() }
+            .joinToString("&")
+
+    val route = if (optionalArgs.isNotEmpty()) {
+        "${Route.RecipeInformationRoute.route}/$recipeId?$optionalArgs"
+    } else {
+        "${Route.RecipeInformationRoute.route}/$recipeId"
+    }
+
+    navigate(route)
 }
 
 fun NavHostController.navigateToAuth() {

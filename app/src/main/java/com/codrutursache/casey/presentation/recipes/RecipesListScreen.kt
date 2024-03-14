@@ -12,7 +12,7 @@ import com.codrutursache.casey.util.mock.Mocks
 fun RecipesListScreen(
     recipes: List<RecipeResponse>,
     fetchMoreRecipes: () -> Unit,
-    navigateToRecipeInformation: (Int) -> Unit,
+    navigateToRecipeInformation: (Int, String?, String?, String?) -> Unit,
 ) {
     InfiniteGridScroll(
         itemsCount = recipes.size, loadMoreItems = fetchMoreRecipes,
@@ -31,6 +31,6 @@ fun RecipesListScreenPreview() {
     RecipesListScreen(
         recipes = Mocks.recipeListDto.results,
         fetchMoreRecipes = { /*TODO*/ },
-        navigateToRecipeInformation = { /*TODO*/ }
+        navigateToRecipeInformation = { _, _, _, _ -> }
     )
 }

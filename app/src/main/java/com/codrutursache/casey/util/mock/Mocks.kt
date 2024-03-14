@@ -16,7 +16,7 @@ import com.codrutursache.casey.data.remote.response.WinePairingResponse
 object Mocks {
 
     // write me a recipeDto with some actual real values
-    private val recipeResponse = RecipeResponse(
+    val recipeResponse = RecipeResponse(
         id = 1,
         title = "Chicken Pasta",
         image = "https://spoonacular.com/recipeImages/715497-312x231.jpg",

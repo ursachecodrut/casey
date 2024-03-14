@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,14 +22,21 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.codrutursache.casey.R
+import com.codrutursache.casey.data.remote.response.RecipeResponse
+import com.codrutursache.casey.presentation.base.InfiniteGridScroll
+import com.codrutursache.casey.presentation.recipes.components.RecipeCard
+import com.codrutursache.casey.presentation.theme.Typography
 import com.codrutursache.casey.util.Constants.MEDIUM_FIREBASE_IMAGE_TAG
 import com.codrutursache.casey.util.Constants.SMALL_FIREBASE_IMAGE_TAG
-import com.codrutursache.casey.presentation.theme.Typography
+import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.util.mock.Mocks
 
 @Composable
 fun ProfileScreen(
     displayName: String?,
     photoUrl: String?,
+    recipes: Response<List<RecipeResponse>>,
+    navigateToRecipeInformation: (Int, String?, String?, String?) -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize()
@@ -58,21 +66,69 @@ fun ProfileScreen(
             }
 
             Text(
-                text = displayName ?: "No name",
+                text = displayName ?: stringResource(R.string.no_name),
                 fontWeight = FontWeight.Bold,
                 fontSize = Typography.bodyMedium.fontSize,
                 letterSpacing = Typography.bodyMedium.letterSpacing,
                 lineHeight = Typography.bodyMedium.lineHeight
             )
+
+            Divider()
+
+            when (recipes) {
+                is Response.Loading -> {
+                    Text(text = "Loading...")
+                }
+
+                is Response.Success -> {
+                    recipes.data?.let { recipes ->
+                        InfiniteGridScroll(
+                            itemsCount = recipes.size,
+                            columns = 2,
+                            isLazy = false,
+                        ) {
+                            RecipeCard(
+                                recipe = recipes[it],
+                                navigateToRecipeInformation = navigateToRecipeInformation
+                            )
+                        }
+
+                    }
+                }
+
+                is Response.Failure -> {
+                    Text(text = stringResource(R.string.something_went_wrong))
+                }
+            }
+
         }
     }
 }
 
-@Preview
 @Composable
-fun ProfileScreenPreview() {
-    ProfileScreen(
-        displayName = "John Doe",
-        photoUrl = null,
-    )
+fun SavedRecipeList(
+    recipes: List<RecipeResponse>,
+    navigateToRecipeInformation: (Int, String?, String?, String?) -> Unit
+) {
+    InfiniteGridScroll(
+        itemsCount = recipes.size,
+        isLazy = false,
+    ) {
+        RecipeCard(
+            recipe = recipes[it],
+            navigateToRecipeInformation = navigateToRecipeInformation
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SavedRecipesListPreview() {
+    SavedRecipeList(
+        recipes = listOf(
+            Mocks.recipeResponse,
+            Mocks.recipeResponse,
+            Mocks.recipeResponse,
+        ),
+    ) { _, _, _, _ -> }
 }
