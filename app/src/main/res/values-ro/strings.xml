@@ -16,4 +16,6 @@
     <string name="steps">Pași</string>
     <string name="general">General</string>
     <string name="recipes">Rețete</string>
+    <string name="no_name">Fără nume</string>
+    <string name="something_went_wrong">Ceva nu a mers bine</string>
 </resources>

@@ -18,4 +18,6 @@
     <string name="steps">Steps</string>
     <string name="general">General</string>
     <string name="recipes">Recipes</string>
+    <string name="no_name">No name</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>

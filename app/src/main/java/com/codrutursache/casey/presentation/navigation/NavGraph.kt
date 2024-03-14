@@ -1,6 +1,5 @@
 package com.codrutursache.casey.presentation.navigation
 
-import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -65,14 +64,7 @@ fun NavGraph(
             RecipesListScreen(
                 recipes = recipes,
                 fetchMoreRecipes = recipesListViewModel::getRecipes,
-                navigateToRecipeInformation = { recipeId, recipeTitle, recipeImage, recipeImageType ->
-                    navController.navigateToRecipeDetails(
-                        recipeId,
-                        recipeTitle,
-                        recipeImage,
-                        recipeImageType
-                    )
-                }
+                navigateToRecipeInformation = navController::navigateToRecipeDetails
             )
         }
 
@@ -106,16 +98,8 @@ fun NavGraph(
                 displayName = profileViewModel.displayName,
                 photoUrl = profileViewModel.photoUrl,
                 recipes = recipes,
-                navigateToRecipeInformation = { recipeId, recipeTitle, recipeImage, recipeImageType ->
-                    navController.navigateToRecipeDetails(
-                        recipeId,
-                        recipeTitle,
-                        recipeImage,
-                        recipeImageType
-                    )
-                }
-
-                )
+                navigateToRecipeInformation = navController::navigateToRecipeDetails
+            )
         }
 
 

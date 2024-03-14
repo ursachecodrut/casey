@@ -32,7 +32,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.codrutursache.casey.R
 import com.codrutursache.casey.data.remote.response.RecipeInformationResponse
-import com.codrutursache.casey.presentation.base.ProgressBar
 import com.codrutursache.casey.presentation.recipe_information.components.GeneralRecipeInfo
 import com.codrutursache.casey.presentation.recipe_information.components.IngredientsList
 import com.codrutursache.casey.presentation.recipe_information.components.StepsList
@@ -47,7 +46,7 @@ fun RecipeInformationScreen(
 
     when (response) {
         is Response.Loading -> {
-            ProgressBar()
+            Text(text = "Loading...")
         }
 
         is Response.Success -> {
@@ -57,8 +56,7 @@ fun RecipeInformationScreen(
         }
 
         is Response.Failure -> {
-
-            Text(text = response.e.toString())
+            Text(text = stringResource(R.string.something_went_wrong))
         }
     }
 }
@@ -151,6 +149,13 @@ fun RecipeInformationSuccessScreen(
 }
 
 
+enum class Tab(@StringRes val title: Int) {
+    GENERAL(R.string.general),
+    INGREDIENTS(R.string.ingredients),
+    STEPS(R.string.steps)
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun RecipeInformationSuccessScreenPreview() {
@@ -164,8 +169,3 @@ fun RecipeInformationSuccessScreenPreview_RO() {
     RecipeInformationSuccessScreen(recipeInfo = Mocks.recipeInfoMock)
 }
 
-enum class Tab(@StringRes val title: Int) {
-    GENERAL(R.string.general),
-    INGREDIENTS(R.string.ingredients),
-    STEPS(R.string.steps)
-}
