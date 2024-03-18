@@ -1,13 +1,11 @@
-package com.codrutursache.casey.data.remote.repository
+package com.codrutursache.casey.data.repository
 
-import android.util.Log
-import com.codrutursache.casey.data.remote.response.RecipeInformationResponse
-import com.codrutursache.casey.data.remote.response.RecipeListResponse
-import com.codrutursache.casey.data.remote.response.RecipeResponse
-import com.codrutursache.casey.data.remote.service.SpoonacularService
+import com.codrutursache.casey.data.response.RecipeInformationResponse
+import com.codrutursache.casey.data.response.RecipeListResponse
+import com.codrutursache.casey.data.response.RecipeResponse
+import com.codrutursache.casey.data.data_source.SpoonacularService
 import com.codrutursache.casey.domain.repository.ProfileRepository
 import com.codrutursache.casey.domain.repository.RecipesRepository
-import com.codrutursache.casey.util.Constants
 import com.codrutursache.casey.util.Constants.SAVED_RECIPES_FIELD
 import com.codrutursache.casey.util.Constants.USERS_COLLECTION
 import com.codrutursache.casey.util.Response

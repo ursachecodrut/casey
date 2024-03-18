@@ -2,7 +2,7 @@ package com.codrutursache.casey.presentation.recipes
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.codrutursache.casey.data.remote.response.RecipeResponse
+import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.presentation.base.InfiniteGridScroll
 import com.codrutursache.casey.presentation.recipes.components.RecipeCard
 import com.codrutursache.casey.util.mock.Mocks

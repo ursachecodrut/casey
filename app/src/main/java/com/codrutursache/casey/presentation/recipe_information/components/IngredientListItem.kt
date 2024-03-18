@@ -20,13 +20,14 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.codrutursache.casey.R
-import com.codrutursache.casey.data.remote.response.ExtendedIngredientResponse
-import com.codrutursache.casey.data.remote.service.SpoonacularService
+import com.codrutursache.casey.data.response.ExtendedIngredientResponse
+import com.codrutursache.casey.data.data_source.SpoonacularService
 import com.codrutursache.casey.util.mock.Mocks
 
 @Composable
 fun IngredientListItem(
-    ingredient: ExtendedIngredientResponse
+    ingredient: ExtendedIngredientResponse,
+    numberOfServings: Int = 1,
 ) {
     ListItem(
         headlineContent = { Text(text = ingredient.name) },
@@ -58,7 +59,7 @@ fun IngredientListItem(
             }
         },
         supportingContent = {
-            val amount = ingredient.measuresResponse.metricResponse.amount
+            val amount = ingredient.measuresResponse.metricResponse.amount * numberOfServings
             val unit = ingredient.measuresResponse.metricResponse.unitShort
 
             Text(text = "${amount.formatAmountValue()} $unit")

@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codrutursache.casey.data.remote.response.RecipeInformationResponse
+import com.codrutursache.casey.data.response.RecipeInformationResponse
 import com.codrutursache.casey.domain.usecases.GetRecipeInformationUseCase
 import com.codrutursache.casey.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel

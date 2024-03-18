@@ -1,6 +1,6 @@
 package com.codrutursache.casey.domain.usecases
 
-import com.codrutursache.casey.data.remote.response.RecipeResponse
+import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.domain.repository.RecipesRepository
 import javax.inject.Inject
 

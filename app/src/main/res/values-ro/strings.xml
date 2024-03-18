@@ -18,4 +18,7 @@
     <string name="recipes">Rețete</string>
     <string name="no_name">Fără nume</string>
     <string name="something_went_wrong">Ceva nu a mers bine</string>
+    <string name="list">Listă</string>
+    <string name="servings">Porții</string>
+    <string name="add_to_shopping_list">Adaugă in lista de cumpărături</string>
 </resources>

@@ -1,8 +1,8 @@
 package com.codrutursache.casey.di
 
-import com.codrutursache.casey.data.remote.repository.AuthRepositoryImpl
-import com.codrutursache.casey.data.remote.repository.ProfileRepositoryImpl
-import com.codrutursache.casey.data.remote.repository.RecipesRepositoryImpl
+import com.codrutursache.casey.data.repository.AuthRepositoryImpl
+import com.codrutursache.casey.data.repository.ProfileRepositoryImpl
+import com.codrutursache.casey.data.repository.RecipesRepositoryImpl
 import com.codrutursache.casey.domain.repository.AuthRepository
 import com.codrutursache.casey.domain.repository.ProfileRepository
 import com.codrutursache.casey.domain.repository.RecipesRepository

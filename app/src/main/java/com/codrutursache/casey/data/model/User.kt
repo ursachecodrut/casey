@@ -1,6 +1,6 @@
-package com.codrutursache.casey.data.remote.model
+package com.codrutursache.casey.data.model
 
-import com.codrutursache.casey.data.remote.response.RecipeResponse
+import com.codrutursache.casey.data.response.RecipeResponse
 import com.google.errorprone.annotations.Keep
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue

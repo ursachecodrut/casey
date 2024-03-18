@@ -1,17 +1,17 @@
 package com.codrutursache.casey.util.mock
 
-import com.codrutursache.casey.data.remote.response.AnalyzedInstructionResponse
-import com.codrutursache.casey.data.remote.response.EquipmentResponse
-import com.codrutursache.casey.data.remote.response.ExtendedIngredientResponse
-import com.codrutursache.casey.data.remote.response.IngredientResponse
-import com.codrutursache.casey.data.remote.response.MeasuresResponse
-import com.codrutursache.casey.data.remote.response.MetricResponse
-import com.codrutursache.casey.data.remote.response.RecipeInformationResponse
-import com.codrutursache.casey.data.remote.response.RecipeListResponse
-import com.codrutursache.casey.data.remote.response.RecipeResponse
-import com.codrutursache.casey.data.remote.response.StepResponse
-import com.codrutursache.casey.data.remote.response.UsResponse
-import com.codrutursache.casey.data.remote.response.WinePairingResponse
+import com.codrutursache.casey.data.response.AnalyzedInstructionResponse
+import com.codrutursache.casey.data.response.EquipmentResponse
+import com.codrutursache.casey.data.response.ExtendedIngredientResponse
+import com.codrutursache.casey.data.response.IngredientResponse
+import com.codrutursache.casey.data.response.MeasuresResponse
+import com.codrutursache.casey.data.response.MetricResponse
+import com.codrutursache.casey.data.response.RecipeInformationResponse
+import com.codrutursache.casey.data.response.RecipeListResponse
+import com.codrutursache.casey.data.response.RecipeResponse
+import com.codrutursache.casey.data.response.StepResponse
+import com.codrutursache.casey.data.response.UsResponse
+import com.codrutursache.casey.data.response.WinePairingResponse
 
 object Mocks {
 
