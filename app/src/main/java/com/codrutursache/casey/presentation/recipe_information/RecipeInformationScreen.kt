@@ -8,11 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.codrutursache.casey.R
+import com.codrutursache.casey.data.response.ExtendedIngredientResponse
 import com.codrutursache.casey.data.response.RecipeInformationResponse
 import com.codrutursache.casey.presentation.recipe_information.components.RecipeInfoTabs
 import com.codrutursache.casey.presentation.recipe_information.components.Servings
@@ -41,6 +38,7 @@ import com.codrutursache.casey.util.mock.Mocks
 @Composable
 fun RecipeInformationScreen(
     response: Response<RecipeInformationResponse>,
+    addIngredients: (List<ExtendedIngredientResponse>) -> Unit
 ) {
 
     when (response) {
@@ -50,7 +48,10 @@ fun RecipeInformationScreen(
 
         is Response.Success -> {
             response.data?.let {
-                RecipeInformationSuccessScreen(recipeInfo = it)
+                RecipeInformationSuccessScreen(
+                    recipeInfo = it,
+                    addIngredients = addIngredients
+                )
             }
         }
 
@@ -63,6 +64,7 @@ fun RecipeInformationScreen(
 @Composable
 fun RecipeInformationSuccessScreen(
     recipeInfo: RecipeInformationResponse,
+    addIngredients: (List<ExtendedIngredientResponse>) -> Unit
 ) {
     // scroll state
     val scrollState = rememberScrollState()
@@ -108,7 +110,10 @@ fun RecipeInformationSuccessScreen(
             )
 
             ElevatedButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    addIngredients(recipeInfo.extendedIngredientResponses)
+
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = stringResource(R.string.add_to_shopping_list))
@@ -127,13 +132,19 @@ fun RecipeInformationSuccessScreen(
 @Preview(showBackground = true)
 @Composable
 fun RecipeInformationSuccessScreenPreview() {
-    RecipeInformationSuccessScreen(recipeInfo = Mocks.recipeInfoMock)
+    RecipeInformationSuccessScreen(
+        recipeInfo = Mocks.recipeInfoMock,
+        addIngredients = {}
+    )
 
 }
 
 @Preview(showBackground = true, locale = "ro")
 @Composable
 fun RecipeInformationSuccessScreenPreview_RO() {
-    RecipeInformationSuccessScreen(recipeInfo = Mocks.recipeInfoMock)
+    RecipeInformationSuccessScreen(
+        recipeInfo = Mocks.recipeInfoMock,
+        addIngredients = {}
+    )
 }
 

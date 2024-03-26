@@ -8,9 +8,13 @@ import com.codrutursache.casey.domain.model.ShoppingItemEntity
 
 @Dao
 interface ShoppingListDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertShoppingItem(shoppingItem: ShoppingItemEntity)
 
     @Query("SELECT * FROM ShoppingItemEntity")
     suspend fun getShoppingList(): List<ShoppingItemEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertItem(item: ShoppingItemEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertBatchItems(items: List<ShoppingItemEntity>)
 }

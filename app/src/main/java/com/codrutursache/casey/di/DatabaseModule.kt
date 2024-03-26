@@ -21,4 +21,8 @@ object DatabaseModule {
             ShoppingListDatabase::class.java,
             ShoppingListDatabase.DATABASE_NAME
         ).build()
+
+    @Provides
+    @Singleton
+    fun provideShoppingListDao(database: ShoppingListDatabase) = database.shoppingListDao()
 }

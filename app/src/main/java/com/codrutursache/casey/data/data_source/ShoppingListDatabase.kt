@@ -10,7 +10,7 @@ import com.codrutursache.casey.domain.model.ShoppingItemEntity
 )
 abstract class ShoppingListDatabase : RoomDatabase() {
 
-    abstract val shoppingListDao: ShoppingListDao
+    abstract fun shoppingListDao(): ShoppingListDao
 
     companion object {
         const val DATABASE_NAME = "shopping_list_database"

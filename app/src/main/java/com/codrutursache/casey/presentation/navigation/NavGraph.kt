@@ -2,7 +2,6 @@ package com.codrutursache.casey.presentation.navigation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -13,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.codrutursache.casey.data.response.ExtendedIngredientResponse
 import com.codrutursache.casey.presentation.auth.AuthScreen
 import com.codrutursache.casey.presentation.auth.AuthViewModel
 import com.codrutursache.casey.presentation.profile.ProfileScreen
@@ -23,6 +23,8 @@ import com.codrutursache.casey.presentation.recipes.RecipesListScreen
 import com.codrutursache.casey.presentation.recipes.RecipesListViewModel
 import com.codrutursache.casey.presentation.settings.SettingsScreen
 import com.codrutursache.casey.presentation.settings.SettingsViewModel
+import com.codrutursache.casey.presentation.shopping_list.ShoppingListScreen
+import com.codrutursache.casey.presentation.shopping_list.ShoppingListViewModel
 
 @Composable
 fun NavGraph(
@@ -75,6 +77,9 @@ fun NavGraph(
         ) {
             val recipeId = it.arguments?.getInt("recipeId") ?: return@composable
             val recipeInformationViewModel = hiltViewModel<RecipeInformationViewModel>()
+            val addIngredients = { ingredients: List<ExtendedIngredientResponse> ->
+                recipeInformationViewModel.addIngredientsToShoppingList(ingredients)
+            }
 
             LaunchedEffect(recipeId) {
                 recipeInformationViewModel.getRecipeInformation(recipeId)
@@ -84,6 +89,7 @@ fun NavGraph(
 
             RecipeInformationScreen(
                 response = response,
+                addIngredients = addIngredients
             )
 
         }
@@ -91,7 +97,12 @@ fun NavGraph(
         composable(
             route = Route.ShoppingListRoute.route,
         ) {
-            Text(text = "Shopping List")
+            val shoppingListViewModel = hiltViewModel<ShoppingListViewModel>()
+
+
+            ShoppingListScreen(
+                response = shoppingListViewModel.shoppingList.value
+            )
         }
 
 

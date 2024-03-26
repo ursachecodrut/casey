@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ShoppingItemEntity(
+    @PrimaryKey val id: Int,
     val name: String,
-    @PrimaryKey val id: String,
+    val quantity: Double,
+    val unit: String,
 )
