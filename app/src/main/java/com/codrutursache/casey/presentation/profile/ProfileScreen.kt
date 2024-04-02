@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.codrutursache.casey.R
-import com.codrutursache.casey.data.remote.response.RecipeResponse
+import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.presentation.base.InfiniteGridScroll
 import com.codrutursache.casey.presentation.recipes.components.RecipeCard
 import com.codrutursache.casey.presentation.theme.Typography

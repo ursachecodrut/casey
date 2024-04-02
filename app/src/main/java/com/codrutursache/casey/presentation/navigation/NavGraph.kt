@@ -12,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.codrutursache.casey.data.response.ExtendedIngredientResponse
 import com.codrutursache.casey.presentation.auth.AuthScreen
 import com.codrutursache.casey.presentation.auth.AuthViewModel
 import com.codrutursache.casey.presentation.profile.ProfileScreen
@@ -22,6 +23,8 @@ import com.codrutursache.casey.presentation.recipes.RecipesListScreen
 import com.codrutursache.casey.presentation.recipes.RecipesListViewModel
 import com.codrutursache.casey.presentation.settings.SettingsScreen
 import com.codrutursache.casey.presentation.settings.SettingsViewModel
+import com.codrutursache.casey.presentation.shopping_list.ShoppingListScreen
+import com.codrutursache.casey.presentation.shopping_list.ShoppingListViewModel
 
 @Composable
 fun NavGraph(
@@ -74,6 +77,9 @@ fun NavGraph(
         ) {
             val recipeId = it.arguments?.getInt("recipeId") ?: return@composable
             val recipeInformationViewModel = hiltViewModel<RecipeInformationViewModel>()
+            val addIngredients = { ingredients: List<ExtendedIngredientResponse> ->
+                recipeInformationViewModel.addIngredientsToShoppingList(ingredients)
+            }
 
             LaunchedEffect(recipeId) {
                 recipeInformationViewModel.getRecipeInformation(recipeId)
@@ -83,9 +89,22 @@ fun NavGraph(
 
             RecipeInformationScreen(
                 response = response,
+                addIngredients = addIngredients
             )
 
         }
+
+        composable(
+            route = Route.ShoppingListRoute.route,
+        ) {
+            val shoppingListViewModel = hiltViewModel<ShoppingListViewModel>()
+
+
+            ShoppingListScreen(
+                response = shoppingListViewModel.shoppingList.value
+            )
+        }
+
 
         composable(
             route = Route.ProfileRoute.route

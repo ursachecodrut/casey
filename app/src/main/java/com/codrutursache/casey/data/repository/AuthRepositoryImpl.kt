@@ -1,7 +1,7 @@
-package com.codrutursache.casey.data.remote.repository
+package com.codrutursache.casey.data.repository
 
 import android.content.Intent
-import com.codrutursache.casey.data.remote.model.User
+import com.codrutursache.casey.data.model.User
 import com.codrutursache.casey.domain.repository.AuthRepository
 import com.codrutursache.casey.domain.repository.OneTapSignInResponse
 import com.codrutursache.casey.domain.repository.RevokeAccessResponse

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.codrutursache.casey.R
-import com.codrutursache.casey.data.remote.response.StepResponse
+import com.codrutursache.casey.data.response.StepResponse
 import com.codrutursache.casey.presentation.theme.Typography
 
 @Composable

@@ -1,4 +1,4 @@
-package com.codrutursache.casey.data.remote.response
+package com.codrutursache.casey.data.response
 
 
 import com.squareup.moshi.Json

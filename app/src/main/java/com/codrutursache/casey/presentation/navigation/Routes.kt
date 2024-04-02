@@ -4,7 +4,9 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -63,9 +65,17 @@ sealed class Route(val route: String) {
         )
     }
 
+    data object ShoppingListRoute : Route("shopping_list_screen"), NavBarRoute {
+        override val icon: ImageVector = Icons.Filled.ShoppingCart
+        override val labelResourceId: Int = R.string.list
+    }
+
     data object SettingsRoute : Route("settings_screen")
 }
 
 
-val bottomNavItems = listOf<NavBarRoute>(Route.RecipesRoute, Route.ProfileRoute)
-
+val bottomNavItems = listOf<NavBarRoute>(
+    Route.RecipesRoute,
+    Route.ShoppingListRoute,
+    Route.ProfileRoute,
+)

@@ -3,7 +3,7 @@ package com.codrutursache.casey.presentation.profile
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codrutursache.casey.data.remote.response.RecipeResponse
+import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.domain.repository.ProfileRepository
 import com.codrutursache.casey.domain.usecases.GetProfileDetailsUseCase
 import com.codrutursache.casey.domain.usecases.GetSavedRecipesUseCase

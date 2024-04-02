@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.codrutursache.casey.data.remote.response.StepResponse
+import com.codrutursache.casey.data.response.StepResponse
 import com.codrutursache.casey.presentation.theme.Typography
 import com.codrutursache.casey.util.mock.Mocks
 

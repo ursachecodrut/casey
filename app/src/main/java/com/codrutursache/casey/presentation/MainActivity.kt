@@ -52,7 +52,6 @@ class MainActivity : ComponentActivity() {
             val closeProfileBottomSheet = { isSheetOpen = false }
 
 
-
             CaseyTheme {
                 Scaffold(
                     topBar = {

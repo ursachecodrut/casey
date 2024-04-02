@@ -1,7 +1,7 @@
-package com.codrutursache.casey.data.remote.service
+package com.codrutursache.casey.data.data_source
 
-import com.codrutursache.casey.data.remote.response.RecipeInformationResponse
-import com.codrutursache.casey.data.remote.response.RecipeListResponse
+import com.codrutursache.casey.data.response.RecipeInformationResponse
+import com.codrutursache.casey.data.response.RecipeListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

@@ -3,7 +3,7 @@ package com.codrutursache.casey.presentation.recipes
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codrutursache.casey.data.remote.response.RecipeResponse
+import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.domain.usecases.GetRecipesUseCase
 import com.codrutursache.casey.util.Response
 import dagger.hilt.android.lifecycle.HiltViewModel

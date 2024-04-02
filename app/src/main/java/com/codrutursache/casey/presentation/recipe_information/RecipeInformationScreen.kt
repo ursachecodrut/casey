@@ -1,22 +1,19 @@
 package com.codrutursache.casey.presentation.recipe_information
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -25,16 +22,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.codrutursache.casey.R
-import com.codrutursache.casey.data.remote.response.RecipeInformationResponse
-import com.codrutursache.casey.presentation.recipe_information.components.GeneralRecipeInfo
-import com.codrutursache.casey.presentation.recipe_information.components.IngredientsList
-import com.codrutursache.casey.presentation.recipe_information.components.StepsList
+import com.codrutursache.casey.data.response.ExtendedIngredientResponse
+import com.codrutursache.casey.data.response.RecipeInformationResponse
+import com.codrutursache.casey.presentation.recipe_information.components.RecipeInfoTabs
+import com.codrutursache.casey.presentation.recipe_information.components.Servings
 import com.codrutursache.casey.presentation.theme.Typography
 import com.codrutursache.casey.util.Response
 import com.codrutursache.casey.util.mock.Mocks
@@ -42,6 +38,7 @@ import com.codrutursache.casey.util.mock.Mocks
 @Composable
 fun RecipeInformationScreen(
     response: Response<RecipeInformationResponse>,
+    addIngredients: (List<ExtendedIngredientResponse>) -> Unit
 ) {
 
     when (response) {
@@ -51,7 +48,10 @@ fun RecipeInformationScreen(
 
         is Response.Success -> {
             response.data?.let {
-                RecipeInformationSuccessScreen(recipeInfo = it)
+                RecipeInformationSuccessScreen(
+                    recipeInfo = it,
+                    addIngredients = addIngredients
+                )
             }
         }
 
@@ -64,11 +64,15 @@ fun RecipeInformationScreen(
 @Composable
 fun RecipeInformationSuccessScreen(
     recipeInfo: RecipeInformationResponse,
+    addIngredients: (List<ExtendedIngredientResponse>) -> Unit
 ) {
+    // scroll state
     val scrollState = rememberScrollState()
 
-    var selectedTab by remember { mutableStateOf(Tab.GENERAL) }
-    val tabs = listOf(Tab.GENERAL, Tab.INGREDIENTS, Tab.STEPS)
+    // servings state
+    var numberOfServings by remember { mutableIntStateOf(1) }
+    val increment: () -> Unit = { numberOfServings++ }
+    val decrement: () -> Unit = { if (numberOfServings > 1) numberOfServings-- }
 
     Surface(
         modifier = Modifier
@@ -99,73 +103,48 @@ fun RecipeInformationSuccessScreen(
             )
 
 
+            Servings(
+                numberOfServings = numberOfServings,
+                increment = increment,
+                decrement = decrement,
+            )
 
-            TabRow(
-                selectedTabIndex = tabs.indexOf(selectedTab),
-                modifier = Modifier
-                    .height(48.dp),
+            ElevatedButton(
+                onClick = {
+                    addIngredients(recipeInfo.extendedIngredientResponses)
+
+                },
+                modifier = Modifier.fillMaxWidth()
             ) {
-                tabs.forEach { tab ->
-                    val possibleCount = when (tab) {
-                        Tab.GENERAL -> null
-                        Tab.INGREDIENTS -> recipeInfo.extendedIngredientResponses.size
-                        Tab.STEPS -> recipeInfo.analyzedInstructionResponses.first().stepResponses.size
-                    }
-
-                    Tab(
-                        selected = selectedTab == tab,
-                        onClick = { selectedTab = tab },
-                        modifier = Modifier
-                            .height(48.dp)
-                    ) {
-                        Text(
-                            text = "${stringResource(tab.title)}${possibleCount?.let { " ($it)" } ?: ""}",
-                            maxLines = 2,
-                            overflow = TextOverflow.Ellipsis,
-                            style = Typography.bodyLarge,
-                        )
-                    }
-
-                }
+                Text(text = stringResource(R.string.add_to_shopping_list))
             }
 
-            when (selectedTab) {
-                Tab.GENERAL -> {
-                    GeneralRecipeInfo(summary = recipeInfo.summary)
-                }
+            RecipeInfoTabs(
+                recipeInfo = recipeInfo,
+                numberOfServings = numberOfServings
+            )
 
-                Tab.INGREDIENTS -> {
-                    IngredientsList(ingredients = recipeInfo.extendedIngredientResponses)
-                }
-
-                Tab.STEPS -> {
-                    recipeInfo.analyzedInstructionResponses.first().let {
-                        StepsList(steps = it.stepResponses)
-                    }
-                }
-            }
         }
     }
-}
-
-
-enum class Tab(@StringRes val title: Int) {
-    GENERAL(R.string.general),
-    INGREDIENTS(R.string.ingredients),
-    STEPS(R.string.steps)
 }
 
 
 @Preview(showBackground = true)
 @Composable
 fun RecipeInformationSuccessScreenPreview() {
-    RecipeInformationSuccessScreen(recipeInfo = Mocks.recipeInfoMock)
+    RecipeInformationSuccessScreen(
+        recipeInfo = Mocks.recipeInfoMock,
+        addIngredients = {}
+    )
 
 }
 
 @Preview(showBackground = true, locale = "ro")
 @Composable
 fun RecipeInformationSuccessScreenPreview_RO() {
-    RecipeInformationSuccessScreen(recipeInfo = Mocks.recipeInfoMock)
+    RecipeInformationSuccessScreen(
+        recipeInfo = Mocks.recipeInfoMock,
+        addIngredients = {}
+    )
 }
 
