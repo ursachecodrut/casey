@@ -22,7 +22,7 @@ import com.codrutursache.casey.presentation.navigation.Route
 fun ProfileBottomSheet(
     sheetState: SheetState,
     closeSheet: () -> Unit,
-    navController: NavHostController,
+    navigateToSettings: () -> Unit
 ) {
     ModalBottomSheet(
         onDismissRequest = closeSheet,
@@ -37,7 +37,7 @@ fun ProfileBottomSheet(
                     Icon(Icons.Filled.Settings, contentDescription = null)
                 },
                 modifier = Modifier.clickable {
-                    navController.navigate(Route.SettingsRoute.route)
+                    navigateToSettings()
                     closeSheet()
                 }
             )

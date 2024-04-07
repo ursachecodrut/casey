@@ -39,61 +39,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             val authViewModel = hiltViewModel<AuthViewModel>()
-            val topBarViewModel = hiltViewModel<TopBarViewModel>()
 
             LaunchedEffect(Unit) {
                 authViewModel.checkAuth(navController)
             }
 
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-
-            val sheetState = rememberModalBottomSheetState()
-            var isSheetOpen by remember { mutableStateOf(false) }
-            val openProfileBottomSheet = { isSheetOpen = true }
-            val closeProfileBottomSheet = { isSheetOpen = false }
-
-
             CaseyTheme {
-//                Scaffold(
-//                    topBar = {
-//                        TopBar(
-//                            currentRoute = navBackStackEntry?.destination?.route,
-//                            arguments = navBackStackEntry?.arguments,
-//                            goBack = { navController.popBackStack() },
-//                            openProfileBottomSheet = openProfileBottomSheet,
-//                            saveRecipe = topBarViewModel::saveRecipe,
-//                        )
-//                    },
-//                    bottomBar = {
-//                        BottomBar(
-//                            navigateTo = { route ->
-//                                navController.navigate(route)
-//                            },
-//                            currentRoute = navBackStackEntry?.destination?.route,
-//                        )
-//                    }
-//                ) { innerPadding ->
-//                    Surface(
-//                        modifier = Modifier.fillMaxSize()
-//                    ) {
-//                        NavGraph(
-//                            navController = navController,
-//                            innerPadding = innerPadding,
-//                        )
-//                    }
-//
-//                    if (isSheetOpen) {
-//                        ProfileBottomSheet(
-//                            sheetState = sheetState,
-//                            closeSheet = closeProfileBottomSheet,
-//                            navController = navController,
-//                        )
-//                    }
-//                }
-//            }
-
                 NavGraph(navController = navController)
-
             }
         }
     }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,9 @@ import coil.request.ImageRequest
 import com.codrutursache.casey.R
 import com.codrutursache.casey.data.response.ExtendedIngredientResponse
 import com.codrutursache.casey.data.response.RecipeInformationResponse
+import com.codrutursache.casey.presentation.base.BottomBar
+import com.codrutursache.casey.presentation.base.topbar.RecipeInformationTopBar
+import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.recipe_information.components.RecipeInfoTabs
 import com.codrutursache.casey.presentation.recipe_information.components.Servings
 import com.codrutursache.casey.presentation.theme.Typography
@@ -37,27 +41,51 @@ import com.codrutursache.casey.util.mock.Mocks
 
 @Composable
 fun RecipeInformationScreen(
+    navigateTo: (String) -> Unit,
     response: Response<RecipeInformationResponse>,
     addIngredients: (List<ExtendedIngredientResponse>, Int) -> Unit
 ) {
+    Scaffold(
+        topBar = {
+            RecipeInformationTopBar(
+                goBack = { /*TODO*/ },
+                saveRecipe = { /*TODO*/ }
+            )
+        },
+        bottomBar = {
+            BottomBar(
+                currentRoute = Route.RecipeInformationRoute.route,
+                navigateTo = navigateTo
+            )
+        },
+    ) { innerPadding ->
 
-    when (response) {
-        is Response.Loading -> {
-            Text(text = "Loading...")
-        }
+        Surface(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
 
-        is Response.Success -> {
-            response.data?.let {
-                RecipeInformationSuccessScreen(
-                    recipeInfo = it,
-                    addIngredients = addIngredients
-                )
+        ) {
+            when (response) {
+                is Response.Loading -> {
+                    Text(text = "Loading...")
+                }
+
+                is Response.Success -> {
+                    response.data?.let {
+                        RecipeInformationSuccessScreen(
+                            recipeInfo = it,
+                            addIngredients = addIngredients
+                        )
+                    }
+                }
+
+                is Response.Failure -> {
+                    Text(text = stringResource(R.string.something_went_wrong))
+                }
             }
         }
 
-        is Response.Failure -> {
-            Text(text = stringResource(R.string.something_went_wrong))
-        }
     }
 }
 
@@ -133,7 +161,7 @@ fun RecipeInformationSuccessScreen(
 fun RecipeInformationSuccessScreenPreview() {
     RecipeInformationSuccessScreen(
         recipeInfo = Mocks.recipeInfoMock,
-        addIngredients = {_, _ -> Unit}
+        addIngredients = { _, _ -> Unit }
     )
 
 }
@@ -143,7 +171,7 @@ fun RecipeInformationSuccessScreenPreview() {
 fun RecipeInformationSuccessScreenPreview_RO() {
     RecipeInformationSuccessScreen(
         recipeInfo = Mocks.recipeInfoMock,
-        addIngredients = {_, _ -> Unit}
+        addIngredients = { _, _ -> Unit }
     )
 }
 

@@ -2,12 +2,14 @@ package com.codrutursache.casey.presentation.shopping_list
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +24,7 @@ import com.codrutursache.casey.domain.model.ShoppingItemEntity
 import com.codrutursache.casey.presentation.base.BottomBar
 import com.codrutursache.casey.presentation.base.ProgressBar
 import com.codrutursache.casey.presentation.base.topbar.RecipesTopBar
+import com.codrutursache.casey.presentation.base.topbar.ShoppingListTopBar
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.recipe_information.components.formatAmountValue
 import com.codrutursache.casey.util.Response
@@ -33,28 +36,34 @@ fun ShoppingListScreen(
     toggleItem: (Int, Boolean) -> Unit,
 ) {
     Scaffold(
-        topBar = { RecipesTopBar() },
+        topBar = { ShoppingListTopBar() },
         bottomBar = {
             BottomBar(
                 currentRoute = Route.ShoppingListRoute.route,
                 navigateTo = navigateTo,
             )
         }
-    ) { _ ->
-        when (response) {
-            is Response.Loading -> {
-                ProgressBar()
-            }
+    ) { innerPadding ->
+        Surface(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        ) {
+            when (response) {
+                is Response.Loading -> {
+                    ProgressBar()
+                }
 
-            is Response.Success -> {
-                ShoppingListScreenSuccess(
-                    response.data!!,
-                    toggleItem = toggleItem
-                )
-            }
+                is Response.Success -> {
+                    ShoppingListScreenSuccess(
+                        response.data!!,
+                        toggleItem = toggleItem
+                    )
+                }
 
-            is Response.Failure -> {
-                Text(text = response.e.toString())
+                is Response.Failure -> {
+                    Text(text = response.e.toString())
+                }
             }
         }
     }

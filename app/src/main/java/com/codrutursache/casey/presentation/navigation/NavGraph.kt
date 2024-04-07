@@ -39,10 +39,6 @@ fun NavGraph(
         startDestination = Route.ShoppingListRoute.route,
         modifier = Modifier
             .padding(innerPadding)
-            .padding(
-                horizontal = 16.dp,
-                vertical = 8.dp
-            ),
     ) {
         composable(
             route = Route.AuthRoute.route
@@ -68,6 +64,7 @@ fun NavGraph(
             val recipes by remember { recipesListViewModel.recipeListDto }
 
             RecipesListScreen(
+                navigateTo = navigateTo,
                 recipes = recipes,
                 fetchMoreRecipes = recipesListViewModel::getRecipes,
                 navigateToRecipeInformation = navController::navigateToRecipeDetails
@@ -95,6 +92,7 @@ fun NavGraph(
             val response by remember { recipeInformationViewModel.recipeInformation }
 
             RecipeInformationScreen(
+                navigateTo = navigateTo,
                 response = response,
                 addIngredients = addIngredients
             )
@@ -122,10 +120,12 @@ fun NavGraph(
             val recipes by remember { profileViewModel.savedRecipesIds }
 
             ProfileScreen(
+                navigateTo = navigateTo,
                 displayName = profileViewModel.displayName,
                 photoUrl = profileViewModel.photoUrl,
                 recipes = recipes,
-                navigateToRecipeInformation = navController::navigateToRecipeDetails
+                navigateToRecipeInformation = navController::navigateToRecipeDetails,
+                navigateToSettings = navController::navigateToSettings
             )
         }
 
@@ -136,6 +136,7 @@ fun NavGraph(
             val settingsViewModel = hiltViewModel<SettingsViewModel>()
 
             SettingsScreen(
+                navigateTo = navigateTo,
                 signOutResponse = settingsViewModel.signOutResponse,
                 navigateToAuthScreen = {
                     navController.popBackStack()
@@ -172,4 +173,8 @@ fun NavHostController.navigateToRecipeDetails(
 
 fun NavHostController.navigateToAuth() {
     navigate(Route.AuthRoute.route)
+}
+
+fun NavHostController.navigateToSettings() {
+    navigate(Route.SettingsRoute.route)
 }
