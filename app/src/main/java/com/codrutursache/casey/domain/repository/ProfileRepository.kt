@@ -8,5 +8,5 @@ interface ProfileRepository {
     val userId: String?
     val userDetails: UserDetails
 
-    suspend fun getSavedRecipesIds(): Response<List<RecipeResponse>>
+    suspend fun getSavedRecipes(): Response<List<RecipeResponse>>
 }

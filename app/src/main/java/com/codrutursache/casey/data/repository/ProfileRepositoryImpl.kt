@@ -24,7 +24,7 @@ class ProfileRepositoryImpl @Inject constructor(
         )
 
 
-    override suspend fun getSavedRecipesIds(): Response<List<RecipeResponse>> = try {
+    override suspend fun getSavedRecipes(): Response<List<RecipeResponse>> = try {
         val recipe = firestore
             .collection(USERS_COLLECTION)
             .document(userId ?: "")

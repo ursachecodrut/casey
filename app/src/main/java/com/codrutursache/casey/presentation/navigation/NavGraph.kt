@@ -14,6 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.codrutursache.casey.data.response.ExtendedIngredientResponse
+import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.presentation.auth.AuthScreen
 import com.codrutursache.casey.presentation.auth.AuthViewModel
 import com.codrutursache.casey.presentation.profile.ProfileScreen
@@ -26,6 +27,7 @@ import com.codrutursache.casey.presentation.settings.SettingsScreen
 import com.codrutursache.casey.presentation.settings.SettingsViewModel
 import com.codrutursache.casey.presentation.shopping_list.ShoppingListScreen
 import com.codrutursache.casey.presentation.shopping_list.ShoppingListViewModel
+import com.codrutursache.casey.util.Response
 
 @Composable
 fun NavGraph(
@@ -33,10 +35,14 @@ fun NavGraph(
     innerPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     val navigateTo = { route: String -> navController.navigate(route) }
+    val navigateBack = { navController.navigateBack() }
+
+    // saved recipes viewModel
+    val profileViewModel = hiltViewModel<ProfileViewModel>()
 
     NavHost(
         navController = navController,
-        startDestination = Route.ShoppingListRoute.route,
+        startDestination = Route.RecipesRoute.route,
         modifier = Modifier
             .padding(innerPadding)
     ) {
@@ -74,8 +80,8 @@ fun NavGraph(
         composable(
             route = Route.RecipeInformationRoute.routeWithArgs,
             arguments = Route.RecipeInformationRoute.arguments
-        ) {
-            val recipeId = it.arguments?.getInt("recipeId") ?: return@composable
+        ) { stackEntry ->
+            val recipeId = stackEntry.arguments?.getInt("recipeId") ?: return@composable
             val recipeInformationViewModel = hiltViewModel<RecipeInformationViewModel>()
             val addIngredients = { ingredients: List<ExtendedIngredientResponse>,
                                    numberOfServings: Int ->
@@ -83,6 +89,15 @@ fun NavGraph(
                     ingredients,
                     numberOfServings
                 )
+            }
+            val saveRecipe =
+                { recipe: RecipeResponse -> recipeInformationViewModel.saveRecipe(recipe) }
+            val isSavedRecipe = when (val response = profileViewModel.savedRecipesIds.value) {
+                is Response.Success -> {
+                    response.data?.any { r -> r.id == recipeId }
+                }
+
+                else -> false
             }
 
             LaunchedEffect(recipeId) {
@@ -92,9 +107,12 @@ fun NavGraph(
             val response by remember { recipeInformationViewModel.recipeInformation }
 
             RecipeInformationScreen(
-                navigateTo = navigateTo,
                 response = response,
-                addIngredients = addIngredients
+                addIngredients = addIngredients,
+                saveRecipe = saveRecipe,
+                isSavedRecipe = isSavedRecipe,
+                navigateTo = navigateTo,
+                navigateBack = navigateBack
             )
 
         }
@@ -115,7 +133,6 @@ fun NavGraph(
         composable(
             route = Route.ProfileRoute.route
         ) {
-            val profileViewModel = hiltViewModel<ProfileViewModel>()
 
             val recipes by remember { profileViewModel.savedRecipesIds }
 
@@ -177,4 +194,8 @@ fun NavHostController.navigateToAuth() {
 
 fun NavHostController.navigateToSettings() {
     navigate(Route.SettingsRoute.route)
+}
+
+fun NavHostController.navigateBack() {
+    popBackStack()
 }

@@ -30,6 +30,7 @@ import coil.request.ImageRequest
 import com.codrutursache.casey.R
 import com.codrutursache.casey.data.response.ExtendedIngredientResponse
 import com.codrutursache.casey.data.response.RecipeInformationResponse
+import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.presentation.base.BottomBar
 import com.codrutursache.casey.presentation.base.topbar.RecipeInformationTopBar
 import com.codrutursache.casey.presentation.navigation.Route
@@ -38,18 +39,23 @@ import com.codrutursache.casey.presentation.recipe_information.components.Servin
 import com.codrutursache.casey.presentation.theme.Typography
 import com.codrutursache.casey.util.Response
 import com.codrutursache.casey.util.mock.Mocks
+import kotlinx.coroutines.Job
 
 @Composable
 fun RecipeInformationScreen(
-    navigateTo: (String) -> Unit,
     response: Response<RecipeInformationResponse>,
-    addIngredients: (List<ExtendedIngredientResponse>, Int) -> Unit
+    addIngredients: (List<ExtendedIngredientResponse>, Int) -> Unit,
+    saveRecipe: (RecipeResponse) -> Job,
+    isSavedRecipe: Boolean?,
+    navigateTo: (String) -> Unit,
+    navigateBack: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             RecipeInformationTopBar(
-                goBack = { /*TODO*/ },
-                saveRecipe = { /*TODO*/ }
+                goBack = navigateBack,
+                isSavedRecipe = isSavedRecipe,
+                saveRecipe = {}
             )
         },
         bottomBar = {
@@ -161,7 +167,7 @@ fun RecipeInformationSuccessScreen(
 fun RecipeInformationSuccessScreenPreview() {
     RecipeInformationSuccessScreen(
         recipeInfo = Mocks.recipeInfoMock,
-        addIngredients = { _, _ -> Unit }
+        addIngredients = { _, _ -> }
     )
 
 }
@@ -171,7 +177,7 @@ fun RecipeInformationSuccessScreenPreview() {
 fun RecipeInformationSuccessScreenPreview_RO() {
     RecipeInformationSuccessScreen(
         recipeInfo = Mocks.recipeInfoMock,
-        addIngredients = { _, _ -> Unit }
+        addIngredients = { _, _ -> }
     )
 }
 

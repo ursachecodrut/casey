@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DropdownMenu
@@ -89,6 +90,7 @@ fun RecipesTopBar() {
 @Composable
 fun RecipeInformationTopBar(
     goBack: () -> Unit,
+    isSavedRecipe: Boolean? = false,
     saveRecipe: () -> Unit,
 ) {
 
@@ -103,11 +105,18 @@ fun RecipeInformationTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { saveRecipe() }) {
+            if (isSavedRecipe == true) {
                 Icon(
-                    Icons.Filled.FavoriteBorder,
+                    imageVector = Icons.Filled.Favorite,
                     contentDescription = stringResource(R.string.favorite)
                 )
+            } else {
+                IconButton(onClick = { saveRecipe() }) {
+                    Icon(
+                        Icons.Filled.FavoriteBorder,
+                        contentDescription = stringResource(R.string.favorite)
+                    )
+                }
             }
         },
     )

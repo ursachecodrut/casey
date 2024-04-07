@@ -16,7 +16,5 @@ class TopBarViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    fun saveRecipe(recipeShort: RecipeResponse) = viewModelScope.launch {
-        saveRecipeUseCase(recipeShort)
-    }
+
 }
