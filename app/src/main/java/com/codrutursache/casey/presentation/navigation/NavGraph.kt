@@ -32,9 +32,11 @@ fun NavGraph(
     navController: NavHostController,
     innerPadding: PaddingValues = PaddingValues(0.dp),
 ) {
+    val navigateTo = { route: String -> navController.navigate(route) }
+
     NavHost(
         navController = navController,
-        startDestination = Route.RecipesRoute.route,
+        startDestination = Route.ShoppingListRoute.route,
         modifier = Modifier
             .padding(innerPadding)
             .padding(
@@ -106,7 +108,8 @@ fun NavGraph(
 
             ShoppingListScreen(
                 response = shoppingListViewModel.shoppingList.value,
-                toggleItem = shoppingListViewModel::toggleShoppingListItem
+                toggleItem = shoppingListViewModel::toggleShoppingListItem,
+                navigateTo = navigateTo,
             )
         }
 

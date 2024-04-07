@@ -29,8 +29,6 @@ fun SettingsScreen(
                 Text(text = stringResource(R.string.sign_out))
             }
         }
-
-
     }
 
     when (signOutResponse) {
