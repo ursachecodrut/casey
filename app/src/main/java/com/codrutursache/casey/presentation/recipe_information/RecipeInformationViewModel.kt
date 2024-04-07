@@ -30,9 +30,9 @@ class RecipeInformationViewModel @Inject constructor(
         }
     }
 
-    fun addIngredientsToShoppingList(ingredients: List<ExtendedIngredientResponse>) {
+    fun addIngredientsToShoppingList(ingredients: List<ExtendedIngredientResponse>, numberOfServings: Int) {
         viewModelScope.launch {
-            addIngredientsToShoppingListUseCase(ingredients)
+            addIngredientsToShoppingListUseCase(ingredients, numberOfServings)
         }
     }
 }

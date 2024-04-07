@@ -21,4 +21,7 @@
     <string name="list">Listă</string>
     <string name="servings">Porții</string>
     <string name="add_to_shopping_list">Adaugă in lista de cumpărături</string>
+    <string name="shopping_list">Lista de cumpărături</string>
+    <string name="edit">Editează</string>
+    <string name="clear">Șterge</string>
 </resources>

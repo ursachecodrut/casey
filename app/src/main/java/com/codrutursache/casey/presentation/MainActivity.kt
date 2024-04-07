@@ -24,6 +24,7 @@ import com.codrutursache.casey.presentation.base.topbar.TopBar
 import com.codrutursache.casey.presentation.base.topbar.TopBarViewModel
 import com.codrutursache.casey.presentation.navigation.NavGraph
 import com.codrutursache.casey.presentation.profile.components.ProfileBottomSheet
+import com.codrutursache.casey.presentation.shopping_list.ShoppingListViewModel
 import com.codrutursache.casey.presentation.theme.CaseyTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -68,7 +68,6 @@ fun IngredientListItem(
         modifier = Modifier
             .clip(RoundedCornerShape(10))
     )
-
 }
 
 fun Double.formatAmountValue(): String = if (this % 1.0 == 0.0) {

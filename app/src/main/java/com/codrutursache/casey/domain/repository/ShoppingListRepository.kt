@@ -10,4 +10,10 @@ interface ShoppingListRepository {
     suspend fun insertShoppingItem(shoppingItem: ShoppingItemEntity)
 
     suspend fun insertBatchShoppingItems(shoppingItems: List<ShoppingItemEntity>)
+
+    suspend fun toggleShoppingListItem(shoppingItemId: Int, checked: Boolean)
+
+    suspend fun deleteShoppingItem(shoppingItemId: Int)
+
+    suspend fun deleteAllShoppingItems()
 }

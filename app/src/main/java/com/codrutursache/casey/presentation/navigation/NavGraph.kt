@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -77,8 +78,12 @@ fun NavGraph(
         ) {
             val recipeId = it.arguments?.getInt("recipeId") ?: return@composable
             val recipeInformationViewModel = hiltViewModel<RecipeInformationViewModel>()
-            val addIngredients = { ingredients: List<ExtendedIngredientResponse> ->
-                recipeInformationViewModel.addIngredientsToShoppingList(ingredients)
+            val addIngredients = { ingredients: List<ExtendedIngredientResponse>,
+                                   numberOfServings: Int ->
+                recipeInformationViewModel.addIngredientsToShoppingList(
+                    ingredients,
+                    numberOfServings
+                )
             }
 
             LaunchedEffect(recipeId) {
@@ -99,9 +104,9 @@ fun NavGraph(
         ) {
             val shoppingListViewModel = hiltViewModel<ShoppingListViewModel>()
 
-
             ShoppingListScreen(
-                response = shoppingListViewModel.shoppingList.value
+                response = shoppingListViewModel.shoppingList.value,
+                toggleItem = shoppingListViewModel::toggleShoppingListItem
             )
         }
 

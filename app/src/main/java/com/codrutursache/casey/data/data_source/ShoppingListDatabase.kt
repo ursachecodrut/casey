@@ -6,7 +6,7 @@ import com.codrutursache.casey.domain.model.ShoppingItemEntity
 
 @Database(
     entities = [ShoppingItemEntity::class],
-    version = 1
+    version = 2
 )
 abstract class ShoppingListDatabase : RoomDatabase() {
 

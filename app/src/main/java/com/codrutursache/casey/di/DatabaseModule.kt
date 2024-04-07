@@ -15,12 +15,13 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideShoppingListDatabase(app: Application): ShoppingListDatabase =
-        Room.databaseBuilder(
+    fun provideShoppingListDatabase(app: Application): ShoppingListDatabase = Room
+        .databaseBuilder(
             app,
             ShoppingListDatabase::class.java,
             ShoppingListDatabase.DATABASE_NAME
-        ).build()
+        )
+        .build()
 
     @Provides
     @Singleton

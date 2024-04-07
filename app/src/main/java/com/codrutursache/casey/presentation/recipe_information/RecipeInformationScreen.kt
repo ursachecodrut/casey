@@ -38,7 +38,7 @@ import com.codrutursache.casey.util.mock.Mocks
 @Composable
 fun RecipeInformationScreen(
     response: Response<RecipeInformationResponse>,
-    addIngredients: (List<ExtendedIngredientResponse>) -> Unit
+    addIngredients: (List<ExtendedIngredientResponse>, Int) -> Unit
 ) {
 
     when (response) {
@@ -64,7 +64,7 @@ fun RecipeInformationScreen(
 @Composable
 fun RecipeInformationSuccessScreen(
     recipeInfo: RecipeInformationResponse,
-    addIngredients: (List<ExtendedIngredientResponse>) -> Unit
+    addIngredients: (List<ExtendedIngredientResponse>, Int) -> Unit
 ) {
     // scroll state
     val scrollState = rememberScrollState()
@@ -111,8 +111,7 @@ fun RecipeInformationSuccessScreen(
 
             ElevatedButton(
                 onClick = {
-                    addIngredients(recipeInfo.extendedIngredientResponses)
-
+                    addIngredients(recipeInfo.extendedIngredientResponses, numberOfServings)
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -134,7 +133,7 @@ fun RecipeInformationSuccessScreen(
 fun RecipeInformationSuccessScreenPreview() {
     RecipeInformationSuccessScreen(
         recipeInfo = Mocks.recipeInfoMock,
-        addIngredients = {}
+        addIngredients = {_, _ -> Unit}
     )
 
 }
@@ -144,7 +143,7 @@ fun RecipeInformationSuccessScreenPreview() {
 fun RecipeInformationSuccessScreenPreview_RO() {
     RecipeInformationSuccessScreen(
         recipeInfo = Mocks.recipeInfoMock,
-        addIngredients = {}
+        addIngredients = {_, _ -> Unit}
     )
 }
 
