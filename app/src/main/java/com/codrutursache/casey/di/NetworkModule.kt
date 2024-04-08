@@ -36,13 +36,14 @@ object NetworkModule {
             .request()
             .url
             .newBuilder()
-            .addQueryParameter("apiKey", BuildConfig.SPOONACULAR_API_KEY)
             .build()
 
         val request = it
             .request()
             .newBuilder()
             .url(url)
+            .addHeader("X-RapidAPI-Key", BuildConfig.RAPID_API_KEY)
+            .addHeader("X-RapidAPI-Host", SpoonacularService.RAPID_API_HOST)
             .build()
 
         it.proceed(request)
@@ -52,10 +53,14 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(
         @Named(SPOONACULAR_API_KEY_INTERCEPTOR_TAG)
-        apiKeyInterceptor: Interceptor
+        apiKeyInterceptor: Interceptor,
+
+        @Named(LOGGING_INTERCEPTOR_TAG)
+        loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(apiKeyInterceptor)
+            .addInterceptor(loggingInterceptor)
             .build()
 
     @Provides
@@ -68,7 +73,7 @@ object NetworkModule {
     @Singleton
     fun provideSpoonacularRetrovitInstance(moshi: Moshi, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl(SpoonacularService.BASE_URL)
+            .baseUrl(SpoonacularService.RAPID_API_URL)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
