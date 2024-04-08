@@ -30,7 +30,16 @@ android {
 
         val properties = Properties()
         properties.load(rootProject.file("local.properties").inputStream())
-        buildConfigField("String", "SPOONACULAR_API_KEY", "\"${properties.getProperty("SPOONACULAR_API_KEY")}\"")
+        buildConfigField(
+            "String",
+            "SPOONACULAR_API_KEY",
+            "\"${properties.getProperty("SPOONACULAR_API_KEY")}\""
+        )
+        buildConfigField(
+            "String",
+            "RAPID_API_KEY",
+            "\"${properties.getProperty("RAPID_API_KEY")}\""
+        )
     }
 
     buildTypes {

@@ -1,5 +1,6 @@
 package com.codrutursache.casey.presentation.recipes
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,10 +35,14 @@ class RecipesListViewModel @Inject constructor(
                     recipeListDto.value += result.data!!.results
                     offset += pageSize
                     isLoading.value = false
+
+                    Log.d("RecipesListViewModel", "getRecipes: ${recipeListDto.value}")
                 }
 
                 is Response.Failure -> {
                     isLoading.value = false
+
+                    Log.e("RecipesListViewModel", "getRecipes: ${result.e}")
                 }
 
                 is Response.Loading -> {

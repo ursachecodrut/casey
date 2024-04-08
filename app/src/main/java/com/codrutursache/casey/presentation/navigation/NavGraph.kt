@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -14,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.codrutursache.casey.data.response.ExtendedIngredientResponse
+import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.presentation.auth.AuthScreen
 import com.codrutursache.casey.presentation.auth.AuthViewModel
 import com.codrutursache.casey.presentation.profile.ProfileScreen
@@ -26,21 +26,24 @@ import com.codrutursache.casey.presentation.settings.SettingsScreen
 import com.codrutursache.casey.presentation.settings.SettingsViewModel
 import com.codrutursache.casey.presentation.shopping_list.ShoppingListScreen
 import com.codrutursache.casey.presentation.shopping_list.ShoppingListViewModel
+import com.codrutursache.casey.util.Response
 
 @Composable
 fun NavGraph(
     navController: NavHostController,
     innerPadding: PaddingValues = PaddingValues(0.dp),
 ) {
+    val navigateTo = { route: String -> navController.navigate(route) }
+    val navigateBack = { navController.navigateBack() }
+
+    // saved recipes viewModel
+    val profileViewModel = hiltViewModel<ProfileViewModel>()
+
     NavHost(
         navController = navController,
         startDestination = Route.RecipesRoute.route,
         modifier = Modifier
             .padding(innerPadding)
-            .padding(
-                horizontal = 16.dp,
-                vertical = 8.dp
-            ),
     ) {
         composable(
             route = Route.AuthRoute.route
@@ -66,6 +69,7 @@ fun NavGraph(
             val recipes by remember { recipesListViewModel.recipeListDto }
 
             RecipesListScreen(
+                navigateTo = navigateTo,
                 recipes = recipes,
                 fetchMoreRecipes = recipesListViewModel::getRecipes,
                 navigateToRecipeInformation = navController::navigateToRecipeDetails
@@ -75,8 +79,18 @@ fun NavGraph(
         composable(
             route = Route.RecipeInformationRoute.routeWithArgs,
             arguments = Route.RecipeInformationRoute.arguments
-        ) {
-            val recipeId = it.arguments?.getInt("recipeId") ?: return@composable
+        ) { stackEntry ->
+            val recipeId = stackEntry.arguments?.getInt("recipeId") ?: return@composable
+            val recipeTitle = stackEntry.arguments?.getString("title") ?: return@composable
+            val recipeImage = stackEntry.arguments?.getString("image") ?: return@composable
+            val recipeImageType = stackEntry.arguments?.getString("imageType") ?: return@composable
+            val recipe = RecipeResponse(
+                id = recipeId,
+                title = recipeTitle,
+                image = recipeImage,
+                imageType = recipeImageType,
+            )
+
             val recipeInformationViewModel = hiltViewModel<RecipeInformationViewModel>()
             val addIngredients = { ingredients: List<ExtendedIngredientResponse>,
                                    numberOfServings: Int ->
@@ -84,6 +98,15 @@ fun NavGraph(
                     ingredients,
                     numberOfServings
                 )
+            }
+            val saveRecipe = { recipeInformationViewModel.saveRecipe(recipe) }
+            val unsaveRecipe = { recipeInformationViewModel.unsaveRecipe(recipeId) }
+            val isSavedRecipe = when (val response = profileViewModel.savedRecipesIds.value) {
+                is Response.Success -> {
+                    response.data?.any { r -> r.id == recipeId }
+                }
+
+                else -> false
             }
 
             LaunchedEffect(recipeId) {
@@ -94,7 +117,12 @@ fun NavGraph(
 
             RecipeInformationScreen(
                 response = response,
-                addIngredients = addIngredients
+                addIngredients = addIngredients,
+                saveRecipe = saveRecipe,
+                unsaveRecipe = unsaveRecipe,
+                isSavedRecipe = isSavedRecipe,
+                navigateTo = navigateTo,
+                navigateBack = navigateBack,
             )
 
         }
@@ -106,7 +134,9 @@ fun NavGraph(
 
             ShoppingListScreen(
                 response = shoppingListViewModel.shoppingList.value,
-                toggleItem = shoppingListViewModel::toggleShoppingListItem
+                toggleItem = shoppingListViewModel::toggleShoppingListItem,
+                clearShoppingList = shoppingListViewModel::clearShoppingList,
+                navigateTo = navigateTo,
             )
         }
 
@@ -114,15 +144,19 @@ fun NavGraph(
         composable(
             route = Route.ProfileRoute.route
         ) {
-            val profileViewModel = hiltViewModel<ProfileViewModel>()
+            LaunchedEffect(Unit) {
+                profileViewModel.getSavedRecipesIds()
+            }
 
             val recipes by remember { profileViewModel.savedRecipesIds }
 
             ProfileScreen(
+                navigateTo = navigateTo,
                 displayName = profileViewModel.displayName,
                 photoUrl = profileViewModel.photoUrl,
                 recipes = recipes,
-                navigateToRecipeInformation = navController::navigateToRecipeDetails
+                navigateToRecipeInformation = navController::navigateToRecipeDetails,
+                navigateToSettings = navController::navigateToSettings
             )
         }
 
@@ -133,6 +167,7 @@ fun NavGraph(
             val settingsViewModel = hiltViewModel<SettingsViewModel>()
 
             SettingsScreen(
+                navigateTo = navigateTo,
                 signOutResponse = settingsViewModel.signOutResponse,
                 navigateToAuthScreen = {
                     navController.popBackStack()
@@ -169,4 +204,12 @@ fun NavHostController.navigateToRecipeDetails(
 
 fun NavHostController.navigateToAuth() {
     navigate(Route.AuthRoute.route)
+}
+
+fun NavHostController.navigateToSettings() {
+    navigate(Route.SettingsRoute.route)
+}
+
+fun NavHostController.navigateBack() {
+    popBackStack()
 }

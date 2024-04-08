@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,13 +40,14 @@ fun AuthScreen(
     signInWithIntent: (Intent?) -> Job,
     navigateToProfileScreen: () -> Unit
 ) {
-    Surface(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    Scaffold() { innerPadding ->
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxHeight()
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .fillMaxSize()
         ) {
             Button(
                 modifier = Modifier.padding(bottom = 48.dp),
@@ -59,45 +61,47 @@ fun AuthScreen(
                 )
             }
         }
-    }
 
-    val launcher = rememberLauncherForActivityResult(StartIntentSenderForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            try {
-                signInWithIntent(result.data)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
 
-    when (oneTapSignInResponse) {
-        is Response.Loading -> ProgressBar()
-        is Response.Success -> oneTapSignInResponse.data?.let { signInResult ->
-            LaunchedEffect(signInResult) {
-                val intentSenderRequest =
-                    IntentSenderRequest.Builder(signInResult.pendingIntent.intentSender).build()
-                launcher.launch(intentSenderRequest)
-            }
-        }
-
-        is Response.Failure -> LaunchedEffect(Unit) {
-            oneTapSignInResponse.e.printStackTrace()
-        }
-    }
-
-    when (signInWithIntentResponse) {
-        is Response.Loading -> ProgressBar()
-        is Response.Success -> signInWithIntentResponse.data?.let { signedIn ->
-            LaunchedEffect(signedIn) {
-                if (signedIn) {
-                    navigateToProfileScreen()
+        val launcher = rememberLauncherForActivityResult(StartIntentSenderForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                try {
+                    signInWithIntent(result.data)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
         }
 
-        is Response.Failure -> LaunchedEffect(Unit) {
-            signInWithIntentResponse.e.printStackTrace()
+        when (oneTapSignInResponse) {
+            is Response.Loading -> ProgressBar()
+            is Response.Success -> oneTapSignInResponse.data?.let { signInResult ->
+                LaunchedEffect(signInResult) {
+                    val intentSenderRequest =
+                        IntentSenderRequest.Builder(signInResult.pendingIntent.intentSender).build()
+                    launcher.launch(intentSenderRequest)
+                }
+            }
+
+            is Response.Failure -> LaunchedEffect(Unit) {
+                oneTapSignInResponse.e.printStackTrace()
+            }
+        }
+
+        when (signInWithIntentResponse) {
+            is Response.Loading -> ProgressBar()
+            is Response.Success -> signInWithIntentResponse.data?.let { signedIn ->
+                LaunchedEffect(signedIn) {
+                    if (signedIn) {
+                        navigateToProfileScreen()
+                    }
+                }
+            }
+
+            is Response.Failure -> LaunchedEffect(Unit) {
+                signInWithIntentResponse.e.printStackTrace()
+            }
         }
     }
+
 }

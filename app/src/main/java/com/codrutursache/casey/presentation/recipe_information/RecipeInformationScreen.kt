@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,35 +30,71 @@ import coil.request.ImageRequest
 import com.codrutursache.casey.R
 import com.codrutursache.casey.data.response.ExtendedIngredientResponse
 import com.codrutursache.casey.data.response.RecipeInformationResponse
+import com.codrutursache.casey.presentation.base.BottomBar
+import com.codrutursache.casey.presentation.base.RecipeInformationTopBar
+import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.recipe_information.components.RecipeInfoTabs
 import com.codrutursache.casey.presentation.recipe_information.components.Servings
 import com.codrutursache.casey.presentation.theme.Typography
 import com.codrutursache.casey.util.Response
 import com.codrutursache.casey.util.mock.Mocks
+import kotlinx.coroutines.Job
 
 @Composable
 fun RecipeInformationScreen(
     response: Response<RecipeInformationResponse>,
-    addIngredients: (List<ExtendedIngredientResponse>, Int) -> Unit
+    addIngredients: (List<ExtendedIngredientResponse>, Int) -> Unit,
+    saveRecipe: () -> Job,
+    unsaveRecipe: () -> Job,
+    isSavedRecipe: Boolean?,
+    navigateTo: (String) -> Unit,
+    navigateBack: () -> Unit,
 ) {
 
-    when (response) {
-        is Response.Loading -> {
-            Text(text = "Loading...")
-        }
 
-        is Response.Success -> {
-            response.data?.let {
-                RecipeInformationSuccessScreen(
-                    recipeInfo = it,
-                    addIngredients = addIngredients
-                )
+    Scaffold(
+        topBar = {
+            RecipeInformationTopBar(
+                goBack = navigateBack,
+                isSavedRecipe = isSavedRecipe,
+                saveRecipe = { saveRecipe() },
+                unsaveRecipe = { unsaveRecipe() },
+            )
+        },
+        bottomBar = {
+            BottomBar(
+                currentRoute = Route.RecipeInformationRoute.route,
+                navigateTo = navigateTo
+            )
+        },
+    ) { innerPadding ->
+
+        Surface(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+
+        ) {
+            when (response) {
+                is Response.Loading -> {
+                    Text(text = "Loading...")
+                }
+
+                is Response.Success -> {
+                    response.data?.let {
+                        RecipeInformationSuccessScreen(
+                            recipeInfo = it,
+                            addIngredients = addIngredients
+                        )
+                    }
+                }
+
+                is Response.Failure -> {
+                    Text(text = stringResource(R.string.something_went_wrong))
+                }
             }
         }
 
-        is Response.Failure -> {
-            Text(text = stringResource(R.string.something_went_wrong))
-        }
     }
 }
 
@@ -133,7 +170,7 @@ fun RecipeInformationSuccessScreen(
 fun RecipeInformationSuccessScreenPreview() {
     RecipeInformationSuccessScreen(
         recipeInfo = Mocks.recipeInfoMock,
-        addIngredients = {_, _ -> Unit}
+        addIngredients = { _, _ -> }
     )
 
 }
@@ -143,7 +180,7 @@ fun RecipeInformationSuccessScreenPreview() {
 fun RecipeInformationSuccessScreenPreview_RO() {
     RecipeInformationSuccessScreen(
         recipeInfo = Mocks.recipeInfoMock,
-        addIngredients = {_, _ -> Unit}
+        addIngredients = { _, _ -> }
     )
 }
 

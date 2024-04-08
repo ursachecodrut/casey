@@ -12,4 +12,6 @@ interface RecipesRepository {
     suspend fun getRecipeInformation(id: Int): Response<RecipeInformationResponse>
 
     suspend fun saveRecipe(recipeShort: RecipeResponse): Response<Boolean>
+
+    suspend fun unsaveRecipe(recipeId: Int): Response<Boolean>
 }

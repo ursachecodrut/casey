@@ -87,7 +87,7 @@ data class RecipeInformationResponse(
     val spoonacularScore: Double,
 
     @Json(name = "spoonacularSourceUrl")
-    val spoonacularSourceUrl: String,
+    val spoonacularSourceUrl: String?,
 
     @Json(name = "summary")
     val summary: String,

@@ -1,10 +1,10 @@
-package com.codrutursache.casey.presentation.base.topbar
+package com.codrutursache.casey.presentation.base
 
-import android.os.Bundle
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DropdownMenu
@@ -19,58 +19,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.codrutursache.casey.R
-import com.codrutursache.casey.data.response.RecipeResponse
-import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.theme.Typography
 
-@Composable
-fun TopBar(
-    currentRoute: String?,
-    arguments: Bundle?,
-    goBack: () -> Unit,
-    openProfileBottomSheet: () -> Unit,
-    saveRecipe: (RecipeResponse) -> Unit,
-) {
-    when (currentRoute) {
-        Route.ProfileRoute.route -> {
-            ProfileTopBar(
-                openProfileBottomSheet = openProfileBottomSheet,
-            )
-        }
-
-        Route.RecipeInformationRoute.routeWithArgs -> {
-            val recipeId = arguments?.getInt("recipeId")
-            val recipeTitle = arguments?.getString("title")
-            val recipeImage = arguments?.getString("image")
-            val recipeImageType = arguments?.getString("imageType")
-            val recipe = RecipeResponse(
-                id = recipeId ?: 0,
-                title = recipeTitle ?: "",
-                image = recipeImage ?: "",
-                imageType = recipeImageType ?: "",
-            )
-
-
-            RecipeInformationTopBar(
-                goBack = goBack,
-                saveRecipe = {
-                    saveRecipe(recipe)
-                },
-            )
-        }
-
-        Route.RecipesRoute.route -> {
-            RecipesTopBar()
-        }
-
-        Route.ShoppingListRoute.route -> {
-            ShoppingListTopBar()
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,8 +43,11 @@ fun RecipesTopBar() {
 @Composable
 fun RecipeInformationTopBar(
     goBack: () -> Unit,
+    isSavedRecipe: Boolean? = false,
     saveRecipe: () -> Unit,
+    unsaveRecipe: () -> Unit,
 ) {
+    var isSaved by remember { mutableStateOf(isSavedRecipe ?: false) }
 
     TopAppBar(
         title = {},
@@ -103,9 +60,15 @@ fun RecipeInformationTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { saveRecipe() }) {
+            val icon: ImageVector =
+                if (isSaved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder
+            val onClickAction = if (isSaved) unsaveRecipe else saveRecipe
+            IconButton(onClick = {
+                onClickAction()
+                isSaved = !isSaved
+            }) {
                 Icon(
-                    Icons.Filled.FavoriteBorder,
+                    imageVector = icon,
                     contentDescription = stringResource(R.string.favorite)
                 )
             }
@@ -116,6 +79,7 @@ fun RecipeInformationTopBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShoppingListTopBar(
+    clearShoppingList: () -> Unit
 ) {
 
     var isMenuOpen by remember { mutableStateOf(false) }
@@ -149,7 +113,7 @@ fun ShoppingListTopBar(
                     )
                     DropdownMenuItem(
                         text = { Text(text = stringResource(R.string.clear)) },
-                        onClick = { },
+                        onClick = { clearShoppingList() },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Filled.Clear,
@@ -206,6 +170,7 @@ fun RecipeInformationTopBarPreview() {
     RecipeInformationTopBar(
         goBack = {},
         saveRecipe = {},
+        unsaveRecipe = {},
     )
 }
 
@@ -215,20 +180,25 @@ fun RecipeInformationTopBarPreviewRo() {
     RecipeInformationTopBar(
         goBack = {},
         saveRecipe = {},
+        unsaveRecipe = {},
     )
 }
 
 @Preview(showBackground = true, name = "[EN] Shopping List Top Bar preview", locale = "en")
 @Composable
 fun ShoppingListTopBarPreview() {
-    ShoppingListTopBar()
+    ShoppingListTopBar(
+        clearShoppingList = {}
+    )
 }
 
 
 @Preview(name = "[EN] Shopping List Top Bar preview", locale = "en")
 @Composable
 fun ShoppingListTopBarPreviewRo() {
-    ShoppingListTopBar()
+    ShoppingListTopBar(
+        clearShoppingList = {}
+    )
 }
 
 @Preview(name = "[EN] Profile Top Bar preview", locale = "en")

@@ -1,9 +1,9 @@
 package com.codrutursache.casey.data.repository
 
+import com.codrutursache.casey.data.data_source.SpoonacularService
 import com.codrutursache.casey.data.response.RecipeInformationResponse
 import com.codrutursache.casey.data.response.RecipeListResponse
 import com.codrutursache.casey.data.response.RecipeResponse
-import com.codrutursache.casey.data.data_source.SpoonacularService
 import com.codrutursache.casey.domain.repository.ProfileRepository
 import com.codrutursache.casey.domain.repository.RecipesRepository
 import com.codrutursache.casey.util.Constants.SAVED_RECIPES_FIELD
@@ -47,6 +47,21 @@ class RecipesRepositoryImpl @Inject constructor(
                 )
             )
         ).await()
+        Response.Success(true)
+    } catch (e: Exception) {
+        Response.Failure(e)
+    }
+
+
+    override suspend fun unsaveRecipe(recipeId: Int): Response<Boolean> = try {
+        val docRef = firestore.collection(USERS_COLLECTION).document(profileRepository.userId ?: "")
+        val doc = docRef.get().await()
+        val savedRecipes = doc.get(SAVED_RECIPES_FIELD) as MutableList<Map<String, Any>>
+        val recipeToRemove = savedRecipes.find { it["id"] == recipeId.toLong() }
+        if (recipeToRemove != null) {
+            savedRecipes.remove(recipeToRemove)
+            docRef.update(SAVED_RECIPES_FIELD, savedRecipes).await()
+        }
         Response.Success(true)
     } catch (e: Exception) {
         Response.Failure(e)

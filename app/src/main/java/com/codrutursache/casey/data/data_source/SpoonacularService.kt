@@ -42,6 +42,8 @@ interface SpoonacularService {
         }
 
         const val BASE_URL = "https://api.spoonacular.com"
+        const val RAPID_API_HOST = "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+        const val RAPID_API_URL = "https://$RAPID_API_HOST"
         const val CDN_URL = "https://spoonacular.com/cdn"
 
         inline fun getFromCdn(item: CdnItem, size: ImageSize, name: String) =
