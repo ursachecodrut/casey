@@ -17,6 +17,7 @@ import javax.inject.Inject
 class ShoppingListViewModel @Inject constructor(
     private val getShoppingListUseCase: GetShoppingListUseCase,
     private val toggleShoppingListItemUseCase: ToggleShoppingListItemUseCase,
+    private val clearShoppingListUseCase: ClearShoppingListUseCase,
 ) : ViewModel() {
 
 
@@ -46,6 +47,7 @@ class ShoppingListViewModel @Inject constructor(
     fun clearShoppingList() {
         viewModelScope.launch {
             shoppingList.value = Response.Loading
+            clearShoppingListUseCase()
             shoppingList.value = Response.Success(emptyList())
         }
     }

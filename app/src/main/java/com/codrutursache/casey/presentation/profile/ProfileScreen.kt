@@ -3,7 +3,6 @@ package com.codrutursache.casey.presentation.profile
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,7 +10,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -33,7 +31,7 @@ import com.codrutursache.casey.R
 import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.presentation.base.BottomBar
 import com.codrutursache.casey.presentation.base.InfiniteGridScroll
-import com.codrutursache.casey.presentation.base.topbar.ProfileTopBar
+import com.codrutursache.casey.presentation.base.ProfileTopBar
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.profile.components.ProfileBottomSheet
 import com.codrutursache.casey.presentation.recipes.components.RecipeCard

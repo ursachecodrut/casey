@@ -1,12 +1,9 @@
 package com.codrutursache.casey.presentation.settings
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,7 +14,7 @@ import com.codrutursache.casey.R
 import com.codrutursache.casey.domain.repository.SignOutResponse
 import com.codrutursache.casey.presentation.base.BottomBar
 import com.codrutursache.casey.presentation.base.ProgressBar
-import com.codrutursache.casey.presentation.base.topbar.ProfileTopBar
+import com.codrutursache.casey.presentation.base.ProfileTopBar
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.util.Response
 import kotlinx.coroutines.Job

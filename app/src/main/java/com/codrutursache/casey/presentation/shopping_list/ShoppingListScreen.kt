@@ -23,8 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.codrutursache.casey.domain.model.ShoppingItemEntity
 import com.codrutursache.casey.presentation.base.BottomBar
 import com.codrutursache.casey.presentation.base.ProgressBar
-import com.codrutursache.casey.presentation.base.topbar.RecipesTopBar
-import com.codrutursache.casey.presentation.base.topbar.ShoppingListTopBar
+import com.codrutursache.casey.presentation.base.ShoppingListTopBar
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.recipe_information.components.formatAmountValue
 import com.codrutursache.casey.util.Response
@@ -34,9 +33,14 @@ fun ShoppingListScreen(
     navigateTo: (String) -> Unit,
     response: Response<List<ShoppingItemEntity>>,
     toggleItem: (Int, Boolean) -> Unit,
+    clearShoppingList: () -> Unit,
 ) {
     Scaffold(
-        topBar = { ShoppingListTopBar() },
+        topBar = {
+            ShoppingListTopBar(
+                clearShoppingList = clearShoppingList,
+            )
+        },
         bottomBar = {
             BottomBar(
                 currentRoute = Route.ShoppingListRoute.route,

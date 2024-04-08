@@ -135,6 +135,7 @@ fun NavGraph(
             ShoppingListScreen(
                 response = shoppingListViewModel.shoppingList.value,
                 toggleItem = shoppingListViewModel::toggleShoppingListItem,
+                clearShoppingList = shoppingListViewModel::clearShoppingList,
                 navigateTo = navigateTo,
             )
         }

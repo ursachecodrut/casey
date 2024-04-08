@@ -1,4 +1,4 @@
-package com.codrutursache.casey.presentation.base.topbar
+package com.codrutursache.casey.presentation.base
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -25,43 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.codrutursache.casey.R
 import com.codrutursache.casey.presentation.theme.Typography
 
-//@Composable
-//fun TopBar(
-//    currentRoute: String?,
-//    arguments: Bundle?,
-//    goBack: () -> Unit,
-//    openProfileBottomSheet: () -> Unit,
-//    saveRecipe: (RecipeResponse) -> Unit,
-//) {
-//    when (currentRoute) {
-//        Route.ProfileRoute.route -> {
-//            ProfileTopBar(
-//                openProfileBottomSheet = openProfileBottomSheet,
-//            )
-//        }
-//
-//        Route.RecipeInformationRoute.routeWithArgs -> {
-//
-//
-//
-//            RecipeInformationTopBar(
-//                goBack = goBack,
-//                saveRecipe = {
-//                    saveRecipe(recipe)
-//                },
-//                unsaveRecipe = {}
-//            )
-//        }
-//
-//        Route.RecipesRoute.route -> {
-//            RecipesTopBar()
-//        }
-//
-//        Route.ShoppingListRoute.route -> {
-//            ShoppingListTopBar()
-//        }
-//    }
-//}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -116,6 +79,7 @@ fun RecipeInformationTopBar(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShoppingListTopBar(
+    clearShoppingList: () -> Unit
 ) {
 
     var isMenuOpen by remember { mutableStateOf(false) }
@@ -149,7 +113,7 @@ fun ShoppingListTopBar(
                     )
                     DropdownMenuItem(
                         text = { Text(text = stringResource(R.string.clear)) },
-                        onClick = { },
+                        onClick = { clearShoppingList() },
                         leadingIcon = {
                             Icon(
                                 imageVector = Icons.Filled.Clear,
@@ -223,14 +187,18 @@ fun RecipeInformationTopBarPreviewRo() {
 @Preview(showBackground = true, name = "[EN] Shopping List Top Bar preview", locale = "en")
 @Composable
 fun ShoppingListTopBarPreview() {
-    ShoppingListTopBar()
+    ShoppingListTopBar(
+        clearShoppingList = {}
+    )
 }
 
 
 @Preview(name = "[EN] Shopping List Top Bar preview", locale = "en")
 @Composable
 fun ShoppingListTopBarPreviewRo() {
-    ShoppingListTopBar()
+    ShoppingListTopBar(
+        clearShoppingList = {}
+    )
 }
 
 @Preview(name = "[EN] Profile Top Bar preview", locale = "en")
