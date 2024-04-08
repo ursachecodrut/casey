@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -82,6 +81,16 @@ fun NavGraph(
             arguments = Route.RecipeInformationRoute.arguments
         ) { stackEntry ->
             val recipeId = stackEntry.arguments?.getInt("recipeId") ?: return@composable
+            val recipeTitle = stackEntry.arguments?.getString("title") ?: return@composable
+            val recipeImage = stackEntry.arguments?.getString("image") ?: return@composable
+            val recipeImageType = stackEntry.arguments?.getString("imageType") ?: return@composable
+            val recipe = RecipeResponse(
+                id = recipeId,
+                title = recipeTitle,
+                image = recipeImage,
+                imageType = recipeImageType,
+            )
+
             val recipeInformationViewModel = hiltViewModel<RecipeInformationViewModel>()
             val addIngredients = { ingredients: List<ExtendedIngredientResponse>,
                                    numberOfServings: Int ->
@@ -90,8 +99,8 @@ fun NavGraph(
                     numberOfServings
                 )
             }
-            val saveRecipe =
-                { recipe: RecipeResponse -> recipeInformationViewModel.saveRecipe(recipe) }
+            val saveRecipe = { recipeInformationViewModel.saveRecipe(recipe) }
+            val unsaveRecipe = { recipeInformationViewModel.unsaveRecipe(recipeId) }
             val isSavedRecipe = when (val response = profileViewModel.savedRecipesIds.value) {
                 is Response.Success -> {
                     response.data?.any { r -> r.id == recipeId }
@@ -110,9 +119,10 @@ fun NavGraph(
                 response = response,
                 addIngredients = addIngredients,
                 saveRecipe = saveRecipe,
+                unsaveRecipe = unsaveRecipe,
                 isSavedRecipe = isSavedRecipe,
                 navigateTo = navigateTo,
-                navigateBack = navigateBack
+                navigateBack = navigateBack,
             )
 
         }
@@ -133,6 +143,9 @@ fun NavGraph(
         composable(
             route = Route.ProfileRoute.route
         ) {
+            LaunchedEffect(Unit) {
+                profileViewModel.getSavedRecipesIds()
+            }
 
             val recipes by remember { profileViewModel.savedRecipesIds }
 

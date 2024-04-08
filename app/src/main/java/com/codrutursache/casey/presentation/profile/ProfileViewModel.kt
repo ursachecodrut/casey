@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codrutursache.casey.data.response.RecipeResponse
-import com.codrutursache.casey.domain.repository.ProfileRepository
 import com.codrutursache.casey.domain.usecases.GetProfileDetailsUseCase
 import com.codrutursache.casey.domain.usecases.GetSavedRecipesUseCase
 import com.codrutursache.casey.util.Response
@@ -22,12 +21,8 @@ class ProfileViewModel @Inject constructor(
     var savedRecipesIds = mutableStateOf<Response<List<RecipeResponse>>>(Response.Success(null))
         private set
 
-    init {
-        getSavedRecipesIds()
-    }
 
-
-    private fun getSavedRecipesIds() {
+    fun getSavedRecipesIds() {
         viewModelScope.launch {
             savedRecipesIds.value = Response.Loading
             savedRecipesIds.value = getSavedRecipesUseCase()

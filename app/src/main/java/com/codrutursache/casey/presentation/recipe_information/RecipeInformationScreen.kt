@@ -30,7 +30,6 @@ import coil.request.ImageRequest
 import com.codrutursache.casey.R
 import com.codrutursache.casey.data.response.ExtendedIngredientResponse
 import com.codrutursache.casey.data.response.RecipeInformationResponse
-import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.presentation.base.BottomBar
 import com.codrutursache.casey.presentation.base.topbar.RecipeInformationTopBar
 import com.codrutursache.casey.presentation.navigation.Route
@@ -45,17 +44,21 @@ import kotlinx.coroutines.Job
 fun RecipeInformationScreen(
     response: Response<RecipeInformationResponse>,
     addIngredients: (List<ExtendedIngredientResponse>, Int) -> Unit,
-    saveRecipe: (RecipeResponse) -> Job,
+    saveRecipe: () -> Job,
+    unsaveRecipe: () -> Job,
     isSavedRecipe: Boolean?,
     navigateTo: (String) -> Unit,
     navigateBack: () -> Unit,
 ) {
+
+
     Scaffold(
         topBar = {
             RecipeInformationTopBar(
                 goBack = navigateBack,
                 isSavedRecipe = isSavedRecipe,
-                saveRecipe = {}
+                saveRecipe = { saveRecipe() },
+                unsaveRecipe = { unsaveRecipe() },
             )
         },
         bottomBar = {
