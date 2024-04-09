@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.domain.usecases.GetProfileDetailsUseCase
 import com.codrutursache.casey.domain.usecases.GetSavedRecipesUseCase
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,13 +18,13 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
     val displayName get() = getProfileDetailsUseCase().displayName
     val photoUrl get() = getProfileDetailsUseCase().photoUrl
-    var savedRecipesIds = mutableStateOf<Response<List<RecipeResponse>>>(Response.Success(null))
+    var savedRecipesIds = mutableStateOf<Resource<List<RecipeResponse>>>(Resource.Success(null))
         private set
 
 
     fun getSavedRecipesIds() {
         viewModelScope.launch {
-            savedRecipesIds.value = Response.Loading
+            savedRecipesIds.value = Resource.Loading
             savedRecipesIds.value = getSavedRecipesUseCase()
         }
     }

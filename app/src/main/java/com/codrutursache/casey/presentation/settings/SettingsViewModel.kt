@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codrutursache.casey.domain.repository.SignOutResponse
 import com.codrutursache.casey.domain.usecases.SignOutUseCase
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,12 +17,12 @@ class SettingsViewModel @Inject constructor(
     private val signOutUseCase: SignOutUseCase,
 ) : ViewModel() {
 
-    var signOutResponse by mutableStateOf<SignOutResponse>(Response.Success(false))
+    var signOutResource by mutableStateOf<SignOutResponse>(Resource.Success(false))
 //    var revokeAccessResponse by mutableStateOf<RevokeAccessResponse>(Response.Success(false))
 
     fun signOut() = viewModelScope.launch {
-        signOutResponse = Response.Loading
-        signOutResponse = signOutUseCase()
+        signOutResource = Resource.Loading
+        signOutResource = signOutUseCase()
     }
 
 //    fun revokeAccess() = viewModelScope.launch {

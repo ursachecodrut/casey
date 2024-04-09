@@ -36,13 +36,13 @@ import com.codrutursache.casey.presentation.recipe_information.components.Recipe
 import com.codrutursache.casey.presentation.recipe_information.components.RecipeInformationTopBar
 import com.codrutursache.casey.presentation.recipe_information.components.Servings
 import com.codrutursache.casey.presentation.theme.Typography
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 import com.codrutursache.casey.util.mock.Mocks
 import kotlinx.coroutines.Job
 
 @Composable
 fun RecipeInformationScreen(
-    response: Response<RecipeInformationResponse>,
+    resource: Resource<RecipeInformationResponse>,
     addIngredients: (List<ExtendedIngredientResponse>, Int) -> Unit,
     saveRecipe: () -> Job,
     unsaveRecipe: () -> Job,
@@ -75,13 +75,13 @@ fun RecipeInformationScreen(
                 .padding(horizontal = 16.dp, vertical = 8.dp)
 
         ) {
-            when (response) {
-                is Response.Loading -> {
+            when (resource) {
+                is Resource.Loading -> {
                     Text(text = "Loading...")
                 }
 
-                is Response.Success -> {
-                    response.data?.let {
+                is Resource.Success -> {
+                    resource.data?.let {
                         RecipeInformationSuccessScreen(
                             recipeInfo = it,
                             addIngredients = addIngredients
@@ -89,7 +89,7 @@ fun RecipeInformationScreen(
                     }
                 }
 
-                is Response.Failure -> {
+                is Resource.Failure -> {
                     Text(text = stringResource(R.string.something_went_wrong))
                 }
             }

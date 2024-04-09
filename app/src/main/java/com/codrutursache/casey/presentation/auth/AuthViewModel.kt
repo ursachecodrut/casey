@@ -11,7 +11,7 @@ import com.codrutursache.casey.domain.repository.OneTapSignInResponse
 import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
 import com.codrutursache.casey.domain.usecases.SignInUseCase
 import com.codrutursache.casey.presentation.navigation.navigateToAuth
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,19 +22,19 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
     private val isUserAuthenticated get() = signInUseCase.isAuthenticated()
 
-    var oneTapSignInResponse by mutableStateOf<OneTapSignInResponse>(Response.Success(null))
+    var oneTapSignInResource by mutableStateOf<OneTapSignInResponse>(Resource.Success(null))
         private set
-    var signInWithIntentResponse by mutableStateOf<SignInWithIntentResponse>(Response.Success(false))
+    var signInWithIntentResource by mutableStateOf<SignInWithIntentResponse>(Resource.Success(false))
         private set
 
     fun oneTapSignIn() = viewModelScope.launch {
-        oneTapSignInResponse = Response.Loading
-        oneTapSignInResponse = signInUseCase.googleOneTapSignIn()
+        oneTapSignInResource = Resource.Loading
+        oneTapSignInResource = signInUseCase.googleOneTapSignIn()
     }
 
     fun signInWithIntent(intent: Intent?) = viewModelScope.launch {
-        oneTapSignInResponse = Response.Loading
-        signInWithIntentResponse = signInUseCase.signInWithIntent(intent ?: return@launch)
+        oneTapSignInResource = Resource.Loading
+        signInWithIntentResource = signInUseCase.signInWithIntent(intent ?: return@launch)
     }
 
     fun checkAuth(navController: NavHostController) {

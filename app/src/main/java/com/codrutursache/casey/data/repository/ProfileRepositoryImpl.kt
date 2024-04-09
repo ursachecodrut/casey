@@ -5,8 +5,8 @@ import com.codrutursache.casey.data.model.User
 import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.domain.model.UserDetails
 import com.codrutursache.casey.domain.repository.ProfileRepository
-import com.codrutursache.casey.util.Constants.USERS_COLLECTION
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.Constants.USERS_COLLECTION
+import com.codrutursache.casey.domain.model.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
@@ -25,7 +25,7 @@ class ProfileRepositoryImpl @Inject constructor(
         )
 
 
-    override suspend fun getSavedRecipes(): Response<List<RecipeResponse>> = try {
+    override suspend fun getSavedRecipes(): Resource<List<RecipeResponse>> = try {
         val recipe = firestore
             .collection(USERS_COLLECTION)
             .document(userId ?: "")
@@ -33,10 +33,10 @@ class ProfileRepositoryImpl @Inject constructor(
             .await()
             .toObject<User>()
             ?.savedRecipes
-        Response.Success(recipe)
+        Resource.Success(recipe)
     } catch (e: Exception) {
         Log.e("ProfileRepositoryImpl", "getSavedRecipes: $e")
-        Response.Failure(e)
+        Resource.Failure(e)
     }
 
 

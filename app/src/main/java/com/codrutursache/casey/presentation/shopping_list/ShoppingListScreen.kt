@@ -26,12 +26,12 @@ import com.codrutursache.casey.presentation.components.ProgressBar
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.recipe_information.components.formatAmountValue
 import com.codrutursache.casey.presentation.shopping_list.components.ShoppingListTopBar
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 
 @Composable
 fun ShoppingListScreen(
     navigateTo: (String) -> Unit,
-    response: Response<List<ShoppingItemEntity>>,
+    resource: Resource<List<ShoppingItemEntity>>,
     toggleItem: (Int, Boolean) -> Unit,
     clearShoppingList: () -> Unit,
 ) {
@@ -53,20 +53,20 @@ fun ShoppingListScreen(
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
-            when (response) {
-                is Response.Loading -> {
+            when (resource) {
+                is Resource.Loading -> {
                     ProgressBar()
                 }
 
-                is Response.Success -> {
+                is Resource.Success -> {
                     ShoppingListScreenSuccess(
-                        response.data!!,
+                        resource.data!!,
                         toggleItem = toggleItem
                     )
                 }
 
-                is Response.Failure -> {
-                    Text(text = response.e.toString())
+                is Resource.Failure -> {
+                    Text(text = resource.e.toString())
                 }
             }
         }

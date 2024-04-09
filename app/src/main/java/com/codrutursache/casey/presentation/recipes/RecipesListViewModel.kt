@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.domain.usecases.GetRecipesUseCase
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,7 +31,7 @@ class RecipesListViewModel @Inject constructor(
     fun getRecipes() {
         viewModelScope.launch {
             when (val result = getRecipesUseCase(number = pageSize, offset = offset)) {
-                is Response.Success -> {
+                is Resource.Success -> {
                     recipeListDto.value += result.data!!.results
                     offset += pageSize
                     isLoading.value = false
@@ -39,13 +39,13 @@ class RecipesListViewModel @Inject constructor(
                     Log.d("RecipesListViewModel", "getRecipes: ${recipeListDto.value}")
                 }
 
-                is Response.Failure -> {
+                is Resource.Failure -> {
                     isLoading.value = false
 
                     Log.e("RecipesListViewModel", "getRecipes: ${result.e}")
                 }
 
-                is Response.Loading -> {
+                is Resource.Loading -> {
                     isLoading.value = true
                 }
             }

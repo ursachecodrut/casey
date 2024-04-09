@@ -24,7 +24,7 @@ import com.codrutursache.casey.R
 import com.codrutursache.casey.domain.repository.OneTapSignInResponse
 import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
 import com.codrutursache.casey.presentation.components.ProgressBar
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 import kotlinx.coroutines.Job
 
 @Composable
@@ -69,8 +69,8 @@ fun AuthScreen(
         }
 
         when (oneTapSignInResponse) {
-            is Response.Loading -> ProgressBar()
-            is Response.Success -> oneTapSignInResponse.data?.let { signInResult ->
+            is Resource.Loading -> ProgressBar()
+            is Resource.Success -> oneTapSignInResponse.data?.let { signInResult ->
                 LaunchedEffect(signInResult) {
                     val intentSenderRequest =
                         IntentSenderRequest.Builder(signInResult.pendingIntent.intentSender).build()
@@ -78,14 +78,14 @@ fun AuthScreen(
                 }
             }
 
-            is Response.Failure -> LaunchedEffect(Unit) {
+            is Resource.Failure -> LaunchedEffect(Unit) {
                 oneTapSignInResponse.e.printStackTrace()
             }
         }
 
         when (signInWithIntentResponse) {
-            is Response.Loading -> ProgressBar()
-            is Response.Success -> signInWithIntentResponse.data?.let { signedIn ->
+            is Resource.Loading -> ProgressBar()
+            is Resource.Success -> signInWithIntentResponse.data?.let { signedIn ->
                 LaunchedEffect(signedIn) {
                     if (signedIn) {
                         navigateToProfileScreen()
@@ -93,7 +93,7 @@ fun AuthScreen(
                 }
             }
 
-            is Response.Failure -> LaunchedEffect(Unit) {
+            is Resource.Failure -> LaunchedEffect(Unit) {
                 signInWithIntentResponse.e.printStackTrace()
             }
         }

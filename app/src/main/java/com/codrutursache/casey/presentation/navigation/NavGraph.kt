@@ -26,7 +26,7 @@ import com.codrutursache.casey.presentation.settings.SettingsScreen
 import com.codrutursache.casey.presentation.settings.SettingsViewModel
 import com.codrutursache.casey.presentation.shopping_list.ShoppingListScreen
 import com.codrutursache.casey.presentation.shopping_list.ShoppingListViewModel
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 
 @Composable
 fun NavGraph(
@@ -51,8 +51,8 @@ fun NavGraph(
             val authViewModel = hiltViewModel<AuthViewModel>()
 
             AuthScreen(
-                signInWithIntentResponse = authViewModel.signInWithIntentResponse,
-                oneTapSignInResponse = authViewModel.oneTapSignInResponse,
+                signInWithIntentResponse = authViewModel.signInWithIntentResource,
+                oneTapSignInResponse = authViewModel.oneTapSignInResource,
                 oneTapSignIn = authViewModel::oneTapSignIn,
                 signInWithIntent = authViewModel::signInWithIntent,
                 navigateToProfileScreen = {
@@ -102,7 +102,7 @@ fun NavGraph(
             val saveRecipe = { recipeInformationViewModel.saveRecipe(recipe) }
             val unsaveRecipe = { recipeInformationViewModel.unsaveRecipe(recipeId) }
             val isSavedRecipe = when (val response = profileViewModel.savedRecipesIds.value) {
-                is Response.Success -> {
+                is Resource.Success -> {
                     response.data?.any { r -> r.id == recipeId }
                 }
 
@@ -116,7 +116,7 @@ fun NavGraph(
             val response by remember { recipeInformationViewModel.recipeInformation }
 
             RecipeInformationScreen(
-                response = response,
+                resource = response,
                 addIngredients = addIngredients,
                 saveRecipe = saveRecipe,
                 unsaveRecipe = unsaveRecipe,
@@ -133,7 +133,7 @@ fun NavGraph(
             val shoppingListViewModel = hiltViewModel<ShoppingListViewModel>()
 
             ShoppingListScreen(
-                response = shoppingListViewModel.shoppingList.value,
+                resource = shoppingListViewModel.shoppingList.value,
                 toggleItem = shoppingListViewModel::toggleShoppingListItem,
                 clearShoppingList = shoppingListViewModel::clearShoppingList,
                 navigateTo = navigateTo,
@@ -168,7 +168,7 @@ fun NavGraph(
 
             SettingsScreen(
                 navigateTo = navigateTo,
-                signOutResponse = settingsViewModel.signOutResponse,
+                signOutResponse = settingsViewModel.signOutResource,
                 navigateToAuthScreen = {
                     navController.popBackStack()
                     navController.navigate(Route.AuthRoute.route)

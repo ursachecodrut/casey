@@ -4,19 +4,19 @@ import android.util.Log
 import com.codrutursache.casey.data.data_source.ShoppingListDao
 import com.codrutursache.casey.domain.model.ShoppingItemEntity
 import com.codrutursache.casey.domain.repository.ShoppingListRepository
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 import javax.inject.Inject
 
 class ShoppingListRepositoryImpl @Inject constructor(
     private val shoppingListDao: ShoppingListDao
 ) : ShoppingListRepository {
-    override suspend fun getShoppingList(): Response<List<ShoppingItemEntity>> =
+    override suspend fun getShoppingList(): Resource<List<ShoppingItemEntity>> =
         try {
             val shoppingList = shoppingListDao.getAllItems()
-            Response.Success(shoppingList)
+            Resource.Success(shoppingList)
         } catch (e: Exception) {
             Log.e("ShoppingListRepositoryImpl", "getShoppingList: $e")
-            Response.Failure(e)
+            Resource.Failure(e)
         }
 
     override suspend fun insertShoppingItem(shoppingItem: ShoppingItemEntity) {

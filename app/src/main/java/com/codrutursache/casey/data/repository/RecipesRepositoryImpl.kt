@@ -7,9 +7,9 @@ import com.codrutursache.casey.data.response.RecipeListResponse
 import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.domain.repository.ProfileRepository
 import com.codrutursache.casey.domain.repository.RecipesRepository
-import com.codrutursache.casey.util.Constants.SAVED_RECIPES_FIELD
-import com.codrutursache.casey.util.Constants.USERS_COLLECTION
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.Constants.SAVED_RECIPES_FIELD
+import com.codrutursache.casey.Constants.USERS_COLLECTION
+import com.codrutursache.casey.domain.model.Resource
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -20,25 +20,25 @@ class RecipesRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val profileRepository: ProfileRepository,
 ) : RecipesRepository {
-    override suspend fun getRecipes(number: Int, offset: Int): Response<RecipeListResponse> =
+    override suspend fun getRecipes(number: Int, offset: Int): Resource<RecipeListResponse> =
         try {
             val response = api.complexSearch(number = number, offset = offset)
-            Response.Success(response)
+            Resource.Success(response)
         } catch (e: Exception) {
             Log.e("RecipesRepositoryImpl", "getRecipes: $e")
-            Response.Failure(e)
+            Resource.Failure(e)
         }
 
-    override suspend fun getRecipeInformation(id: Int): Response<RecipeInformationResponse> =
+    override suspend fun getRecipeInformation(id: Int): Resource<RecipeInformationResponse> =
         try {
             val response = api.getRecipeInformation(id)
-            Response.Success(response)
+            Resource.Success(response)
         } catch (e: Exception) {
             Log.e("RecipesRepositoryImpl", "getRecipeInformation: $e")
-            Response.Failure(e)
+            Resource.Failure(e)
         }
 
-    override suspend fun saveRecipe(recipeShort: RecipeResponse): Response<Boolean> = try {
+    override suspend fun saveRecipe(recipeShort: RecipeResponse): Resource<Boolean> = try {
         val docRef = firestore.collection(USERS_COLLECTION).document(profileRepository.userId ?: "")
         docRef.update(
             SAVED_RECIPES_FIELD, FieldValue.arrayUnion(
@@ -50,14 +50,14 @@ class RecipesRepositoryImpl @Inject constructor(
                 )
             )
         ).await()
-        Response.Success(true)
+        Resource.Success(true)
     } catch (e: Exception) {
         Log.e("RecipesRepositoryImpl", "saveRecipe: $e")
-        Response.Failure(e)
+        Resource.Failure(e)
     }
 
 
-    override suspend fun unsaveRecipe(recipeId: Int): Response<Boolean> = try {
+    override suspend fun unsaveRecipe(recipeId: Int): Resource<Boolean> = try {
         val docRef = firestore.collection(USERS_COLLECTION).document(profileRepository.userId ?: "")
         val doc = docRef.get().await()
         val savedRecipes = doc.get(SAVED_RECIPES_FIELD) as MutableList<Map<String, Any>>
@@ -66,10 +66,10 @@ class RecipesRepositoryImpl @Inject constructor(
             savedRecipes.remove(recipeToRemove)
             docRef.update(SAVED_RECIPES_FIELD, savedRecipes).await()
         }
-        Response.Success(true)
+        Resource.Success(true)
     } catch (e: Exception) {
         Log.e("RecipesRepositoryImpl", "unsaveRecipe: $e")
-        Response.Failure(e)
+        Resource.Failure(e)
     }
 
 }

@@ -8,15 +8,14 @@ import com.codrutursache.casey.domain.repository.OneTapSignInResponse
 import com.codrutursache.casey.domain.repository.RevokeAccessResponse
 import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
 import com.codrutursache.casey.domain.repository.SignOutResponse
-import com.codrutursache.casey.util.Constants.USERS_COLLECTION
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.Constants.USERS_COLLECTION
+import com.codrutursache.casey.domain.model.Resource
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.firestore.FieldValue.serverTimestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
@@ -35,10 +34,10 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun googleOneTapSignIn(): OneTapSignInResponse =
         try {
             val signInResult = oneTapClient.beginSignIn(signInRequest).await()
-            Response.Success(signInResult)
+            Resource.Success(signInResult)
         } catch (e: Exception) {
             Log.e("AuthRepositoryImpl", "googleOneTapSignIn: $e")
-            Response.Failure(e)
+            Resource.Failure(e)
         }
 
     override suspend fun signInWithIntent(intent: Intent): SignInWithIntentResponse {
@@ -52,11 +51,11 @@ class AuthRepositoryImpl @Inject constructor(
             if (isNewUser) {
                 addUserToFirestore()
             }
-            Response.Success(true)
+            Resource.Success(true)
         } catch (e: Exception) {
             Log.e("AuthRepositoryImpl", "signInWithIntent: $e")
             if (e is CancellationException) throw e
-            Response.Failure(e)
+            Resource.Failure(e)
         }
     }
 
@@ -64,10 +63,10 @@ class AuthRepositoryImpl @Inject constructor(
         return try {
             oneTapClient.signOut().await()
             auth.signOut()
-            Response.Success(true)
+            Resource.Success(true)
         } catch (e: Exception) {
             Log.e("AuthRepositoryImpl", "signOut: $e")
-            Response.Failure(e)
+            Resource.Failure(e)
         }
     }
 
@@ -79,10 +78,10 @@ class AuthRepositoryImpl @Inject constructor(
                 oneTapClient.signOut().await()
                 delete().await()
             }
-            Response.Success(true)
+            Resource.Success(true)
         } catch (e: Exception) {
             Log.e("AuthRepositoryImpl", "deleteAccount: $e")
-            Response.Failure(e)
+            Resource.Failure(e)
         }
     }
 

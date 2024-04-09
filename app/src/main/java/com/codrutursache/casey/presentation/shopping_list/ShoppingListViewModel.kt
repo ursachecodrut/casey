@@ -3,12 +3,11 @@ package com.codrutursache.casey.presentation.shopping_list
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.codrutursache.casey.domain.model.ShoppingItemEntity
 import com.codrutursache.casey.domain.usecases.ClearShoppingListUseCase
 import com.codrutursache.casey.domain.usecases.GetShoppingListUseCase
 import com.codrutursache.casey.domain.usecases.ToggleShoppingListItemUseCase
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,8 +20,8 @@ class ShoppingListViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    var shoppingList = mutableStateOf<Response<List<ShoppingItemEntity>>>(
-        Response.Success(
+    var shoppingList = mutableStateOf<Resource<List<ShoppingItemEntity>>>(
+        Resource.Success(
             emptyList()
         )
     )
@@ -33,7 +32,7 @@ class ShoppingListViewModel @Inject constructor(
 
     fun getShoppingList() {
         viewModelScope.launch {
-            shoppingList.value = Response.Loading
+            shoppingList.value = Resource.Loading
             shoppingList.value = getShoppingListUseCase()
         }
     }
@@ -46,9 +45,9 @@ class ShoppingListViewModel @Inject constructor(
 
     fun clearShoppingList() {
         viewModelScope.launch {
-            shoppingList.value = Response.Loading
+            shoppingList.value = Resource.Loading
             clearShoppingListUseCase()
-            shoppingList.value = Response.Success(emptyList())
+            shoppingList.value = Resource.Success(emptyList())
         }
     }
 }

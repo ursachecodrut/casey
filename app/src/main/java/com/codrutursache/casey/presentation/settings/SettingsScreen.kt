@@ -16,7 +16,7 @@ import com.codrutursache.casey.presentation.components.BottomBar
 import com.codrutursache.casey.presentation.components.ProgressBar
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.profile.components.ProfileTopBar
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.domain.model.Resource
 import kotlinx.coroutines.Job
 
 @Composable
@@ -50,8 +50,8 @@ fun SettingsScreen(
         }
 
         when (signOutResponse) {
-            is Response.Loading -> ProgressBar()
-            is Response.Success -> signOutResponse.data?.let { isSignOut ->
+            is Resource.Loading -> ProgressBar()
+            is Resource.Success -> signOutResponse.data?.let { isSignOut ->
                 LaunchedEffect(isSignOut) {
                     if (isSignOut) {
                         navigateToAuthScreen()
@@ -59,7 +59,7 @@ fun SettingsScreen(
                 }
             }
 
-            is Response.Failure -> LaunchedEffect(Unit) {
+            is Resource.Failure -> LaunchedEffect(Unit) {
                 signOutResponse.e.printStackTrace()
             }
 

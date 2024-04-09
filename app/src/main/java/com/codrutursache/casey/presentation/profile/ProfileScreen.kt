@@ -36,9 +36,9 @@ import com.codrutursache.casey.presentation.profile.components.ProfileBottomShee
 import com.codrutursache.casey.presentation.profile.components.ProfileTopBar
 import com.codrutursache.casey.presentation.recipes.components.RecipeCard
 import com.codrutursache.casey.presentation.theme.Typography
-import com.codrutursache.casey.util.Constants.MEDIUM_FIREBASE_IMAGE_TAG
-import com.codrutursache.casey.util.Constants.SMALL_FIREBASE_IMAGE_TAG
-import com.codrutursache.casey.util.Response
+import com.codrutursache.casey.Constants.MEDIUM_FIREBASE_IMAGE_TAG
+import com.codrutursache.casey.Constants.SMALL_FIREBASE_IMAGE_TAG
+import com.codrutursache.casey.domain.model.Resource
 import com.codrutursache.casey.util.mock.Mocks
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +47,7 @@ fun ProfileScreen(
     navigateTo: (String) -> Unit,
     displayName: String?,
     photoUrl: String?,
-    recipes: Response<List<RecipeResponse>>,
+    recipes: Resource<List<RecipeResponse>>,
     navigateToRecipeInformation: (Int, String?, String?, String?) -> Unit,
     navigateToSettings: () -> Unit,
 ) {
@@ -110,11 +110,11 @@ fun ProfileScreen(
             Divider()
 
             when (recipes) {
-                is Response.Loading -> {
+                is Resource.Loading -> {
                     Text(text = "Loading...")
                 }
 
-                is Response.Success -> {
+                is Resource.Success -> {
                     recipes.data?.let { recipes ->
                         InfiniteGridScroll(
                             itemsCount = recipes.size,
@@ -130,7 +130,7 @@ fun ProfileScreen(
                     }
                 }
 
-                is Response.Failure -> {
+                is Resource.Failure -> {
                     Text(text = stringResource(R.string.something_went_wrong))
                 }
             }

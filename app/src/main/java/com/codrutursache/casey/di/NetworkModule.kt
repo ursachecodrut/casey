@@ -2,8 +2,8 @@ package com.codrutursache.casey.di
 
 import com.codrutursache.casey.BuildConfig
 import com.codrutursache.casey.data.data_source.SpoonacularService
-import com.codrutursache.casey.util.Constants.LOGGING_INTERCEPTOR_TAG
-import com.codrutursache.casey.util.Constants.SPOONACULAR_API_KEY_INTERCEPTOR_TAG
+import com.codrutursache.casey.Constants.LOGGING_INTERCEPTOR_TAG
+import com.codrutursache.casey.Constants.SPOONACULAR_API_KEY_INTERCEPTOR_TAG
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
