@@ -22,11 +22,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codrutursache.casey.domain.model.ShoppingItemEntity
 import com.codrutursache.casey.presentation.components.BottomBar
-import com.codrutursache.casey.presentation.components.ProgressBar
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.recipe_information.components.formatAmountValue
 import com.codrutursache.casey.presentation.shopping_list.components.ShoppingListTopBar
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.presentation.components.LoadingScreen
 
 @Composable
 fun ShoppingListScreen(
@@ -55,7 +55,7 @@ fun ShoppingListScreen(
         ) {
             when (resource) {
                 is Resource.Loading -> {
-                    ProgressBar()
+                    LoadingScreen()
                 }
 
                 is Resource.Success -> {
@@ -126,33 +126,50 @@ fun ShoppingListItem(
     )
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun ShoppingListScreenSuccessPreview() {
-    ShoppingListScreenSuccess(
-        shoppingList = listOf(
-            ShoppingItemEntity(
-                id = 1,
-                name = "Apple",
-                quantity = 2.0,
-                unit = "kg",
-                checked = false
-            ),
-            ShoppingItemEntity(
-                id = 2,
-                name = "Banana",
-                quantity = 3.0,
-                unit = "kg",
-                checked = true
-            ),
-            ShoppingItemEntity(
-                id = 3,
-                name = "Orange",
-                quantity = 4.0,
-                unit = "kg",
-                checked = false
-            ),
+
+    val items = listOf(
+        ShoppingItemEntity(
+            id = 1,
+            name = "Apple",
+            quantity = 2.0,
+            unit = "kg",
+            checked = false
         ),
+        ShoppingItemEntity(
+            id = 2,
+            name = "Banana",
+            quantity = 3.0,
+            unit = "kg",
+            checked = true
+        ),
+        ShoppingItemEntity(
+            id = 3,
+            name = "Orange",
+            quantity = 4.0,
+            unit = "kg",
+            checked = false
+        ),
+    )
+
+    ShoppingListScreen(
+        resource = Resource.Success(items),
+        clearShoppingList = {},
+        navigateTo = { },
+        toggleItem = { _, _ -> }
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ShoppingListScreenLoadingPreview() {
+    ShoppingListScreen(
+        resource = Resource.Loading,
+        clearShoppingList = {},
+        navigateTo = { },
         toggleItem = { _, _ -> }
     )
 }

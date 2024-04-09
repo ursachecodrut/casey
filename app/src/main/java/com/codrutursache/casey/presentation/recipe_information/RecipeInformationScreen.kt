@@ -37,6 +37,7 @@ import com.codrutursache.casey.presentation.recipe_information.components.Recipe
 import com.codrutursache.casey.presentation.recipe_information.components.Servings
 import com.codrutursache.casey.presentation.theme.Typography
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.presentation.components.LoadingScreen
 import com.codrutursache.casey.util.mock.Mocks
 import kotlinx.coroutines.Job
 
@@ -77,7 +78,7 @@ fun RecipeInformationScreen(
         ) {
             when (resource) {
                 is Resource.Loading -> {
-                    Text(text = "Loading...")
+                    LoadingScreen()
                 }
 
                 is Resource.Success -> {

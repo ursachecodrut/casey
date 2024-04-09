@@ -13,10 +13,10 @@ import androidx.compose.ui.unit.dp
 import com.codrutursache.casey.R
 import com.codrutursache.casey.domain.repository.SignOutResponse
 import com.codrutursache.casey.presentation.components.BottomBar
-import com.codrutursache.casey.presentation.components.ProgressBar
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.profile.components.ProfileTopBar
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.presentation.components.LoadingScreen
 import kotlinx.coroutines.Job
 
 @Composable
@@ -50,7 +50,7 @@ fun SettingsScreen(
         }
 
         when (signOutResponse) {
-            is Resource.Loading -> ProgressBar()
+            is Resource.Loading -> LoadingScreen()
             is Resource.Success -> signOutResponse.data?.let { isSignOut ->
                 LaunchedEffect(isSignOut) {
                     if (isSignOut) {

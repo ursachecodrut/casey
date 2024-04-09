@@ -52,7 +52,7 @@ fun RecipesListScreenPreview() {
     RecipesListScreen(
         navigateTo = { },
         recipes = Mocks.recipeListDto.results,
-        fetchMoreRecipes = { /*TODO*/ },
+        fetchMoreRecipes = { },
         navigateToRecipeInformation = { _, _, _, _ -> }
     )
 }

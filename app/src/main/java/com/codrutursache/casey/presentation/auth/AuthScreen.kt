@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.sp
 import com.codrutursache.casey.R
 import com.codrutursache.casey.domain.repository.OneTapSignInResponse
 import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
-import com.codrutursache.casey.presentation.components.ProgressBar
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.presentation.components.LoadingScreen
 import kotlinx.coroutines.Job
 
 @Composable
@@ -69,7 +69,7 @@ fun AuthScreen(
         }
 
         when (oneTapSignInResponse) {
-            is Resource.Loading -> ProgressBar()
+            is Resource.Loading -> LoadingScreen()
             is Resource.Success -> oneTapSignInResponse.data?.let { signInResult ->
                 LaunchedEffect(signInResult) {
                     val intentSenderRequest =
@@ -84,7 +84,7 @@ fun AuthScreen(
         }
 
         when (signInWithIntentResponse) {
-            is Resource.Loading -> ProgressBar()
+            is Resource.Loading -> LoadingScreen()
             is Resource.Success -> signInWithIntentResponse.data?.let { signedIn ->
                 LaunchedEffect(signedIn) {
                     if (signedIn) {

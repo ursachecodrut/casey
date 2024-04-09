@@ -35,14 +35,10 @@ class RecipesListViewModel @Inject constructor(
                     recipeListDto.value += result.data!!.results
                     offset += pageSize
                     isLoading.value = false
-
-                    Log.d("RecipesListViewModel", "getRecipes: ${recipeListDto.value}")
                 }
 
                 is Resource.Failure -> {
                     isLoading.value = false
-
-                    Log.e("RecipesListViewModel", "getRecipes: ${result.e}")
                 }
 
                 is Resource.Loading -> {

@@ -30,15 +30,15 @@ import coil.request.ImageRequest
 import com.codrutursache.casey.R
 import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.presentation.components.BottomBar
-import com.codrutursache.casey.presentation.components.InfiniteGridScroll
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.profile.components.ProfileBottomSheet
 import com.codrutursache.casey.presentation.profile.components.ProfileTopBar
-import com.codrutursache.casey.presentation.recipes.components.RecipeCard
 import com.codrutursache.casey.presentation.theme.Typography
 import com.codrutursache.casey.Constants.MEDIUM_FIREBASE_IMAGE_TAG
 import com.codrutursache.casey.Constants.SMALL_FIREBASE_IMAGE_TAG
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.presentation.components.LoadingScreen
+import com.codrutursache.casey.presentation.profile.components.SavedRecipeList
 import com.codrutursache.casey.util.mock.Mocks
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,8 +70,6 @@ fun ProfileScreen(
             )
         }
     ) { innerPadding ->
-
-
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier
@@ -111,22 +109,15 @@ fun ProfileScreen(
 
             when (recipes) {
                 is Resource.Loading -> {
-                    Text(text = "Loading...")
+                    LoadingScreen()
                 }
 
                 is Resource.Success -> {
                     recipes.data?.let { recipes ->
-                        InfiniteGridScroll(
-                            itemsCount = recipes.size,
-                            columns = 2,
-                            isLazy = false,
-                        ) {
-                            RecipeCard(
-                                recipe = recipes[it],
-                                navigateToRecipeInformation = navigateToRecipeInformation
-                            )
-                        }
-
+                        SavedRecipeList(
+                            recipes = recipes,
+                            navigateToRecipeInformation = navigateToRecipeInformation
+                        )
                     }
                 }
 
@@ -147,30 +138,34 @@ fun ProfileScreen(
     }
 }
 
+@Preview
 @Composable
-fun SavedRecipeList(
-    recipes: List<RecipeResponse>,
-    navigateToRecipeInformation: (Int, String?, String?, String?) -> Unit
+fun ProfileScreenSuccessPreview(
 ) {
-    InfiniteGridScroll(
-        itemsCount = recipes.size,
-        isLazy = false,
-    ) {
-        RecipeCard(
-            recipe = recipes[it],
-            navigateToRecipeInformation = navigateToRecipeInformation
-        )
-    }
+    ProfileScreen(
+        navigateTo = {},
+        displayName = "John Doe",
+        photoUrl = "",
+        recipes = Resource.Success(listOf(
+            Mocks.recipeResponse,
+            Mocks.recipeResponse,
+            Mocks.recipeResponse
+        )),
+        navigateToRecipeInformation = { _, _, _, _ -> },
+        navigateToSettings = {}
+    )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun SavedRecipesListPreview() {
-    SavedRecipeList(
-        recipes = listOf(
-            Mocks.recipeResponse,
-            Mocks.recipeResponse,
-            Mocks.recipeResponse,
-        ),
-    ) { _, _, _, _ -> }
+fun ProfileScreenLoadingPreview(
+) {
+    ProfileScreen(
+        navigateTo = {},
+        displayName = "John Doe",
+        photoUrl = "",
+        recipes = Resource.Loading,
+        navigateToRecipeInformation = { _, _, _, _ -> },
+        navigateToSettings = {}
+    )
 }
