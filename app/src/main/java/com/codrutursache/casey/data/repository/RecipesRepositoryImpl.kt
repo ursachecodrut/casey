@@ -1,5 +1,6 @@
 package com.codrutursache.casey.data.repository
 
+import android.util.Log
 import com.codrutursache.casey.data.data_source.SpoonacularService
 import com.codrutursache.casey.data.response.RecipeInformationResponse
 import com.codrutursache.casey.data.response.RecipeListResponse
@@ -24,6 +25,7 @@ class RecipesRepositoryImpl @Inject constructor(
             val response = api.complexSearch(number = number, offset = offset)
             Response.Success(response)
         } catch (e: Exception) {
+            Log.e("RecipesRepositoryImpl", "getRecipes: $e")
             Response.Failure(e)
         }
 
@@ -32,6 +34,7 @@ class RecipesRepositoryImpl @Inject constructor(
             val response = api.getRecipeInformation(id)
             Response.Success(response)
         } catch (e: Exception) {
+            Log.e("RecipesRepositoryImpl", "getRecipeInformation: $e")
             Response.Failure(e)
         }
 
@@ -49,6 +52,7 @@ class RecipesRepositoryImpl @Inject constructor(
         ).await()
         Response.Success(true)
     } catch (e: Exception) {
+        Log.e("RecipesRepositoryImpl", "saveRecipe: $e")
         Response.Failure(e)
     }
 
@@ -64,6 +68,7 @@ class RecipesRepositoryImpl @Inject constructor(
         }
         Response.Success(true)
     } catch (e: Exception) {
+        Log.e("RecipesRepositoryImpl", "unsaveRecipe: $e")
         Response.Failure(e)
     }
 

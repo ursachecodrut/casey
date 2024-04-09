@@ -15,6 +15,7 @@ class ShoppingListRepositoryImpl @Inject constructor(
             val shoppingList = shoppingListDao.getAllItems()
             Response.Success(shoppingList)
         } catch (e: Exception) {
+            Log.e("ShoppingListRepositoryImpl", "getShoppingList: $e")
             Response.Failure(e)
         }
 

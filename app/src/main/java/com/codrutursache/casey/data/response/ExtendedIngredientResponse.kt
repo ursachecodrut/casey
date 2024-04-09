@@ -1,6 +1,7 @@
 package com.codrutursache.casey.data.response
 
 
+import com.codrutursache.casey.domain.model.ShoppingItemEntity
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -41,4 +42,13 @@ data class ExtendedIngredientResponse(
 
     @Json(name = "unit")
     val unit: String
-)
+) {
+    fun toShoppingListItem(numberOfServings: Int): ShoppingItemEntity {
+        return ShoppingItemEntity(
+            id = id,
+            name = name,
+            quantity = measuresResponse.metricResponse.amount * numberOfServings,
+            unit = measuresResponse.metricResponse.unitShort
+        )
+    }
+}

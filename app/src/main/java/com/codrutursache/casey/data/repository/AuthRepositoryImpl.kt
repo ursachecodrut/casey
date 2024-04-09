@@ -1,6 +1,7 @@
 package com.codrutursache.casey.data.repository
 
 import android.content.Intent
+import android.util.Log
 import com.codrutursache.casey.data.model.User
 import com.codrutursache.casey.domain.repository.AuthRepository
 import com.codrutursache.casey.domain.repository.OneTapSignInResponse
@@ -36,6 +37,7 @@ class AuthRepositoryImpl @Inject constructor(
             val signInResult = oneTapClient.beginSignIn(signInRequest).await()
             Response.Success(signInResult)
         } catch (e: Exception) {
+            Log.e("AuthRepositoryImpl", "googleOneTapSignIn: $e")
             Response.Failure(e)
         }
 
@@ -52,7 +54,7 @@ class AuthRepositoryImpl @Inject constructor(
             }
             Response.Success(true)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("AuthRepositoryImpl", "signInWithIntent: $e")
             if (e is CancellationException) throw e
             Response.Failure(e)
         }
@@ -64,6 +66,7 @@ class AuthRepositoryImpl @Inject constructor(
             auth.signOut()
             Response.Success(true)
         } catch (e: Exception) {
+            Log.e("AuthRepositoryImpl", "signOut: $e")
             Response.Failure(e)
         }
     }
@@ -78,6 +81,7 @@ class AuthRepositoryImpl @Inject constructor(
             }
             Response.Success(true)
         } catch (e: Exception) {
+            Log.e("AuthRepositoryImpl", "deleteAccount: $e")
             Response.Failure(e)
         }
     }

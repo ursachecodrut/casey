@@ -1,5 +1,6 @@
 package com.codrutursache.casey.data.repository
 
+import android.util.Log
 import com.codrutursache.casey.data.model.User
 import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.domain.model.UserDetails
@@ -34,6 +35,7 @@ class ProfileRepositoryImpl @Inject constructor(
             ?.savedRecipes
         Response.Success(recipe)
     } catch (e: Exception) {
+        Log.e("ProfileRepositoryImpl", "getSavedRecipes: $e")
         Response.Failure(e)
     }
 
