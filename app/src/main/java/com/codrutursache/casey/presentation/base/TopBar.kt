@@ -193,7 +193,7 @@ fun ShoppingListTopBarPreview() {
 }
 
 
-@Preview(name = "[EN] Shopping List Top Bar preview", locale = "en")
+@Preview(name = "[RO] Shopping List Top Bar preview", locale = "ro")
 @Composable
 fun ShoppingListTopBarPreviewRo() {
     ShoppingListTopBar(

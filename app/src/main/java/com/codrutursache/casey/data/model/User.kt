@@ -1,7 +1,6 @@
 package com.codrutursache.casey.data.model
 
 import com.codrutursache.casey.data.response.RecipeResponse
-import com.google.errorprone.annotations.Keep
 import com.google.firebase.Timestamp
 
 data class User(

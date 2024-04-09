@@ -15,7 +15,6 @@ import com.codrutursache.casey.data.response.WinePairingResponse
 
 object Mocks {
 
-    // write me a recipeDto with some actual real values
     val recipeResponse = RecipeResponse(
         id = 1,
         title = "Chicken Pasta",
@@ -23,7 +22,6 @@ object Mocks {
         imageType = "jpg"
     )
 
-    // create a list of recipeDtos using a range
     val recipeListDto = RecipeListResponse(
         offset = 0,
         number = 10,

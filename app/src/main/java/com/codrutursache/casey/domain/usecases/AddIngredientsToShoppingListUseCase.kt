@@ -16,12 +16,3 @@ class AddIngredientsToShoppingListUseCase @Inject constructor(
         shoppingListRepository.insertBatchShoppingItems(shoppingItems)
     }
 }
-
-fun ExtendedIngredientResponse.toShoppingListItem(numberOfServings: Int): ShoppingItemEntity {
-    return ShoppingItemEntity(
-        id = id,
-        name = name,
-        quantity = measuresResponse.metricResponse.amount * numberOfServings,
-        unit = measuresResponse.metricResponse.unitShort
-    )
-}
