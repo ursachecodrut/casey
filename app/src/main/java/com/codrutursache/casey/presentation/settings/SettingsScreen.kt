@@ -12,10 +12,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.codrutursache.casey.R
 import com.codrutursache.casey.domain.repository.SignOutResponse
-import com.codrutursache.casey.presentation.base.BottomBar
-import com.codrutursache.casey.presentation.base.ProgressBar
-import com.codrutursache.casey.presentation.base.ProfileTopBar
+import com.codrutursache.casey.presentation.components.BottomBar
+import com.codrutursache.casey.presentation.components.ProgressBar
 import com.codrutursache.casey.presentation.navigation.Route
+import com.codrutursache.casey.presentation.profile.components.ProfileTopBar
 import com.codrutursache.casey.util.Response
 import kotlinx.coroutines.Job
 

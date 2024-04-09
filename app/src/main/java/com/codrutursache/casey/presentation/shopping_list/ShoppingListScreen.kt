@@ -21,11 +21,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codrutursache.casey.domain.model.ShoppingItemEntity
-import com.codrutursache.casey.presentation.base.BottomBar
-import com.codrutursache.casey.presentation.base.ProgressBar
-import com.codrutursache.casey.presentation.base.ShoppingListTopBar
+import com.codrutursache.casey.presentation.components.BottomBar
+import com.codrutursache.casey.presentation.components.ProgressBar
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.recipe_information.components.formatAmountValue
+import com.codrutursache.casey.presentation.shopping_list.components.ShoppingListTopBar
 import com.codrutursache.casey.util.Response
 
 @Composable

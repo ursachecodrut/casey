@@ -30,10 +30,10 @@ import coil.request.ImageRequest
 import com.codrutursache.casey.R
 import com.codrutursache.casey.data.response.ExtendedIngredientResponse
 import com.codrutursache.casey.data.response.RecipeInformationResponse
-import com.codrutursache.casey.presentation.base.BottomBar
-import com.codrutursache.casey.presentation.base.RecipeInformationTopBar
+import com.codrutursache.casey.presentation.components.BottomBar
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.recipe_information.components.RecipeInfoTabs
+import com.codrutursache.casey.presentation.recipe_information.components.RecipeInformationTopBar
 import com.codrutursache.casey.presentation.recipe_information.components.Servings
 import com.codrutursache.casey.presentation.theme.Typography
 import com.codrutursache.casey.util.Response

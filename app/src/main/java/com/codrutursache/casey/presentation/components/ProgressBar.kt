@@ -1,4 +1,4 @@
-package com.codrutursache.casey.presentation.base
+package com.codrutursache.casey.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator

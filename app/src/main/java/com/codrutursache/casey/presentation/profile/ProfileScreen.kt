@@ -29,11 +29,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.codrutursache.casey.R
 import com.codrutursache.casey.data.response.RecipeResponse
-import com.codrutursache.casey.presentation.base.BottomBar
-import com.codrutursache.casey.presentation.base.InfiniteGridScroll
-import com.codrutursache.casey.presentation.base.ProfileTopBar
+import com.codrutursache.casey.presentation.components.BottomBar
+import com.codrutursache.casey.presentation.components.InfiniteGridScroll
 import com.codrutursache.casey.presentation.navigation.Route
 import com.codrutursache.casey.presentation.profile.components.ProfileBottomSheet
+import com.codrutursache.casey.presentation.profile.components.ProfileTopBar
 import com.codrutursache.casey.presentation.recipes.components.RecipeCard
 import com.codrutursache.casey.presentation.theme.Typography
 import com.codrutursache.casey.util.Constants.MEDIUM_FIREBASE_IMAGE_TAG
