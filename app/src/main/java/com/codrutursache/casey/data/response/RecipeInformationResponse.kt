@@ -54,7 +54,7 @@ data class RecipeInformationResponse(
     val imageType: String,
 
     @Json(name = "instructions")
-    val instructions: String,
+    val instructions: String?,
 
     @Json(name = "lowFodmap")
     val lowFodmap: Boolean,

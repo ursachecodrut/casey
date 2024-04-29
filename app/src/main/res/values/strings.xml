@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name" translatable="false">Casey</string>
+
+    <!-- Firebase -->
     <string name="web_client_id" translatable="false">984299635980-lbibunbb0j8usto102kt25o7b6uvvrvd.apps.googleusercontent.com</string>
+
+    <!-- Notification Channel Config -->
+    <string name="notification_channel_id" translatable="false">casey_channel_id</string>
+    <string name="notification_channel_name" translatable="false">Casey</string>
+    <string name="notification_channel_description" translatable="false">Casey notifications</string>
+
+    <!-- Food Trivia Notification -->
+    <string name="food_trivia_notification_title">Daily food trivia</string>
+    <string name="food_trivia_notification_content" translatable="false">Did you know that %1$s?</string>
 
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="my_profile_title">My Profile</string>

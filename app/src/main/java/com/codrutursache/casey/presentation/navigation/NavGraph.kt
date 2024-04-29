@@ -1,5 +1,11 @@
 package com.codrutursache.casey.presentation.navigation
 
+import android.Manifest
+import android.os.Build
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -28,6 +34,7 @@ import com.codrutursache.casey.presentation.shopping_list.ShoppingListScreen
 import com.codrutursache.casey.presentation.shopping_list.ShoppingListViewModel
 import com.codrutursache.casey.domain.model.Resource
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun NavGraph(
     navController: NavHostController,
@@ -56,7 +63,7 @@ fun NavGraph(
                 oneTapSignIn = authViewModel::oneTapSignIn,
                 signInWithIntent = authViewModel::signInWithIntent,
                 navigateToProfileScreen = {
-                    navController.navigate(Route.ProfileRoute.route)
+                    navController.navigate(Route.RecipesRoute.route)
                 }
             )
         }
@@ -67,6 +74,22 @@ fun NavGraph(
             val recipesListViewModel = hiltViewModel<RecipesListViewModel>()
 
             val recipes by remember { recipesListViewModel.recipeListDto }
+
+            // request notification permission
+            val notificationPermissionLauncher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.RequestPermission(),
+                onResult = { isGranted ->
+                    if (isGranted) {
+                        Log.d("PermissionResult", "Notification permission granted")
+                    } else {
+                        Log.d("PermissionResult", "Notification permission denied")
+                    }
+                }
+            )
+
+            LaunchedEffect(Unit) {
+                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
 
             RecipesListScreen(
                 navigateTo = navigateTo,
@@ -90,6 +113,8 @@ fun NavGraph(
                 image = recipeImage,
                 imageType = recipeImageType,
             )
+
+            Log.d("RecipeInformationRoute", "Recipe id: $recipeId")
 
             val recipeInformationViewModel = hiltViewModel<RecipeInformationViewModel>()
             val addIngredients = { ingredients: List<ExtendedIngredientResponse>,

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="food_trivia_notification_title">Curiozități zilnice despre mâncare</string>
+
+
     <string name="sign_in_with_google">Sign in cu Google</string>
     <string name="my_profile_title">Profilul meu</string>
     <string name="settings">Setări</string>
