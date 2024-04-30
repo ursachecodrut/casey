@@ -11,7 +11,7 @@
 
     <!-- Food Trivia Notification -->
     <string name="food_trivia_notification_title">Daily food trivia</string>
-    <string name="food_trivia_notification_content" translatable="false">Did you know that %1$s?</string>
+    <string name="food_trivia_notification_content" translatable="false">Did you know that...\n%1$s</string>
 
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="my_profile_title">My Profile</string>

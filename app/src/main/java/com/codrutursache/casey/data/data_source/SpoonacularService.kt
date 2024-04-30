@@ -1,5 +1,6 @@
 package com.codrutursache.casey.data.data_source
 
+import com.codrutursache.casey.data.response.RandomFoodTriviaResponse
 import com.codrutursache.casey.data.response.RecipeInformationResponse
 import com.codrutursache.casey.data.response.RecipeListResponse
 import retrofit2.http.GET
@@ -27,6 +28,9 @@ interface SpoonacularService {
         @Path("ids") ids: List<Int>,
         @Query("includeNutrition") includeNutrition: Boolean = false,
     ): List<RecipeInformationResponse>
+
+    @GET("/food/trivia/random")
+    suspend fun getRandomFoodTrivia(): RandomFoodTriviaResponse
 
 
     companion object {

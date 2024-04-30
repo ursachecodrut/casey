@@ -1,10 +1,12 @@
 package com.codrutursache.casey.di
 
 import com.codrutursache.casey.data.repository.AuthRepositoryImpl
+import com.codrutursache.casey.data.repository.NotificationRepositoryImpl
 import com.codrutursache.casey.data.repository.ProfileRepositoryImpl
 import com.codrutursache.casey.data.repository.RecipesRepositoryImpl
 import com.codrutursache.casey.data.repository.ShoppingListRepositoryImpl
 import com.codrutursache.casey.domain.repository.AuthRepository
+import com.codrutursache.casey.domain.repository.NotificationRepository
 import com.codrutursache.casey.domain.repository.ProfileRepository
 import com.codrutursache.casey.domain.repository.RecipesRepository
 import com.codrutursache.casey.domain.repository.ShoppingListRepository
@@ -41,4 +43,10 @@ abstract class RepositoryModule {
     abstract fun bindShoppingListRepository(
         shoppingListRepositoryImpl: ShoppingListRepositoryImpl
     ): ShoppingListRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindNotificationRepository(
+        notificationRepositoryImpl: NotificationRepositoryImpl
+    ): NotificationRepository
 }
