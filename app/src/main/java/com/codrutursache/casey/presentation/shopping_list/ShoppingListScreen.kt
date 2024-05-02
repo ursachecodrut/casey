@@ -2,12 +2,14 @@ package com.codrutursache.casey.presentation.shopping_list
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -84,18 +86,29 @@ fun ShoppingListScreenSuccess(
         return
     }
 
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+    Column(
+       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(shoppingList) { shoppingItem ->
-            ShoppingListItem(
-                item = shoppingItem,
-                onCheckedChange = { checked ->
-                    toggleItem(shoppingItem.id, checked)
-                },
-            )
+
+        Text(
+            text = "Number of items: ${shoppingList.size}",
+            style = MaterialTheme.typography.bodyLarge,
+        )
+
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            items(shoppingList.sortedBy { it.name }) { shoppingItem ->
+                ShoppingListItem(
+                    item = shoppingItem,
+                    onCheckedChange = { checked ->
+                        toggleItem(shoppingItem.id, checked)
+                    },
+                )
+            }
         }
     }
+
 }
 
 
@@ -119,7 +132,6 @@ fun ShoppingListItem(
             Checkbox(
                 checked = checked,
                 onCheckedChange = {
-                    Log.d("ShoppingListItem", "onCheckedChange: $it")
                     checked = it
                     onCheckedChange(it)
                 }

@@ -1,5 +1,6 @@
 package com.codrutursache.casey.util
 
+import android.util.Log
 import kotlin.reflect.full.memberProperties
 
 
@@ -104,9 +105,9 @@ val Number.tsp get() = Mass(this.toDouble(), MassUnit.TSP)
  */
 
 sealed class VolumeUnit(symbol: String, toBaseUnitFactor: Double) : Unit(symbol, toBaseUnitFactor) {
-    data object LITER : VolumeUnit("L", 1000.0)
+    data object LITER : VolumeUnit("l", 1000.0)
 
-    data object MILLILITER : VolumeUnit("mL", 1.0) // base unit
+    data object MILLILITER : VolumeUnit("ml", 1.0) // base unit
 
     data object GALLON : VolumeUnit("gal", 3785.41)
 
@@ -163,7 +164,7 @@ fun convertToBaseUnit(amount: Double, unit: String): Double {
             mass.toBaseUnit().value
         }
 
-        "L", "mL", "gal", "qt", "pt", "cup", "fl oz" -> {
+        "l", "ml", "gal", "qt", "pt", "cup", "fl oz" -> {
             val volume = Volume(amount, unit)
             volume.toBaseUnit().value
         }

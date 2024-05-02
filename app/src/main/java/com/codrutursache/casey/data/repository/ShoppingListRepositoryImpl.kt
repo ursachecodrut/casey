@@ -24,7 +24,14 @@ class ShoppingListRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertBatchShoppingItems(shoppingItems: List<ShoppingItemEntity>) {
-        shoppingListDao.insertBatchItems(shoppingItems)
+        val convertedToBaseUnitShoppingItems = shoppingItems.map { it.changeToBaseUnit() }
+
+        val presentShoppingItems = shoppingListDao.getAllItems()
+
+        val updatedShoppingItems =
+            mergeShoppingItems(presentShoppingItems, convertedToBaseUnitShoppingItems)
+
+        shoppingListDao.insertBatchItems(updatedShoppingItems)
     }
 
     override suspend fun toggleShoppingListItem(shoppingItemId: Int, checked: Boolean) {
@@ -37,5 +44,20 @@ class ShoppingListRepositoryImpl @Inject constructor(
 
     override suspend fun deleteAllShoppingItems() {
         shoppingListDao.deleteAllItems()
+    }
+
+    private fun mergeShoppingItems(
+        presentShoppingItems: List<ShoppingItemEntity>,
+        newShoppingItems: List<ShoppingItemEntity>
+    ): List<ShoppingItemEntity> {
+        return newShoppingItems.map { shoppingItem ->
+            val presentItem = presentShoppingItems.find { it.id == shoppingItem.id }
+            if (presentItem != null) {
+                val updatedQuantity = presentItem.quantity + shoppingItem.quantity
+                presentItem.copy(quantity = updatedQuantity)
+            } else {
+                shoppingItem
+            }
+        }
     }
 }
