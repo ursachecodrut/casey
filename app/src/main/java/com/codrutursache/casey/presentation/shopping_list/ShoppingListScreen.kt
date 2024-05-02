@@ -79,6 +79,11 @@ fun ShoppingListScreenSuccess(
     toggleItem: (Int, Boolean) -> Unit
 ) {
 
+    if (shoppingList.isEmpty()) {
+        Text(text = "No items in the shopping list")
+        return
+    }
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -157,6 +162,19 @@ fun ShoppingListScreenSuccessPreview() {
 
     ShoppingListScreen(
         resource = Resource.Success(items),
+        clearShoppingList = {},
+        navigateTo = { },
+        toggleItem = { _, _ -> }
+    )
+}
+
+
+@Preview("Empty list", showBackground = true)
+@Composable
+fun ShoppingListScreenSuccessPreviewEmptyList() {
+
+    ShoppingListScreen(
+        resource = Resource.Success(emptyList()),
         clearShoppingList = {},
         navigateTo = { },
         toggleItem = { _, _ -> }
