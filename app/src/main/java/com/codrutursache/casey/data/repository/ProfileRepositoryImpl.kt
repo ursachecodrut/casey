@@ -26,6 +26,10 @@ class ProfileRepositoryImpl @Inject constructor(
 
 
     override suspend fun getSavedRecipes(): Resource<List<RecipeResponse>> = try {
+        if (userId == null) {
+            Resource.Failure(Exception("User not authenticated"))
+        }
+
         val recipe = firestore
             .collection(USERS_COLLECTION)
             .document(userId ?: "")

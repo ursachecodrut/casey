@@ -81,6 +81,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
+
+
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
@@ -91,6 +93,7 @@ dependencies {
 
     // Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.49")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     ksp("com.google.dagger:hilt-android-compiler:2.48")
 
     // Firebase
@@ -124,5 +127,5 @@ dependencies {
 
     // Debugging
     debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.7")
 }
