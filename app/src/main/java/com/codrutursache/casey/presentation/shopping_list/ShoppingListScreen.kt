@@ -1,5 +1,6 @@
 package com.codrutursache.casey.presentation.shopping_list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -7,7 +8,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -19,6 +22,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.codrutursache.casey.domain.model.ShoppingItemEntity
@@ -86,7 +91,7 @@ fun ShoppingListScreenSuccess(
     }
 
     Column(
-       verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
 
         Text(
@@ -120,12 +125,22 @@ fun ShoppingListItem(
     var checked by remember { mutableStateOf(item.checked) }
 
     ListItem(
-        headlineContent = { Text(text = item.name) },
+        headlineContent = {
+            Text(
+                text = item.name,
+                textDecoration = if (checked) TextDecoration.LineThrough else TextDecoration.None,
+                color = if (checked) Color.Gray else LocalContentColor.current
+            )
+        },
         supportingContent = {
             val amount = item.quantity
             val unit = item.unit
 
-            Text(text = "${amount.formatAmountValue()} $unit")
+            Text(
+                text = "${amount.formatAmountValue()} $unit",
+                textDecoration = if (checked) TextDecoration.LineThrough else TextDecoration.None,
+                color = if (checked) Color.Gray else LocalContentColor.current
+            )
         },
         trailingContent = {
             Checkbox(
@@ -133,10 +148,10 @@ fun ShoppingListItem(
                 onCheckedChange = {
                     checked = it
                     onCheckedChange(it)
-                }
+                },
             )
         },
-        tonalElevation = 10.dp,
+        tonalElevation = if (checked) 3.dp else 10.dp,
         modifier = Modifier
             .clip(RoundedCornerShape(10))
     )
