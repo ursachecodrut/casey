@@ -161,6 +161,7 @@ fun NavGraph(
                 resource = shoppingListViewModel.shoppingList.value,
                 toggleItem = shoppingListViewModel::toggleShoppingListItem,
                 clearShoppingList = shoppingListViewModel::clearShoppingList,
+                updateShoppingListItem = shoppingListViewModel::updateShoppingListItem,
                 navigateTo = navigateTo,
             )
         }

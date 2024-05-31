@@ -1,6 +1,6 @@
 package com.codrutursache.casey.presentation.shopping_list
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -8,13 +8,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,14 +34,18 @@ import com.codrutursache.casey.presentation.recipe_information.components.format
 import com.codrutursache.casey.presentation.shopping_list.components.ShoppingListTopBar
 import com.codrutursache.casey.domain.model.Resource
 import com.codrutursache.casey.presentation.components.LoadingScreen
+import com.codrutursache.casey.presentation.shopping_list.components.ShoppingItemBottomSheet
 
 @Composable
 fun ShoppingListScreen(
     navigateTo: (String) -> Unit,
     resource: Resource<List<ShoppingItemEntity>>,
     toggleItem: (Int, Boolean) -> Unit,
+    updateShoppingListItem: (ShoppingItemEntity) -> Unit,
     clearShoppingList: () -> Unit,
 ) {
+
+
     Scaffold(
         topBar = {
             ShoppingListTopBar(
@@ -67,7 +72,8 @@ fun ShoppingListScreen(
                 is Resource.Success -> {
                     ShoppingListScreenSuccess(
                         resource.data!!,
-                        toggleItem = toggleItem
+                        toggleItem = toggleItem,
+                        updateItem = updateShoppingListItem
                     )
                 }
 
@@ -76,19 +82,30 @@ fun ShoppingListScreen(
                 }
             }
         }
+
+
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShoppingListScreenSuccess(
     shoppingList: List<ShoppingItemEntity>,
-    toggleItem: (Int, Boolean) -> Unit
+    toggleItem: (Int, Boolean) -> Unit,
+    updateItem: (ShoppingItemEntity) -> Unit
 ) {
 
     if (shoppingList.isEmpty()) {
         Text(text = "No items in the shopping list")
         return
     }
+
+    var selectedShoppingItem by remember { mutableStateOf<ShoppingItemEntity?>(null) }
+
+    val sheetState = rememberModalBottomSheetState()
+    var isSheetOpen by remember { mutableStateOf(false) }
+    val openSheet = { isSheetOpen = true }
+    val closeSheet = { isSheetOpen = false }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -108,9 +125,22 @@ fun ShoppingListScreenSuccess(
                     onCheckedChange = { checked ->
                         toggleItem(shoppingItem.id, checked)
                     },
+                    openSheet = {
+                        selectedShoppingItem = shoppingItem
+                        openSheet()
+                    }
                 )
             }
         }
+    }
+
+    if (isSheetOpen) {
+        ShoppingItemBottomSheet(
+            sheetState = sheetState,
+            closeSheet = closeSheet,
+            updateItem = updateItem,
+            shoppingItem = selectedShoppingItem!!
+        )
     }
 
 }
@@ -119,7 +149,8 @@ fun ShoppingListScreenSuccess(
 @Composable
 fun ShoppingListItem(
     item: ShoppingItemEntity,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    openSheet: () -> Unit
 ) {
 
     var checked by remember { mutableStateOf(item.checked) }
@@ -154,6 +185,7 @@ fun ShoppingListItem(
         tonalElevation = if (checked) 3.dp else 10.dp,
         modifier = Modifier
             .clip(RoundedCornerShape(10))
+            .clickable { openSheet() }
     )
 }
 
@@ -190,7 +222,8 @@ fun ShoppingListScreenSuccessPreview() {
         resource = Resource.Success(items),
         clearShoppingList = {},
         navigateTo = { },
-        toggleItem = { _, _ -> }
+        toggleItem = { _, _ -> },
+        updateShoppingListItem = { }
     )
 }
 
@@ -203,7 +236,9 @@ fun ShoppingListScreenSuccessPreviewEmptyList() {
         resource = Resource.Success(emptyList()),
         clearShoppingList = {},
         navigateTo = { },
-        toggleItem = { _, _ -> }
+        toggleItem = { _, _ -> },
+        updateShoppingListItem = { }
+
     )
 }
 
@@ -214,6 +249,7 @@ fun ShoppingListScreenLoadingPreview() {
         resource = Resource.Loading,
         clearShoppingList = {},
         navigateTo = { },
-        toggleItem = { _, _ -> }
+        toggleItem = { _, _ -> },
+        updateShoppingListItem = { }
     )
 }
