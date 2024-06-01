@@ -114,5 +114,5 @@ data class RecipeInformationResponse(
     val weightWatcherSmartPoints: Int,
 
     @Json(name = "winePairing")
-    val winePairingResponse: WinePairingResponse
+    val winePairingResponse: WinePairingResponse?
 )

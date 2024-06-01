@@ -37,4 +37,9 @@
     <string name="shopping_list">Shopping list</string>
     <string name="edit">Edit</string>
     <string name="clear">Clear</string>
+    <string name="no_items_in_the_shopping_list">No items in the shopping list</string>
+    <string name="number_of_items">Number of items: %1$s</string>
+    <string name="name">Name</string>
+    <string name="amount">Amount</string>
+    <string name="unit">Unit</string>
 </resources>

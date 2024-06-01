@@ -29,4 +29,9 @@
     <string name="shopping_list">Lista de cumpărături</string>
     <string name="edit">Editează</string>
     <string name="clear">Șterge</string>
+    <string name="no_items_in_the_shopping_list">Nu există articole în lista de cumpărături</string>
+    <string name="number_of_items">Numărul de articole: %1$s</string>
+    <string name="name">Nume</string>
+    <string name="amount">Cantitate</string>
+    <string name="unit">Unitate</string>
 </resources>

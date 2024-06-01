@@ -8,6 +8,7 @@ import com.codrutursache.casey.domain.usecases.ClearShoppingListUseCase
 import com.codrutursache.casey.domain.usecases.GetShoppingListUseCase
 import com.codrutursache.casey.domain.usecases.ToggleShoppingListItemUseCase
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.domain.usecases.DeleteShoppingListItemUseCase
 import com.codrutursache.casey.domain.usecases.UpdateShoppingListItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,7 +19,8 @@ class ShoppingListViewModel @Inject constructor(
     private val getShoppingListUseCase: GetShoppingListUseCase,
     private val toggleShoppingListItemUseCase: ToggleShoppingListItemUseCase,
     private val clearShoppingListUseCase: ClearShoppingListUseCase,
-    private val updateShoppingListItemUseCase: UpdateShoppingListItemUseCase
+    private val updateShoppingListItemUseCase: UpdateShoppingListItemUseCase,
+    private val deleteShoppingListItemUseCase: DeleteShoppingListItemUseCase
 ) : ViewModel() {
 
 
@@ -32,7 +34,7 @@ class ShoppingListViewModel @Inject constructor(
         getShoppingList()
     }
 
-    fun getShoppingList() {
+    private fun getShoppingList() {
         viewModelScope.launch {
             shoppingList.value = Resource.Loading
             shoppingList.value = getShoppingListUseCase()
@@ -50,6 +52,22 @@ class ShoppingListViewModel @Inject constructor(
             shoppingList.value = Resource.Loading
             clearShoppingListUseCase()
             shoppingList.value = Resource.Success(emptyList())
+        }
+    }
+
+    fun deleteShoppingListItem(shoppingItemId: Int) {
+        viewModelScope.launch {
+            deleteShoppingListItemUseCase(shoppingItemId)
+            when (val currentList = shoppingList.value) {
+                is Resource.Success -> {
+                    val updatedList = currentList.data?.filter { it.id != shoppingItemId }
+                    shoppingList.value = Resource.Success(updatedList!!)
+                }
+
+                else -> {
+                    // Do nothing
+                }
+            }
         }
     }
 

@@ -24,9 +24,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.codrutursache.casey.R
 import com.codrutursache.casey.domain.model.ShoppingItemEntity
 import com.codrutursache.casey.presentation.components.BottomBar
 import com.codrutursache.casey.presentation.navigation.Route
@@ -42,10 +44,9 @@ fun ShoppingListScreen(
     resource: Resource<List<ShoppingItemEntity>>,
     toggleItem: (Int, Boolean) -> Unit,
     updateShoppingListItem: (ShoppingItemEntity) -> Unit,
+    deleteShoppingListItem: (Int) -> Unit,
     clearShoppingList: () -> Unit,
 ) {
-
-
     Scaffold(
         topBar = {
             ShoppingListTopBar(
@@ -73,7 +74,8 @@ fun ShoppingListScreen(
                     ShoppingListScreenSuccess(
                         resource.data!!,
                         toggleItem = toggleItem,
-                        updateItem = updateShoppingListItem
+                        updateItem = updateShoppingListItem,
+                        deleteItem = deleteShoppingListItem
                     )
                 }
 
@@ -92,11 +94,12 @@ fun ShoppingListScreen(
 fun ShoppingListScreenSuccess(
     shoppingList: List<ShoppingItemEntity>,
     toggleItem: (Int, Boolean) -> Unit,
-    updateItem: (ShoppingItemEntity) -> Unit
+    updateItem: (ShoppingItemEntity) -> Unit,
+    deleteItem: (Int) -> Unit
 ) {
 
     if (shoppingList.isEmpty()) {
-        Text(text = "No items in the shopping list")
+        Text(text = stringResource(R.string.no_items_in_the_shopping_list))
         return
     }
 
@@ -112,7 +115,7 @@ fun ShoppingListScreenSuccess(
     ) {
 
         Text(
-            text = "Number of items: ${shoppingList.size}",
+            text = stringResource(R.string.number_of_items, shoppingList.size),
             style = MaterialTheme.typography.bodyLarge,
         )
 
@@ -139,6 +142,7 @@ fun ShoppingListScreenSuccess(
             sheetState = sheetState,
             closeSheet = closeSheet,
             updateItem = updateItem,
+            deleteItem = deleteItem,
             shoppingItem = selectedShoppingItem!!
         )
     }
@@ -223,7 +227,8 @@ fun ShoppingListScreenSuccessPreview() {
         clearShoppingList = {},
         navigateTo = { },
         toggleItem = { _, _ -> },
-        updateShoppingListItem = { }
+        updateShoppingListItem = { },
+        deleteShoppingListItem = { }
     )
 }
 
@@ -237,8 +242,8 @@ fun ShoppingListScreenSuccessPreviewEmptyList() {
         clearShoppingList = {},
         navigateTo = { },
         toggleItem = { _, _ -> },
-        updateShoppingListItem = { }
-
+        updateShoppingListItem = { },
+        deleteShoppingListItem = { }
     )
 }
 
@@ -250,6 +255,7 @@ fun ShoppingListScreenLoadingPreview() {
         clearShoppingList = {},
         navigateTo = { },
         toggleItem = { _, _ -> },
+        deleteShoppingListItem = { },
         updateShoppingListItem = { }
     )
 }
