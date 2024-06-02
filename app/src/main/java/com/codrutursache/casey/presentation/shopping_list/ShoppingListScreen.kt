@@ -7,12 +7,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -58,7 +63,17 @@ fun ShoppingListScreen(
                 currentRoute = Route.ShoppingListRoute.route,
                 navigateTo = navigateTo,
             )
-        }
+        },
+        floatingActionButton = {
+            if (resource is Resource.Success) {
+                SmallFloatingActionButton(
+                    onClick = { },
+                ) {
+                    Icon(imageVector = Icons.Filled.Add, contentDescription = "Add new item")
+                }
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
     ) { innerPadding ->
         Surface(
             modifier = Modifier
@@ -84,8 +99,6 @@ fun ShoppingListScreen(
                 }
             }
         }
-
-
     }
 }
 
@@ -136,7 +149,6 @@ fun ShoppingListScreenSuccess(
             }
         }
     }
-
     if (isSheetOpen) {
         ShoppingItemBottomSheet(
             sheetState = sheetState,
