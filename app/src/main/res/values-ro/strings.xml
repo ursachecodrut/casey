@@ -34,4 +34,5 @@
     <string name="name">Nume</string>
     <string name="amount">Cantitate</string>
     <string name="unit">Unitate</string>
+    <string name="search_for_recipes">Caută rețete</string>
 </resources>

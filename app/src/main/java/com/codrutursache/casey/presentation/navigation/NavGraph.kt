@@ -95,6 +95,7 @@ fun NavGraph(
                 navigateTo = navigateTo,
                 recipes = recipes,
                 fetchMoreRecipes = recipesListViewModel::getRecipes,
+                searchRecipe = recipesListViewModel::searchRecipes,
                 navigateToRecipeInformation = navController::navigateToRecipeDetails
             )
         }

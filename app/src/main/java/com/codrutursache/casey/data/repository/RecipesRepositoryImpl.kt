@@ -20,9 +20,13 @@ class RecipesRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val profileRepository: ProfileRepository,
 ) : RecipesRepository {
-    override suspend fun getRecipes(number: Int, offset: Int): Resource<RecipeListResponse> =
+    override suspend fun getRecipes(
+        number: Int,
+        offset: Int,
+        recipeName: String
+    ): Resource<RecipeListResponse> =
         try {
-            val response = api.complexSearch(number = number, offset = offset)
+            val response = api.complexSearch(number = number, offset = offset, recipeName)
             Resource.Success(response)
         } catch (e: Exception) {
             Log.e("RecipesRepositoryImpl", "getRecipes: $e")

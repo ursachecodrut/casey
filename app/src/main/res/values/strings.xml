@@ -42,4 +42,5 @@
     <string name="name">Name</string>
     <string name="amount">Amount</string>
     <string name="unit">Unit</string>
+    <string name="search_for_recipes">Search for recipes</string>
 </resources>

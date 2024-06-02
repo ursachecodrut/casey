@@ -7,7 +7,11 @@ import com.codrutursache.casey.domain.model.Resource
 
 interface RecipesRepository {
 
-    suspend fun getRecipes(number: Int, offset: Int): Resource<RecipeListResponse>
+    suspend fun getRecipes(
+        number: Int,
+        offset: Int,
+        recipeName: String = ""
+    ): Resource<RecipeListResponse>
 
     suspend fun getRecipeInformation(id: Int): Resource<RecipeInformationResponse>
 

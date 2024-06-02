@@ -9,11 +9,11 @@ import retrofit2.http.Query
 
 interface SpoonacularService {
 
-
     @GET("/recipes/complexSearch")
     suspend fun complexSearch(
         @Query("number") number: Int = 10,
         @Query("offset") offset: Int = 0,
+        @Query("query") recipeName: String = ""
     ): RecipeListResponse
 
     @GET("/recipes/{id}/information")
