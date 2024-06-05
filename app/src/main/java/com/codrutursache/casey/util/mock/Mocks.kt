@@ -1,16 +1,19 @@
 package com.codrutursache.casey.util.mock
 
 import com.codrutursache.casey.data.response.AnalyzedInstructionResponse
+import com.codrutursache.casey.data.response.CaloricBreakdown
 import com.codrutursache.casey.data.response.EquipmentResponse
 import com.codrutursache.casey.data.response.ExtendedIngredientResponse
 import com.codrutursache.casey.data.response.IngredientResponse
 import com.codrutursache.casey.data.response.MeasuresResponse
 import com.codrutursache.casey.data.response.MetricResponse
+import com.codrutursache.casey.data.response.Nutrition
 import com.codrutursache.casey.data.response.RecipeInformationResponse
 import com.codrutursache.casey.data.response.RecipeListResponse
 import com.codrutursache.casey.data.response.RecipeResponse
 import com.codrutursache.casey.data.response.StepResponse
 import com.codrutursache.casey.data.response.UsResponse
+import com.codrutursache.casey.data.response.WeightPerServing
 import com.codrutursache.casey.data.response.WinePairingResponse
 
 object Mocks {
@@ -205,6 +208,21 @@ object Mocks {
             pairedWines = emptyList(),
             pairingText = "",
             productMatches = emptyList()
+        ),
+        nutrition = Nutrition(
+            nutrients = emptyList(),
+            caloricBreakdown = CaloricBreakdown(
+                percentProtein = 0.0,
+                percentFat = 0.0,
+                percentCarbs = 0.0
+            ),
+            weightPerServing = WeightPerServing(
+                amount = 1,
+                unit = "serving",
+            ),
+            ingredients = emptyList(),
+            flavonoids = emptyList(),
+            properties = emptyList()
         )
     )
 }
