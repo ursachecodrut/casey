@@ -3,9 +3,10 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
-    id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
+    id("com.google.gms.google-services")    // Google Services
+    id("com.google.dagger.hilt.android")    // Dagger-Hilt
+    id("com.google.devtools.ksp")           // Kotlin Symbol Processing
+    id("com.google.firebase.firebase-perf") // Firebase Performance Monitoring
 }
 
 android {
@@ -102,6 +103,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx:24.11.1")
     implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
     implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-perf")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
