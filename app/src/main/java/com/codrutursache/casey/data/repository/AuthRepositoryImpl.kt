@@ -10,6 +10,7 @@ import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
 import com.codrutursache.casey.domain.repository.SignOutResponse
 import com.codrutursache.casey.Constants.USERS_COLLECTION
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.domain.repository.AuthResponse
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -30,6 +31,27 @@ class AuthRepositoryImpl @Inject constructor(
 ) : AuthRepository {
 
     override val isUserAuthenticatedInFirebase = auth.currentUser != null
+
+    override suspend fun signInWithEmail(email: String, password: String): AuthResponse {
+        return try {
+            auth.signInWithEmailAndPassword(email, password).await()
+            Resource.Success(true)
+        } catch (e: Exception) {
+            Log.e("AuthRepositoryImpl", "signInWithEmail: $e")
+            Resource.Failure(e)
+        }
+    }
+
+    override suspend fun signUpWithEmail(email: String, password: String): AuthResponse {
+        return try {
+            auth.createUserWithEmailAndPassword(email, password).await()
+            addUserToFirestore()
+            Resource.Success(true)
+        } catch (e: Exception) {
+            Log.e("AuthRepositoryImpl", "signUpWithEmail: $e")
+            Resource.Failure(e)
+        }
+    }
 
     override suspend fun googleOneTapSignIn(): OneTapSignInResponse =
         try {
@@ -90,9 +112,9 @@ class AuthRepositoryImpl @Inject constructor(
             val user = User(
                 email = email,
                 displayName = displayName,
-                photoUrl = photoUrl.toString(),
                 createdAt = Timestamp.now()
             )
+            Log.d("AuthRepositoryImpl", "addUserToFirestore: $user")
             firestore.collection(USERS_COLLECTION).document(uid).set(user).await()
         }
     }

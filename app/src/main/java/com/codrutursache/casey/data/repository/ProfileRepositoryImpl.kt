@@ -21,7 +21,8 @@ class ProfileRepositoryImpl @Inject constructor(
     override val userDetails: UserDetails
         get() = UserDetails(
             displayName = auth.currentUser?.displayName,
-            photoUrl = auth.currentUser?.photoUrl.toString()
+            photoUrl = auth.currentUser?.photoUrl.toString(),
+            email = auth.currentUser?.email
         )
 
 

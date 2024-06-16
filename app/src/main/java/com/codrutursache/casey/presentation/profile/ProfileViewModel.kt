@@ -18,6 +18,7 @@ class ProfileViewModel @Inject constructor(
 ) : ViewModel() {
     val displayName get() = getProfileDetailsUseCase().displayName
     val photoUrl get() = getProfileDetailsUseCase().photoUrl
+    val email get() = getProfileDetailsUseCase().email
     var savedRecipesIds = mutableStateOf<Resource<List<RecipeResponse>>>(Resource.Success(null))
         private set
 

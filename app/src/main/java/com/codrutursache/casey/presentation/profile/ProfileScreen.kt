@@ -1,5 +1,7 @@
 package com.codrutursache.casey.presentation.profile
 
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +49,7 @@ import com.codrutursache.casey.util.mock.Mocks
 fun ProfileScreen(
     navigateTo: (String) -> Unit,
     displayName: String?,
+    email: String?,
     photoUrl: String?,
     recipes: Resource<List<RecipeResponse>>,
     navigateToRecipeInformation: (Int, String?, String?, String?) -> Unit,
@@ -80,25 +84,37 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(
-                            photoUrl?.replace(
-                                SMALL_FIREBASE_IMAGE_TAG,
-                                MEDIUM_FIREBASE_IMAGE_TAG
+                Log.d("ProfileScreen", "photoUrl: $photoUrl")
+                if (photoUrl.isNullOrEmpty() || photoUrl == "null") {
+                    Log.d("ProfileScreen", "photoUrl is null")
+                    Image(
+                        painter = painterResource(R.drawable.default_profile_image),
+                        contentDescription = stringResource(R.string.profile_picture),
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(CircleShape)
+                    )
+                } else {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(
+                                photoUrl.replace(
+                                    SMALL_FIREBASE_IMAGE_TAG,
+                                    MEDIUM_FIREBASE_IMAGE_TAG
+                                )
                             )
-                        )
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = stringResource(R.string.profile_picture),
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                )
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = stringResource(R.string.profile_picture),
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(CircleShape)
+                    )
+                }
             }
 
             Text(
-                text = displayName ?: stringResource(R.string.no_name),
+                text = if (displayName.isNullOrEmpty()) email ?: "" else displayName,
                 fontWeight = FontWeight.Bold,
                 fontSize = Typography.bodyMedium.fontSize,
                 letterSpacing = Typography.bodyMedium.letterSpacing,
@@ -126,14 +142,14 @@ fun ProfileScreen(
                 }
             }
 
-        }
 
-        if (isSheetOpen) {
-            ProfileBottomSheet(
-                sheetState = sheetState,
-                closeSheet = closeProfileBottomSheet,
-                navigateToSettings = navigateToSettings,
-            )
+            if (isSheetOpen) {
+                ProfileBottomSheet(
+                    sheetState = sheetState,
+                    closeSheet = closeProfileBottomSheet,
+                    navigateToSettings = navigateToSettings,
+                )
+            }
         }
     }
 }
@@ -146,11 +162,14 @@ fun ProfileScreenSuccessPreview(
         navigateTo = {},
         displayName = "John Doe",
         photoUrl = "",
-        recipes = Resource.Success(listOf(
-            Mocks.recipeResponse,
-            Mocks.recipeResponse,
-            Mocks.recipeResponse
-        )),
+        email = "",
+        recipes = Resource.Success(
+            listOf(
+                Mocks.recipeResponse,
+                Mocks.recipeResponse,
+                Mocks.recipeResponse
+            )
+        ),
         navigateToRecipeInformation = { _, _, _, _ -> },
         navigateToSettings = {}
     )
@@ -164,6 +183,7 @@ fun ProfileScreenLoadingPreview(
         navigateTo = {},
         displayName = "John Doe",
         photoUrl = "",
+        email = "",
         recipes = Resource.Loading,
         navigateToRecipeInformation = { _, _, _, _ -> },
         navigateToSettings = {}

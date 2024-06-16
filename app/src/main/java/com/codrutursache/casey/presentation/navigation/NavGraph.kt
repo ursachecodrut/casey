@@ -58,10 +58,12 @@ fun NavGraph(
             val authViewModel = hiltViewModel<AuthViewModel>()
 
             AuthScreen(
-                signInWithIntentResponse = authViewModel.signInWithIntentResource,
+                authResponse = authViewModel.authResource,
                 oneTapSignInResponse = authViewModel.oneTapSignInResource,
                 oneTapSignIn = authViewModel::oneTapSignIn,
                 signInWithIntent = authViewModel::signInWithIntent,
+                signInWithEmail = authViewModel::signInWithEmail,
+                signUpWithEmail = authViewModel::signUpWithEmail,
                 navigateToProfileScreen = {
                     navController.navigate(Route.RecipesRoute.route)
                 }
@@ -181,6 +183,7 @@ fun NavGraph(
             ProfileScreen(
                 navigateTo = navigateTo,
                 displayName = profileViewModel.displayName,
+                email = profileViewModel.email,
                 photoUrl = profileViewModel.photoUrl,
                 recipes = recipes,
                 navigateToRecipeInformation = navController::navigateToRecipeDetails,

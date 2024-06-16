@@ -12,6 +12,8 @@ import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
 import com.codrutursache.casey.domain.usecases.SignInUseCase
 import com.codrutursache.casey.presentation.navigation.navigateToAuth
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.domain.usecases.SignInWithEmailUseCase
+import com.codrutursache.casey.domain.usecases.SignUpWithEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,13 +21,25 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
+    private val signInWithEmailUseCase: SignInWithEmailUseCase,
+    private val signUpWithEmailUseCase: SignUpWithEmailUseCase,
 ) : ViewModel() {
     private val isUserAuthenticated get() = signInUseCase.isAuthenticated()
 
     var oneTapSignInResource by mutableStateOf<OneTapSignInResponse>(Resource.Success(null))
         private set
-    var signInWithIntentResource by mutableStateOf<SignInWithIntentResponse>(Resource.Success(false))
+    var authResource by mutableStateOf<SignInWithIntentResponse>(Resource.Success(false))
         private set
+
+    fun signInWithEmail(email: String, password: String) = viewModelScope.launch {
+        authResource = Resource.Loading
+        authResource = signInWithEmailUseCase(email, password)
+    }
+
+    fun signUpWithEmail(email: String, password: String) = viewModelScope.launch {
+        authResource = Resource.Loading
+        authResource = signUpWithEmailUseCase(email, password)
+    }
 
     fun oneTapSignIn() = viewModelScope.launch {
         oneTapSignInResource = Resource.Loading
@@ -34,7 +48,7 @@ class AuthViewModel @Inject constructor(
 
     fun signInWithIntent(intent: Intent?) = viewModelScope.launch {
         oneTapSignInResource = Resource.Loading
-        signInWithIntentResource = signInUseCase.signInWithIntent(intent ?: return@launch)
+        authResource = signInUseCase.signInWithIntent(intent ?: return@launch)
     }
 
     fun checkAuth(navController: NavHostController) {
