@@ -7,7 +7,7 @@ interface ShoppingListRepository {
 
     suspend fun getShoppingList(): Resource<List<ShoppingItemEntity>>
 
-    suspend fun insertShoppingItem(shoppingItem: ShoppingItemEntity)
+    suspend fun insertShoppingItem(shoppingItem: ShoppingItemEntity): Long
 
     suspend fun insertBatchShoppingItems(shoppingItems: List<ShoppingItemEntity>)
 

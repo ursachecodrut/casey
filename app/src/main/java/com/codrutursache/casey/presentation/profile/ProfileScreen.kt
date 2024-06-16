@@ -84,7 +84,6 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Log.d("ProfileScreen", "photoUrl: $photoUrl")
                 if (photoUrl.isNullOrEmpty() || photoUrl == "null") {
                     Log.d("ProfileScreen", "photoUrl is null")
                     Image(

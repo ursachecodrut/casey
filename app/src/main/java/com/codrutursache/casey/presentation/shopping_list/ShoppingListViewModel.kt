@@ -8,6 +8,7 @@ import com.codrutursache.casey.domain.usecases.ClearShoppingListUseCase
 import com.codrutursache.casey.domain.usecases.GetShoppingListUseCase
 import com.codrutursache.casey.domain.usecases.ToggleShoppingListItemUseCase
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.domain.usecases.AddItemToShoppingListUseCase
 import com.codrutursache.casey.domain.usecases.DeleteShoppingListItemUseCase
 import com.codrutursache.casey.domain.usecases.UpdateShoppingListItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +21,8 @@ class ShoppingListViewModel @Inject constructor(
     private val toggleShoppingListItemUseCase: ToggleShoppingListItemUseCase,
     private val clearShoppingListUseCase: ClearShoppingListUseCase,
     private val updateShoppingListItemUseCase: UpdateShoppingListItemUseCase,
-    private val deleteShoppingListItemUseCase: DeleteShoppingListItemUseCase
+    private val deleteShoppingListItemUseCase: DeleteShoppingListItemUseCase,
+    private val addItemToShoppingListUseCase: AddItemToShoppingListUseCase
 ) : ViewModel() {
 
 
@@ -38,6 +40,18 @@ class ShoppingListViewModel @Inject constructor(
         viewModelScope.launch {
             shoppingList.value = Resource.Loading
             shoppingList.value = getShoppingListUseCase()
+        }
+    }
+
+    fun addItemToShoppingList(
+        name: String,
+        quantity: Double,
+        unit: String,
+        isChecked: Boolean
+    ) {
+        viewModelScope.launch {
+            addItemToShoppingListUseCase(name, quantity, unit, isChecked)
+            getShoppingList()
         }
     }
 

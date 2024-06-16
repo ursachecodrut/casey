@@ -50,6 +50,7 @@ fun ShoppingListScreen(
     toggleItem: (Int, Boolean) -> Unit,
     updateShoppingListItem: (ShoppingItemEntity) -> Unit,
     deleteShoppingListItem: (Int) -> Unit,
+    addShoppingItem: (String, Double, String, Boolean) -> Unit,
     clearShoppingList: () -> Unit,
 ) {
     Scaffold(
@@ -67,7 +68,9 @@ fun ShoppingListScreen(
         floatingActionButton = {
             if (resource is Resource.Success) {
                 SmallFloatingActionButton(
-                    onClick = { },
+                    onClick = {
+                        addShoppingItem("", 0.0, "", false)
+                    },
                 ) {
                     Icon(imageVector = Icons.Filled.Add, contentDescription = "Add new item")
                 }
@@ -240,7 +243,8 @@ fun ShoppingListScreenSuccessPreview() {
         navigateTo = { },
         toggleItem = { _, _ -> },
         updateShoppingListItem = { },
-        deleteShoppingListItem = { }
+        deleteShoppingListItem = { },
+        addShoppingItem = { _, _, _, _ -> }
     )
 }
 
@@ -255,7 +259,8 @@ fun ShoppingListScreenSuccessPreviewEmptyList() {
         navigateTo = { },
         toggleItem = { _, _ -> },
         updateShoppingListItem = { },
-        deleteShoppingListItem = { }
+        deleteShoppingListItem = { },
+        addShoppingItem = { _, _, _, _ -> }
     )
 }
 
@@ -268,6 +273,7 @@ fun ShoppingListScreenLoadingPreview() {
         navigateTo = { },
         toggleItem = { _, _ -> },
         deleteShoppingListItem = { },
-        updateShoppingListItem = { }
+        updateShoppingListItem = { },
+        addShoppingItem = { _, _, _, _ -> }
     )
 }

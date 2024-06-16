@@ -166,6 +166,7 @@ fun NavGraph(
                 clearShoppingList = shoppingListViewModel::clearShoppingList,
                 updateShoppingListItem = shoppingListViewModel::updateShoppingListItem,
                 deleteShoppingListItem = shoppingListViewModel::deleteShoppingListItem,
+                addShoppingItem = shoppingListViewModel::addItemToShoppingList,
                 navigateTo = navigateTo,
             )
         }

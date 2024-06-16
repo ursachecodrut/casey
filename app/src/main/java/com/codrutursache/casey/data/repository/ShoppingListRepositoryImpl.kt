@@ -5,45 +5,50 @@ import com.codrutursache.casey.data.data_source.ShoppingListDao
 import com.codrutursache.casey.domain.model.ShoppingItemEntity
 import com.codrutursache.casey.domain.repository.ShoppingListRepository
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.domain.repository.AuthRepository
+import com.codrutursache.casey.domain.repository.ProfileRepository
 import javax.inject.Inject
 
 class ShoppingListRepositoryImpl @Inject constructor(
-    private val shoppingListDao: ShoppingListDao
+    private val shoppingListDao: ShoppingListDao,
+    profileRepository: ProfileRepository,
 ) : ShoppingListRepository {
+    private val userId = profileRepository.userId ?: ""
+
     override suspend fun getShoppingList(): Resource<List<ShoppingItemEntity>> =
         try {
-            val shoppingList = shoppingListDao.getAllItems()
+            val shoppingList = shoppingListDao.getAllItems(userId)
             Resource.Success(shoppingList)
         } catch (e: Exception) {
             Log.e("ShoppingListRepositoryImpl", "getShoppingList: $e")
             Resource.Failure(e)
         }
 
-    override suspend fun insertShoppingItem(shoppingItem: ShoppingItemEntity) {
-        shoppingListDao.insertItem(shoppingItem)
+    override suspend fun insertShoppingItem(shoppingItem: ShoppingItemEntity): Long {
+        val shoppingItemWithUserId = shoppingItem.copy(userId = userId)
+        return shoppingListDao.insertItem(shoppingItemWithUserId)
     }
 
+
     override suspend fun insertBatchShoppingItems(shoppingItems: List<ShoppingItemEntity>) {
-        val convertedToBaseUnitShoppingItems = shoppingItems.map { it.changeToBaseUnit() }
-
-        val presentShoppingItems = shoppingListDao.getAllItems()
-
-        val updatedShoppingItems =
-            mergeShoppingItems(presentShoppingItems, convertedToBaseUnitShoppingItems)
-
-        shoppingListDao.insertBatchItems(updatedShoppingItems)
+        val convertedShoppingItems = shoppingItems
+            .map { it.copy(userId = userId) }
+            .map { it.changeToBaseUnit() }
+        val presentShoppingItems = shoppingListDao.getAllItems(userId)
+        val mergedShoppingItems = mergeShoppingItems(presentShoppingItems, convertedShoppingItems)
+        shoppingListDao.insertBatchItems(mergedShoppingItems)
     }
 
     override suspend fun toggleShoppingListItem(shoppingItemId: Int, checked: Boolean) {
-        shoppingListDao.toggleItem(shoppingItemId, checked)
+        shoppingListDao.toggleItem(shoppingItemId, checked, userId)
     }
 
     override suspend fun deleteShoppingItem(shoppingItemId: Int) {
-        shoppingListDao.deleteItem(shoppingItemId)
+        shoppingListDao.deleteItem(shoppingItemId, userId)
     }
 
     override suspend fun deleteAllShoppingItems() {
-        shoppingListDao.deleteAllItems()
+        shoppingListDao.deleteAllItems(userId)
     }
 
     private fun mergeShoppingItems(

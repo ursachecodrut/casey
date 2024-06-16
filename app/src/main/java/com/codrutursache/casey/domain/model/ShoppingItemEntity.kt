@@ -8,11 +8,13 @@ import com.codrutursache.casey.util.Volume
 
 @Entity
 data class ShoppingItemEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val name: String,
     val quantity: Double,
     val unit: String,
     val checked: Boolean = false,
+    val userId: String = ""
 ) {
 
     private fun standardizeUnit(unit: String): String {

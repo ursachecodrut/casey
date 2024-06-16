@@ -21,6 +21,8 @@ object DatabaseModule {
             ShoppingListDatabase::class.java,
             ShoppingListDatabase.DATABASE_NAME
         )
+        .fallbackToDestructiveMigration() // This is not recommended for production apps
+        // and should be replaced with a proper migration strategy
         .build()
 
     @Provides
