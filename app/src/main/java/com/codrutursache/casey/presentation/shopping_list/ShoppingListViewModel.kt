@@ -43,14 +43,9 @@ class ShoppingListViewModel @Inject constructor(
         }
     }
 
-    fun addItemToShoppingList(
-        name: String,
-        quantity: Double,
-        unit: String,
-        isChecked: Boolean
-    ) {
+    fun addItemToShoppingList(item: ShoppingItemEntity) {
         viewModelScope.launch {
-            addItemToShoppingListUseCase(name, quantity, unit, isChecked)
+            addItemToShoppingListUseCase(item)
             getShoppingList()
         }
     }

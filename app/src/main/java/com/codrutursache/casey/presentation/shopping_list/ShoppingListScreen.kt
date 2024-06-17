@@ -17,6 +17,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -43,6 +44,7 @@ import com.codrutursache.casey.domain.model.Resource
 import com.codrutursache.casey.presentation.components.LoadingScreen
 import com.codrutursache.casey.presentation.shopping_list.components.ShoppingItemBottomSheet
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShoppingListScreen(
     navigateTo: (String) -> Unit,
@@ -50,9 +52,17 @@ fun ShoppingListScreen(
     toggleItem: (Int, Boolean) -> Unit,
     updateShoppingListItem: (ShoppingItemEntity) -> Unit,
     deleteShoppingListItem: (Int) -> Unit,
-    addShoppingItem: (String, Double, String, Boolean) -> Unit,
+    addShoppingItem: (ShoppingItemEntity) -> Unit,
     clearShoppingList: () -> Unit,
 ) {
+
+    val sheetState = rememberModalBottomSheetState()
+    var isSheetOpen by remember { mutableStateOf(false) }
+    val openSheet = { isSheetOpen = true }
+    val closeSheet = { isSheetOpen = false }
+    var selectedShoppingItem by remember { mutableStateOf<ShoppingItemEntity?>(null) }
+    val selectItem = { item: ShoppingItemEntity -> selectedShoppingItem = item }
+
     Scaffold(
         topBar = {
             ShoppingListTopBar(
@@ -69,7 +79,8 @@ fun ShoppingListScreen(
             if (resource is Resource.Success) {
                 SmallFloatingActionButton(
                     onClick = {
-                        addShoppingItem("", 0.0, "", false)
+                        selectedShoppingItem = null
+                        openSheet()
                     },
                 ) {
                     Icon(imageVector = Icons.Filled.Add, contentDescription = "Add new item")
@@ -93,7 +104,14 @@ fun ShoppingListScreen(
                         resource.data!!,
                         toggleItem = toggleItem,
                         updateItem = updateShoppingListItem,
-                        deleteItem = deleteShoppingListItem
+                        deleteItem = deleteShoppingListItem,
+                        addItem = addShoppingItem,
+                        sheetState = sheetState,
+                        openSheet = openSheet,
+                        closeSheet = closeSheet,
+                        isSheetOpen = isSheetOpen,
+                        selectedShoppingItem = selectedShoppingItem,
+                        selectItem = selectItem
                     )
                 }
 
@@ -111,7 +129,14 @@ fun ShoppingListScreenSuccess(
     shoppingList: List<ShoppingItemEntity>,
     toggleItem: (Int, Boolean) -> Unit,
     updateItem: (ShoppingItemEntity) -> Unit,
-    deleteItem: (Int) -> Unit
+    deleteItem: (Int) -> Unit,
+    addItem: (ShoppingItemEntity) -> Unit,
+    sheetState: SheetState,
+    openSheet: () -> Unit,
+    closeSheet: () -> Unit,
+    isSheetOpen: Boolean,
+    selectedShoppingItem: ShoppingItemEntity?,
+    selectItem: (ShoppingItemEntity) -> Unit
 ) {
 
     if (shoppingList.isEmpty()) {
@@ -119,12 +144,7 @@ fun ShoppingListScreenSuccess(
         return
     }
 
-    var selectedShoppingItem by remember { mutableStateOf<ShoppingItemEntity?>(null) }
 
-    val sheetState = rememberModalBottomSheetState()
-    var isSheetOpen by remember { mutableStateOf(false) }
-    val openSheet = { isSheetOpen = true }
-    val closeSheet = { isSheetOpen = false }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -145,7 +165,7 @@ fun ShoppingListScreenSuccess(
                         toggleItem(shoppingItem.id, checked)
                     },
                     openSheet = {
-                        selectedShoppingItem = shoppingItem
+                        selectItem(shoppingItem)
                         openSheet()
                     }
                 )
@@ -158,7 +178,8 @@ fun ShoppingListScreenSuccess(
             closeSheet = closeSheet,
             updateItem = updateItem,
             deleteItem = deleteItem,
-            shoppingItem = selectedShoppingItem!!
+            addItem = addItem,
+            shoppingItem = selectedShoppingItem,
         )
     }
 
@@ -244,7 +265,7 @@ fun ShoppingListScreenSuccessPreview() {
         toggleItem = { _, _ -> },
         updateShoppingListItem = { },
         deleteShoppingListItem = { },
-        addShoppingItem = { _, _, _, _ -> }
+        addShoppingItem = {}
     )
 }
 
@@ -260,7 +281,7 @@ fun ShoppingListScreenSuccessPreviewEmptyList() {
         toggleItem = { _, _ -> },
         updateShoppingListItem = { },
         deleteShoppingListItem = { },
-        addShoppingItem = { _, _, _, _ -> }
+        addShoppingItem = { }
     )
 }
 
@@ -274,6 +295,6 @@ fun ShoppingListScreenLoadingPreview() {
         toggleItem = { _, _ -> },
         deleteShoppingListItem = { },
         updateShoppingListItem = { },
-        addShoppingItem = { _, _, _, _ -> }
+        addShoppingItem = {}
     )
 }
