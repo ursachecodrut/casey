@@ -54,8 +54,10 @@ fun BottomBar(
                 label = { Text(text = label) },
                 selected = isSelected,
                 onClick = {
-                    selectedItem = index
-                    navigateTo(item.route)
+                    if (selectedItem != index) {
+                        selectedItem = index
+                        navigateTo(item.route)
+                    }
                 }
             )
 
