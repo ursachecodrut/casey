@@ -46,17 +46,6 @@ fun ShoppingListTopBar(
 
                 DropdownMenu(expanded = isMenuOpen, onDismissRequest = { isMenuOpen = false }) {
                     DropdownMenuItem(
-                        text = { Text(text = stringResource(R.string.edit)) },
-                        onClick = { /*TODO*/ },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Filled.Edit,
-                                contentDescription = stringResource(R.string.edit)
-                            )
-                        }
-
-                    )
-                    DropdownMenuItem(
                         text = { Text(text = stringResource(R.string.clear)) },
                         onClick = { clearShoppingList() },
                         leadingIcon = {
