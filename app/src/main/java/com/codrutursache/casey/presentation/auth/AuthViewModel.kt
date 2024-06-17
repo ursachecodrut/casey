@@ -10,10 +10,10 @@ import androidx.navigation.NavHostController
 import com.codrutursache.casey.domain.repository.OneTapSignInResponse
 import com.codrutursache.casey.domain.repository.SignInWithIntentResponse
 import com.codrutursache.casey.domain.usecases.SignInUseCase
-import com.codrutursache.casey.presentation.navigation.navigateToAuth
 import com.codrutursache.casey.domain.model.Resource
 import com.codrutursache.casey.domain.usecases.SignInWithEmailUseCase
 import com.codrutursache.casey.domain.usecases.SignUpWithEmailUseCase
+import com.codrutursache.casey.presentation.navigation.navigateToSignIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -53,8 +53,8 @@ class AuthViewModel @Inject constructor(
 
     fun checkAuth(navController: NavHostController) {
         viewModelScope.launch {
-            if (!isUserAuthenticated) {
-                navController.navigateToAuth()
+            if (!isUserAuthenticated && navController.currentDestination?.route != "sign_up_screen") {
+                navController.navigateToSignIn()
             }
         }
     }

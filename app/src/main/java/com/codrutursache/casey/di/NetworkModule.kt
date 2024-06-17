@@ -60,7 +60,7 @@ object NetworkModule {
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(apiKeyInterceptor)
-//            .addInterceptor(loggingInterceptor)
+            .addInterceptor(loggingInterceptor)
             .build()
 
     @Provides

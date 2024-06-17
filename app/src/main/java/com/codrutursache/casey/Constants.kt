@@ -1,5 +1,7 @@
 package com.codrutursache.casey
 
+import androidx.compose.ui.graphics.Color
+
 object Constants {
     const val USERS_COLLECTION = "users"
     const val SAVED_RECIPES_FIELD = "savedRecipes"

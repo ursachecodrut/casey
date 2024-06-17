@@ -1,14 +1,28 @@
 package com.codrutursache.casey.presentation.recipe_information
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessAlarm
+import androidx.compose.material.icons.filled.Alarm
+import androidx.compose.material.icons.filled.Score
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -17,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -38,6 +53,7 @@ import com.codrutursache.casey.presentation.recipe_information.components.Servin
 import com.codrutursache.casey.presentation.theme.Typography
 import com.codrutursache.casey.domain.model.Resource
 import com.codrutursache.casey.presentation.components.LoadingScreen
+import com.codrutursache.casey.presentation.theme.CaseyTheme
 import com.codrutursache.casey.util.mock.Mocks
 import kotlinx.coroutines.Job
 
@@ -99,6 +115,7 @@ fun RecipeInformationScreen(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RecipeInformationSuccessScreen(
     recipeInfo: RecipeInformationResponse,
@@ -111,6 +128,18 @@ fun RecipeInformationSuccessScreen(
     var numberOfServings by remember { mutableIntStateOf(1) }
     val increment: () -> Unit = { numberOfServings++ }
     val decrement: () -> Unit = { if (numberOfServings > 1) numberOfServings-- }
+
+    val recipeTags = mapOf<String, Boolean>(
+        "vegetarian" to recipeInfo.vegetarian,
+        "vegan" to recipeInfo.vegan,
+        "gluten free" to recipeInfo.glutenFree,
+        "dairy free" to recipeInfo.dairyFree,
+        "very healthy" to recipeInfo.veryHealthy,
+        "cheap" to recipeInfo.cheap,
+        "very popular" to recipeInfo.veryPopular,
+        "sustainable" to recipeInfo.sustainable,
+        "low fodmap" to recipeInfo.lowFodmap,
+    )
 
     Surface(
         modifier = Modifier
@@ -139,6 +168,66 @@ fun RecipeInformationSuccessScreen(
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(6))
             )
+
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                recipeTags.forEach { (tag, value) ->
+                    if (value) {
+                        Text(
+                            text = tag,
+                            style = Typography.bodyMedium,
+                            modifier = Modifier
+                                .background(
+                                    color = MaterialTheme.colorScheme.inversePrimary.copy(alpha = 0.4f),
+                                    shape = CircleShape
+                                )
+                                .padding(horizontal = 8.dp, vertical = 4.dp)
+                        )
+                    }
+                }
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Alarm,
+                    contentDescription = stringResource(R.string.ready_in),
+                    modifier = Modifier.size(24.dp)
+                )
+                Text(
+                    text = stringResource(
+                        R.string.ready_in_minutes,
+                        recipeInfo.readyInMinutes
+                    ),
+                    style = Typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Score,
+                    contentDescription = stringResource(R.string.health_score),
+                    modifier = Modifier.size(24.dp)
+                )
+                Text(
+                    text = stringResource(
+                        R.string.health_score,
+                        recipeInfo.healthScore
+                    ),
+                    style = Typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
 
 
             Servings(

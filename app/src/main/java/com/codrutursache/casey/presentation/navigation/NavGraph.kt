@@ -20,8 +20,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.codrutursache.casey.data.response.ExtendedIngredientResponse
 import com.codrutursache.casey.data.response.RecipeResponse
-import com.codrutursache.casey.presentation.auth.AuthScreen
-import com.codrutursache.casey.presentation.auth.AuthViewModel
 import com.codrutursache.casey.presentation.profile.ProfileScreen
 import com.codrutursache.casey.presentation.profile.ProfileViewModel
 import com.codrutursache.casey.presentation.recipe_information.RecipeInformationScreen
@@ -33,6 +31,10 @@ import com.codrutursache.casey.presentation.settings.SettingsViewModel
 import com.codrutursache.casey.presentation.shopping_list.ShoppingListScreen
 import com.codrutursache.casey.presentation.shopping_list.ShoppingListViewModel
 import com.codrutursache.casey.domain.model.Resource
+import com.codrutursache.casey.presentation.auth.AuthViewModel
+import com.codrutursache.casey.presentation.auth.SignInScreen
+import com.codrutursache.casey.presentation.auth.SignUpScreen
+
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
@@ -53,20 +55,36 @@ fun NavGraph(
             .padding(innerPadding)
     ) {
         composable(
-            route = Route.AuthRoute.route
+            route = Route.SignInRoute.route
         ) {
             val authViewModel = hiltViewModel<AuthViewModel>()
 
-            AuthScreen(
+            SignInScreen(
                 authResponse = authViewModel.authResource,
                 oneTapSignInResponse = authViewModel.oneTapSignInResource,
                 oneTapSignIn = authViewModel::oneTapSignIn,
                 signInWithIntent = authViewModel::signInWithIntent,
                 signInWithEmail = authViewModel::signInWithEmail,
+                navigateToProfileScreen = navController::navigateToProfile,
+                navigateToSignUpScreen = navController::navigateToSignUp,
+                navigateToSignInScreen = navController::navigateToSignIn
+            )
+        }
+
+        composable(
+            route = Route.SignUpRoute.route
+        ) {
+            val authViewModel = hiltViewModel<AuthViewModel>()
+
+            SignUpScreen(
+                authResponse = authViewModel.authResource,
+                oneTapSignInResponse = authViewModel.oneTapSignInResource,
+                oneTapSignIn = authViewModel::oneTapSignIn,
+                signInWithIntent = authViewModel::signInWithIntent,
                 signUpWithEmail = authViewModel::signUpWithEmail,
-                navigateToProfileScreen = {
-                    navController.navigate(Route.RecipesRoute.route)
-                }
+                navigateToProfileScreen = navController::navigateToProfile,
+                navigateToSignUpScreen = navController::navigateToSignUp,
+                navigateToSignInScreen = navController::navigateToSignIn
             )
         }
 
@@ -203,7 +221,7 @@ fun NavGraph(
                 signOutResponse = settingsViewModel.signOutResource,
                 navigateToAuthScreen = {
                     navController.popBackStack()
-                    navController.navigate(Route.AuthRoute.route)
+                    navController.navigate(Route.SignInRoute.route)
                 },
                 signOut = settingsViewModel::signOut,
             )
@@ -234,12 +252,20 @@ fun NavHostController.navigateToRecipeDetails(
     navigate(route)
 }
 
-fun NavHostController.navigateToAuth() {
-    navigate(Route.AuthRoute.route)
+fun NavHostController.navigateToSignIn() {
+    navigate(Route.SignInRoute.route)
+}
+
+fun NavHostController.navigateToSignUp() {
+    navigate(Route.SignUpRoute.route)
 }
 
 fun NavHostController.navigateToSettings() {
     navigate(Route.SettingsRoute.route)
+}
+
+fun NavHostController.navigateToProfile() {
+    navigate(Route.ProfileRoute.route)
 }
 
 fun NavHostController.navigateBack() {

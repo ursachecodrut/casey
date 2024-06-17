@@ -35,4 +35,10 @@
     <string name="amount">Cantitate</string>
     <string name="unit">Unitate</string>
     <string name="search_for_recipes">Caută rețete</string>
+    <string name="ready_in_minutes">Gata în %1$s minute</string>
+    <string name="ready_in">Gata în</string>
+    <string name="health_score">Scor de sănătate: %1$s</string>
+    <string name="invalid_email_address">Adresă de email invalidă</string>
+    <string name="sign_in">Intră</string>
+    <string name="sign_up">Înregistrează-te</string>
 </resources>

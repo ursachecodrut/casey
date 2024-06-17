@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -25,6 +26,7 @@ fun PasswordTextField(
     password: String,
     onPasswordChange: (String) -> Unit,
     label: String = "Password",
+    modifier: Modifier = Modifier
 ) {
     var passwordHidden by rememberSaveable { mutableStateOf(true) }
     OutlinedTextField(
@@ -42,7 +44,8 @@ fun PasswordTextField(
                 val description = if (passwordHidden) "Show password" else "Hide password"
                 Icon(imageVector = visibilityIcon, contentDescription = description)
             }
-        }
+        },
+        modifier = modifier
     )
 
 }

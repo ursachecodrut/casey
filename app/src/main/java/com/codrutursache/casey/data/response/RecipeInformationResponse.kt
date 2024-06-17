@@ -60,7 +60,7 @@ data class RecipeInformationResponse(
     val lowFodmap: Boolean,
 
     @Json(name = "nutrition")
-    val nutrition: Nutrition,
+    val nutrition: Nutrition?,
 
     @Json(name = "occasions")
     val occasions: List<Any>,

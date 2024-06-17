@@ -26,7 +26,10 @@ interface RouteWithArgs {
 }
 
 sealed class Route(val route: String) {
-    data object AuthRoute : Route("auth_screen")
+
+    data object SignInRoute : Route("sign_in_screen")
+
+    data object SignUpRoute : Route("sign_up_screen")
 
     data object ProfileRoute : Route("profile_screen"), NavBarRoute {
         override val icon: ImageVector = Icons.Filled.AccountCircle

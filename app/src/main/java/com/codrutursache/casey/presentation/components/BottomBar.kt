@@ -25,7 +25,7 @@ fun BottomBar(
 ) {
     var isBottomBarVisible by rememberSaveable { mutableStateOf(false) }
     isBottomBarVisible = when (currentRoute) {
-        Route.AuthRoute.route -> false
+        Route.SignInRoute.route -> false
         Route.ProfileRoute.route -> true
         else -> true
     }

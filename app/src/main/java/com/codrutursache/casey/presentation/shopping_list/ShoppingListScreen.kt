@@ -141,37 +141,35 @@ fun ShoppingListScreenSuccess(
 
     if (shoppingList.isEmpty()) {
         Text(text = stringResource(R.string.no_items_in_the_shopping_list))
-        return
-    }
-
-
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-
-        Text(
-            text = stringResource(R.string.number_of_items, shoppingList.size),
-            style = MaterialTheme.typography.bodyLarge,
-        )
-
-        LazyColumn(
+    } else {
+        Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            items(shoppingList.sortedBy { it.name }) { shoppingItem ->
-                ShoppingListItem(
-                    item = shoppingItem,
-                    onCheckedChange = { checked ->
-                        toggleItem(shoppingItem.id, checked)
-                    },
-                    openSheet = {
-                        selectItem(shoppingItem)
-                        openSheet()
-                    }
-                )
+
+            Text(
+                text = stringResource(R.string.number_of_items, shoppingList.size),
+                style = MaterialTheme.typography.bodyLarge,
+            )
+
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                items(shoppingList.sortedBy { it.name }) { shoppingItem ->
+                    ShoppingListItem(
+                        item = shoppingItem,
+                        onCheckedChange = { checked ->
+                            toggleItem(shoppingItem.id, checked)
+                        },
+                        openSheet = {
+                            selectItem(shoppingItem)
+                            openSheet()
+                        }
+                    )
+                }
             }
         }
     }
+
     if (isSheetOpen) {
         ShoppingItemBottomSheet(
             sheetState = sheetState,

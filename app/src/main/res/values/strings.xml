@@ -43,4 +43,10 @@
     <string name="amount">Amount</string>
     <string name="unit">Unit</string>
     <string name="search_for_recipes">Search for recipes</string>
+    <string name="ready_in_minutes">Ready in %1$s minutes</string>
+    <string name="ready_in">Ready in</string>
+    <string name="health_score">Health Score: %1$s</string>
+    <string name="invalid_email_address">Invalid email address</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
 </resources>

@@ -2,9 +2,11 @@ package com.codrutursache.casey.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.codrutursache.casey.R
 
 val Typography = Typography(
     bodyLarge = TextStyle(
@@ -27,5 +29,12 @@ val Typography = Typography(
         fontSize = 11.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp
-    )
+    ),
+)
+
+val logo = TextStyle(
+    fontFamily = FontFamily(Font(R.font.ballpark_winer)),
+    fontWeight = FontWeight.Bold,
+    fontSize = 48.sp,
+    lineHeight = 56.sp,
 )
