@@ -252,22 +252,10 @@ fun NavHostController.navigateToRecipeDetails(
     navigate(route)
 }
 
-fun NavHostController.navigateToSignIn() {
-    navigate(Route.SignInRoute.route)
-}
-
-fun NavHostController.navigateToSignUp() {
-    navigate(Route.SignUpRoute.route)
-}
-
-fun NavHostController.navigateToSettings() {
-    navigate(Route.SettingsRoute.route)
-}
-
-fun NavHostController.navigateToProfile() {
-    navigate(Route.ProfileRoute.route)
-}
-
+fun NavHostController.navigateToSignIn() = navigate(Route.SignInRoute.route)
+fun NavHostController.navigateToSignUp() = navigate(Route.SignUpRoute.route)
+fun NavHostController.navigateToSettings() = navigate(Route.SettingsRoute.route)
+fun NavHostController.navigateToProfile() = navigate(Route.ProfileRoute.route)
 fun NavHostController.navigateBack() {
     popBackStack()
 }

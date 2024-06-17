@@ -22,6 +22,10 @@ class ProfileViewModel @Inject constructor(
     var savedRecipesIds = mutableStateOf<Resource<List<RecipeResponse>>>(Resource.Success(null))
         private set
 
+    init {
+        getSavedRecipesIds()
+    }
+
 
     fun getSavedRecipesIds() {
         viewModelScope.launch {

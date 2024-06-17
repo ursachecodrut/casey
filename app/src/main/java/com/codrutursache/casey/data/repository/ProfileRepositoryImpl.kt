@@ -27,18 +27,20 @@ class ProfileRepositoryImpl @Inject constructor(
 
 
     override suspend fun getSavedRecipes(): Resource<List<RecipeResponse>> = try {
-        if (userId == null) {
+        if (userId.isNullOrEmpty()) {
             Resource.Failure(Exception("User not authenticated"))
         }
 
-        val recipe = firestore
+        val userDoc = firestore
             .collection(USERS_COLLECTION)
             .document(userId ?: "")
             .get()
             .await()
             .toObject<User>()
-            ?.savedRecipes
-        Resource.Success(recipe)
+
+        val recipes = userDoc?.savedRecipes ?: emptyList()
+
+        Resource.Success(recipes)
     } catch (e: Exception) {
         Log.e("ProfileRepositoryImpl", "getSavedRecipes: $e")
         Resource.Failure(e)
