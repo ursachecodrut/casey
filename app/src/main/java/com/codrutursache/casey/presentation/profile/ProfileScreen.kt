@@ -85,7 +85,6 @@ fun ProfileScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 if (photoUrl.isNullOrEmpty() || photoUrl == "null") {
-                    Log.d("ProfileScreen", "photoUrl is null")
                     Image(
                         painter = painterResource(R.drawable.default_profile_image),
                         contentDescription = stringResource(R.string.profile_picture),
@@ -137,7 +136,7 @@ fun ProfileScreen(
                 }
 
                 is Resource.Failure -> {
-                    Text(text = stringResource(R.string.something_went_wrong))
+                    Log.d("ProfileScreen", "ProfileScreen: ${recipes.e}")
                 }
             }
 

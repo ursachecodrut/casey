@@ -17,7 +17,20 @@ class ProfileRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
 ) : ProfileRepository {
-    override val userId = auth.currentUser?.uid
+    private var _userId: String? = null
+    override val userId: String?
+        get() = _userId
+
+    private val authStateListener = FirebaseAuth.AuthStateListener {
+        _userId = it.currentUser?.uid
+        // Potentially trigger a refresh of data, e.g.,
+        // refreshSavedRecipes()
+    }
+
+    init {
+        auth.addAuthStateListener(authStateListener)
+    }
+
     override val userDetails: UserDetails
         get() = UserDetails(
             displayName = auth.currentUser?.displayName,
@@ -27,9 +40,11 @@ class ProfileRepositoryImpl @Inject constructor(
 
 
     override suspend fun getSavedRecipes(): Resource<List<RecipeResponse>> = try {
-        if (userId.isNullOrEmpty()) {
+        if (userId.isNullOrEmpty() || userId == "null") {
             Resource.Failure(Exception("User not authenticated"))
         }
+
+        Log.d("ProfileRepositoryImpl", "getSavedRecipes: userId: $userId")
 
         val userDoc = firestore
             .collection(USERS_COLLECTION)
@@ -45,6 +60,5 @@ class ProfileRepositoryImpl @Inject constructor(
         Log.e("ProfileRepositoryImpl", "getSavedRecipes: $e")
         Resource.Failure(e)
     }
-
 
 }
