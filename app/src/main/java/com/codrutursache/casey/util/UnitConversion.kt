@@ -173,3 +173,15 @@ fun convertToBaseUnit(amount: Double, unit: String): Double {
     }
 
 }
+
+fun main() {
+    // write me an example that showcases the usage of the classes and functions defined above
+    val mass1 = 12.tbsp
+    val mass2 = 100.g
+
+    val mass1InGrams = mass1 to MassUnit.GRAM
+    val total = mass1 + mass2
+
+
+
+}

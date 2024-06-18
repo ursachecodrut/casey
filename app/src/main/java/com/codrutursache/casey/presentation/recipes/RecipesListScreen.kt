@@ -53,7 +53,8 @@ fun RecipesListScreen(
             )
 
             InfiniteGridScroll(
-                itemsCount = recipes.size, loadMoreItems = fetchMoreRecipes,
+                itemsCount = recipes.size,
+                loadMoreItems = fetchMoreRecipes,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp)
             ) {

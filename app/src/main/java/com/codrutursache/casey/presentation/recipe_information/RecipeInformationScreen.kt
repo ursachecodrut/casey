@@ -109,6 +109,8 @@ fun RecipeInformationScreen(
                 is Resource.Failure -> {
                     Text(text = stringResource(R.string.something_went_wrong))
                 }
+
+                else -> {}
             }
         }
 

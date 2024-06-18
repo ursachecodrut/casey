@@ -37,6 +37,3 @@ fun InfiniteGridScroll(
         }
     }
 }
-
-
-
