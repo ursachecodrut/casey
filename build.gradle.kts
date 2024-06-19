@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.kotlin.ksp) apply false
     alias(libs.plugins.firebase.perf) apply false
+    alias(libs.plugins.androidTest) apply false
+    alias(libs.plugins.androidx.baselineprofile) apply false
 }
 
 task("clean", Delete::class) {

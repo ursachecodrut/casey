@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Casey"
 include(":app")
+include(":measure")

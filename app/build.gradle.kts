@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.firebase.perf)        // Firebase Performance Monitoring
     alias(libs.plugins.kotlin.ksp)           // Kotlin Symbol Processing
+
+    alias(libs.plugins.androidx.baselineprofile)
 }
 
 android {
@@ -50,6 +52,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        create("benchmark") {
+            initWith(buildTypes.getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+            isDebuggable = false
         }
     }
     compileOptions {
@@ -131,5 +139,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    baselineProfile(project(":measure"))
     implementation(libs.androidx.profileinstaller)
+    implementation(libs.androidx.runtime.tracing)
 }
