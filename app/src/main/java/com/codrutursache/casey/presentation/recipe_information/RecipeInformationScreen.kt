@@ -203,7 +203,7 @@ fun RecipeInformationSuccessScreen(
                 Text(
                     text = stringResource(
                         R.string.ready_in_minutes,
-                        recipeInfo.readyInMinutes
+                        recipeInfo.readyInMinutes ?: "N/A"
                     ),
                     style = Typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface,

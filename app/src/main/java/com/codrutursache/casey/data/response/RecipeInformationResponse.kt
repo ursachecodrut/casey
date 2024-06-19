@@ -16,7 +16,7 @@ data class RecipeInformationResponse(
     val cheap: Boolean,
 
     @Json(name = "cookingMinutes")
-    val cookingMinutes: Int,
+    val cookingMinutes: Int?,
 
     @Json(name = "creditsText")
     val creditsText: String,
@@ -69,13 +69,13 @@ data class RecipeInformationResponse(
     val originalId: Any?,
 
     @Json(name = "preparationMinutes")
-    val preparationMinutes: Int,
+    val preparationMinutes: Int?,
 
     @Json(name = "pricePerServing")
     val pricePerServing: Double,
 
     @Json(name = "readyInMinutes")
-    val readyInMinutes: Int,
+    val readyInMinutes: Int?,
 
     @Json(name = "servings")
     val servings: Int,
