@@ -74,7 +74,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.13.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.ui:ui")
@@ -85,23 +85,23 @@ dependencies {
 
 
     // Lifecycle
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
 
     // Navigation
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     // Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.49")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     ksp("com.google.dagger:hilt-android-compiler:2.48")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
-    implementation("com.google.android.gms:play-services-auth:21.1.0")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.11.1")
-    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:25.0.0")
+    implementation("com.google.firebase:firebase-auth-ktx:23.0.0")
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-perf")
 
@@ -129,5 +129,7 @@ dependencies {
 
     // Debugging
     debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.7")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.8")
+
+    implementation("androidx.profileinstaller:profileinstaller:1.3.1")
 }

@@ -65,9 +65,10 @@ fun NavGraph(
                 oneTapSignIn = authViewModel::oneTapSignIn,
                 signInWithIntent = authViewModel::signInWithIntent,
                 signInWithEmail = authViewModel::signInWithEmail,
-                navigateToProfileScreen = navController::navigateToProfile,
                 navigateToSignUpScreen = navController::navigateToSignUp,
-                navigateToSignInScreen = navController::navigateToSignIn
+                navigateToSignInScreen = navController::navigateToSignIn,
+                afterAuthNavigateTo = navController::navigateToRecipes
+
             )
         }
 
@@ -82,9 +83,9 @@ fun NavGraph(
                 oneTapSignIn = authViewModel::oneTapSignIn,
                 signInWithIntent = authViewModel::signInWithIntent,
                 signUpWithEmail = authViewModel::signUpWithEmail,
-                navigateToProfileScreen = navController::navigateToProfile,
                 navigateToSignUpScreen = navController::navigateToSignUp,
-                navigateToSignInScreen = navController::navigateToSignIn
+                navigateToSignInScreen = navController::navigateToSignIn,
+                afterAuthNavigateTo = navController::navigateToRecipes
             )
         }
 
@@ -255,6 +256,7 @@ fun NavHostController.navigateToRecipeDetails(
 fun NavHostController.navigateToSignIn() = navigate(Route.SignInRoute.route)
 fun NavHostController.navigateToSignUp() = navigate(Route.SignUpRoute.route)
 fun NavHostController.navigateToSettings() = navigate(Route.SettingsRoute.route)
+fun NavHostController.navigateToRecipes() = navigate(Route.RecipesRoute.route)
 fun NavHostController.navigateToProfile() = navigate(Route.ProfileRoute.route)
 fun NavHostController.navigateBack() {
     popBackStack()

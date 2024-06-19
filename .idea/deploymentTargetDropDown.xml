@@ -2,16 +2,10 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ExampleInstrumentedTest">
+      <entry key="ExampleStartupBenchmark">
         <State />
       </entry>
-      <entry key="GreetingPreview">
-        <State />
-      </entry>
-      <entry key="ShoppingListScreenLoadingPreview">
-        <State />
-      </entry>
-      <entry key="ShoppingListTopBarPreview - [EN] Shopping List Top Bar preview">
+      <entry key="InfiniteGridScrollBenchmark">
         <State />
       </entry>
       <entry key="app">
@@ -29,6 +23,9 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-06-17T08:23:20.982626Z" />
         </State>
+      </entry>
+      <entry key="defaultCompilation()">
+        <State />
       </entry>
     </value>
   </component>

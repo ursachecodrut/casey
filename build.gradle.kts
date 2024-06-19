@@ -17,6 +17,8 @@ plugins {
 
     // Firebase Performance Monitoring
     id("com.google.firebase.firebase-perf") version "1.4.2" apply false
+
+    id("com.android.test") version "8.2.1" apply false
 }
 
 task("clean", Delete::class) {

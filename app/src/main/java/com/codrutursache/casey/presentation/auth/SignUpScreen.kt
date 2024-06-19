@@ -36,7 +36,7 @@ fun SignUpScreen(
     signUpWithEmail: (String, String) -> Unit,
     navigateToSignInScreen: () -> Unit,
     navigateToSignUpScreen: () -> Unit,
-    navigateToProfileScreen: () -> Unit,
+    afterAuthNavigateTo: () -> Unit,
 ) {
     Scaffold(
     ) { innerPadding ->
@@ -105,7 +105,7 @@ fun SignUpScreen(
 
     LaunchedEffect(authResponse) {
         if (authResponse is Resource.Success && authResponse.data == true) {
-            navigateToProfileScreen()
+            afterAuthNavigateTo()
         }
     }
 }
