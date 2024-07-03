@@ -54,7 +54,7 @@ class ExampleInstrumentedTest {
             CaseyTheme {
                 BottomBar(
                     navigateTo = {},
-                    currentRoute = Route.AuthRoute.route
+                    currentRoute = Route.SignInRoute.route
                 )
             }
         }

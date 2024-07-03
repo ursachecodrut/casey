@@ -90,9 +90,13 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.extended)
+//
+//    // add livedata
+//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0-RC")
+//
 
 
-    // Lifecycle
+            // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)

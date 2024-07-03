@@ -96,21 +96,7 @@ fun NavGraph(
 
             val recipes by remember { recipesListViewModel.recipeListDto }
 
-            // request notification permission
-            val notificationPermissionLauncher = rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.RequestPermission(),
-                onResult = { isGranted ->
-                    if (isGranted) {
-                        Log.d("PermissionResult", "Notification permission granted")
-                    } else {
-                        Log.d("PermissionResult", "Notification permission denied")
-                    }
-                }
-            )
 
-            LaunchedEffect(Unit) {
-                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
 
             RecipesListScreen(
                 navigateTo = navigateTo,
@@ -199,6 +185,23 @@ fun NavGraph(
             }
 
             val recipes by remember { profileViewModel.savedRecipesIds }
+
+
+            // request notification permission
+            val notificationPermissionLauncher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.RequestPermission(),
+                onResult = { isGranted ->
+                    if (isGranted) {
+                        Log.d("PermissionResult", "Notification permission granted")
+                    } else {
+                        Log.d("PermissionResult", "Notification permission denied")
+                    }
+                }
+            )
+
+            LaunchedEffect(Unit) {
+                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
 
             ProfileScreen(
                 navigateTo = navigateTo,

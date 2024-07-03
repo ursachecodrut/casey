@@ -2,10 +2,16 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="BaselineProfileGenerator">
+        <State />
+      </entry>
       <entry key="ExampleStartupBenchmark (1)">
         <State />
       </entry>
       <entry key="InfiniteGridScrollBenchmark">
+        <State />
+      </entry>
+      <entry key="ScrollingBenchmarking">
         <State />
       </entry>
       <entry key="app">
@@ -23,9 +29,6 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-06-17T08:23:20.982626Z" />
         </State>
-      </entry>
-      <entry key="defaultCompilation()">
-        <State />
       </entry>
     </value>
   </component>

@@ -9,10 +9,6 @@ import org.junit.Rule
 
 abstract class AbstractBenchmark(
     protected val startupMode: StartupMode = StartupMode.WARM,
-    // For the purpose of this workshop, we have iterations set to low number.
-    // For more accurate measurements, you should increase the iterations to at least 10
-    // based on how much variance occurs in the results. In general more iterations = more stable
-    // results, but longer execution time.
     protected val iterations: Int = 1
 ) {
     @get:Rule
@@ -25,7 +21,7 @@ abstract class AbstractBenchmark(
 
     fun benchmark(compilationMode: CompilationMode) {
         rule.measureRepeated(
-            packageName = "com.compose.performance",
+            packageName = "com.codrutursache.casey",
             metrics = metrics,
             compilationMode = compilationMode,
             startupMode = startupMode,
